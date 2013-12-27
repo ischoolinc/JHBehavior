@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9F6A778D-348C-497C-A685-8DEF4F975BB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JHSchool.Behavior.Report</RootNamespace>
+    <AssemblyName>JHSchool.Behavior.Report</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/JHSchool.Behavior.Report/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Aspose.Cells.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Aspose.Words.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Campus.Report, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Campus.Report.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="FISCA, Version=2.1.4.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.Authentication, Version=1.9.0.16, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Authentication.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.DSAUtil, Version=3.9.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.DSAUtil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.Presentation, Version=1.1.0.19, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Presentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.UDT, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.UDT.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Framework, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool, Version=1.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Compatibility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Compatibility.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Data, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Permrec, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Permrec.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K12.Data, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K12.Logic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Logic.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K12.Presentation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Presentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Customization.Data, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.Customization.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Customization.PlugIn, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.Customization.PlugIn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.ErrorReporting, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.ErrorReporting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CommonMethods.cs" />
+    <Compile Include="Common\SeatNoComparer.cs" />
+    <Compile Include="Common\SelectDateRangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SelectDateRangeForm.designer.cs">
+      <DependentUpon>SelectDateRangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\SelectTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SelectTypeForm.designer.cs">
+      <DependentUpon>SelectTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\SelectWeekForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SelectWeekForm.designer.cs">
+      <DependentUpon>SelectWeekForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IReport.cs" />
+    <Compile Include="Permissions.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProjectResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortClassIndex.cs" />
+    <Compile Include="StudentSortObj.cs" />
+    <Compile Include="學生獎勵明細\Report.cs" />
+    <Compile Include="學生獎勵明細\SelectMeritForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="學生獎勵明細\SelectMeritForm.designer.cs">
+      <DependentUpon>SelectMeritForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="學生獎懲明細\Report.cs" />
+    <Compile Include="學生獎懲明細\SelectMeritDemeritForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="學生獎懲明細\SelectMeritDemeritForm.designer.cs">
+      <DependentUpon>SelectMeritDemeritForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="學生缺曠明細\Report.cs" />
+    <Compile Include="學生缺曠明細\SelectAttendanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="學生缺曠明細\SelectAttendanceForm.designer.cs">
+      <DependentUpon>SelectAttendanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="懲戒通知單\DemeritConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="懲戒通知單\DemeritConfigForm.designer.cs">
+      <DependentUpon>DemeritConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="懲戒通知單\DemeritDateRangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="懲戒通知單\DemeritDateRangeForm.designer.cs">
+      <DependentUpon>DemeritDateRangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="懲戒通知單\Report.cs" />
+    <Compile Include="特殊組合點名表\SpecialRollCallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="特殊組合點名表\SpecialRollCallForm.Designer.cs">
+      <DependentUpon>SpecialRollCallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="獎懲通知單\DisciplineNotificationConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="獎懲通知單\DisciplineNotificationConfigForm.designer.cs">
+      <DependentUpon>DisciplineNotificationConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="獎懲通知單\DisciplineNotificationSelectDateRangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="獎懲通知單\DisciplineNotificationSelectDateRangeForm.designer.cs">
+      <DependentUpon>DisciplineNotificationSelectDateRangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="獎懲通知單\Report.cs" />
+    <Compile Include="獎懲週報表\Report.cs" />
+    <Compile Include="獎懲週報表\WeekDisciplineReportCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="獎懲週報表\WeekDisciplineReportCount.designer.cs">
+      <DependentUpon>WeekDisciplineReportCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級學生獎懲統計_new\InfoClass.cs" />
+    <Compile Include="班級學生獎懲統計_new\MeritDemeritInfo.cs" />
+    <Compile Include="班級學生獎懲統計_new\MeritDemeritStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級學生獎懲統計_new\MeritDemeritStatistics.Designer.cs">
+      <DependentUpon>MeritDemeritStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級學生獎懲統計_new\ObjConfig.cs" />
+    <Compile Include="班級學生獎懲統計_new\Report.cs" />
+    <Compile Include="班級學生缺曠明細\AbsenceDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級學生缺曠明細\AbsenceDetailForm.designer.cs">
+      <DependentUpon>AbsenceDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級學生缺曠明細\Report.cs" />
+    <Compile Include="班級學生缺曠明細\AttendanceConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級學生缺曠明細\AttendanceConfig.designer.cs">
+      <DependentUpon>AttendanceConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級學生缺曠統計\AttendanceStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級學生缺曠統計\AttendanceStatistics.designer.cs">
+      <DependentUpon>AttendanceStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級學生缺曠統計\Report.cs" />
+    <Compile Include="班級獎懲記錄明細\DisciplineDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級獎懲記錄明細\DisciplineDetailForm.designer.cs">
+      <DependentUpon>DisciplineDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級獎懲記錄明細\Report.cs" />
+    <Compile Include="班級獎懲記錄明細\WeekReportCountConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級獎懲記錄明細\WeekReportCountConfig.designer.cs">
+      <DependentUpon>WeekReportCountConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級通訊錄\Report.cs" />
+    <Compile Include="班級點名表\ClassStudentAttendanceSelectPeriodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="班級點名表\ClassStudentAttendanceSelectPeriodForm.Designer.cs">
+      <DependentUpon>ClassStudentAttendanceSelectPeriodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="班級點名表\Report.cs" />
+    <Compile Include="Common\SelectPeriodForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\SelectPeriodForm.designer.cs">
+      <DependentUpon>SelectPeriodForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠通知單\AbsenceNotificationConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="缺曠通知單\AbsenceNotificationConfigForm.designer.cs">
+      <DependentUpon>AbsenceNotificationConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠通知單\AbsenceNotificationSelectDateRangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="缺曠通知單\AbsenceNotificationSelectDateRangeForm.designer.cs">
+      <DependentUpon>AbsenceNotificationSelectDateRangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠通知單\Report.cs" />
+    <Compile Include="缺曠週報表_依假別\WARCByAbsence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="缺曠週報表_依假別\WARCByAbsence.Designer.cs">
+      <DependentUpon>WARCByAbsence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠週報表_依假別\WeekAbsenceReportConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="缺曠週報表_依假別\WeekAbsenceReportConfig.designer.cs">
+      <DependentUpon>WeekAbsenceReportConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠週報表_依節次\Report.cs" />
+    <Compile Include="缺曠週報表_依節次\WeekAbsenceReportCountByPeriod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="缺曠週報表_依節次\WeekAbsenceReportCountByPeriod.designer.cs">
+      <DependentUpon>WeekAbsenceReportCountByPeriod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="缺曠週報表_依假別\Report.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\SelectDateRangeForm.resx">
+      <DependentUpon>SelectDateRangeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\SelectPeriodForm.resx">
+      <DependentUpon>SelectPeriodForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\SelectTypeForm.resx">
+      <DependentUpon>SelectTypeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\SelectWeekForm.resx">
+      <DependentUpon>SelectWeekForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProjectResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="學生獎勵明細\SelectMeritForm.resx">
+      <DependentUpon>SelectMeritForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="學生獎懲明細\SelectMeritDemeritForm.resx">
+      <DependentUpon>SelectMeritDemeritForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="學生缺曠明細\SelectAttendanceForm.resx">
+      <DependentUpon>SelectAttendanceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="懲戒通知單\DemeritConfigForm.resx">
+      <DependentUpon>DemeritConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="懲戒通知單\DemeritDateRangeForm.resx">
+      <DependentUpon>DemeritDateRangeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="特殊組合點名表\SpecialRollCallForm.resx">
+      <DependentUpon>SpecialRollCallForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="獎懲通知單\DisciplineNotificationConfigForm.resx">
+      <DependentUpon>DisciplineNotificationConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="獎懲通知單\DisciplineNotificationSelectDateRangeForm.resx">
+      <DependentUpon>DisciplineNotificationSelectDateRangeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="獎懲週報表\WeekDisciplineReportCount.resx">
+      <DependentUpon>WeekDisciplineReportCount.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級學生獎懲統計_new\MeritDemeritStatistics.resx">
+      <DependentUpon>MeritDemeritStatistics.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級學生缺曠明細\AbsenceDetailForm.resx">
+      <DependentUpon>AbsenceDetailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級學生缺曠明細\AttendanceConfig.resx">
+      <DependentUpon>AttendanceConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級學生缺曠統計\AttendanceStatistics.resx">
+      <DependentUpon>AttendanceStatistics.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級獎懲記錄明細\DisciplineDetailForm.resx">
+      <DependentUpon>DisciplineDetailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="班級獎懲記錄明細\WeekReportCountConfig.resx">
+      <DependentUpon>WeekReportCountConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="缺曠通知單\AbsenceNotificationConfigForm.resx">
+      <DependentUpon>AbsenceNotificationConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="缺曠通知單\AbsenceNotificationSelectDateRangeForm.resx">
+      <DependentUpon>AbsenceNotificationSelectDateRangeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="缺曠週報表_依假別\WARCByAbsence.resx">
+      <DependentUpon>WARCByAbsence.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="缺曠週報表_依假別\WeekAbsenceReportConfig.resx">
+      <DependentUpon>WeekAbsenceReportConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="缺曠週報表_依節次\WeekAbsenceReportCountByPeriod.resx">
+      <DependentUpon>WeekAbsenceReportCountByPeriod.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Library\Aspose.Cells.dll" />
+    <Content Include="Library\Aspose.Cells.xml" />
+    <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Aspose.Words.xml" />
+    <Content Include="Library\Campus.Report.dll" />
+    <Content Include="Library\Campus.Report.pdb" />
+    <Content Include="Library\DevComponents.DotNetBar2.dll" />
+    <Content Include="Library\FISCA.Authentication.dll" />
+    <Content Include="Library\FISCA.Authentication.pdb" />
+    <Content Include="Library\FISCA.Authentication.xml" />
+    <Content Include="Library\FISCA.dll" />
+    <Content Include="Library\FISCA.DSAUtil.dll" />
+    <Content Include="Library\FISCA.DSAUtil.pdb" />
+    <Content Include="Library\FISCA.DSAUtil.xml" />
+    <Content Include="Library\FISCA.pdb" />
+    <Content Include="Library\FISCA.Presentation.dll" />
+    <Content Include="Library\FISCA.Presentation.pdb" />
+    <Content Include="Library\FISCA.Presentation.xml" />
+    <Content Include="Library\FISCA.UDT.dll" />
+    <Content Include="Library\FISCA.UDT.pdb" />
+    <Content Include="Library\FISCA.UDT.xml" />
+    <Content Include="Library\Framework.dll" />
+    <Content Include="Library\JHSchool.Compatibility.dll" />
+    <Content Include="Library\JHSchool.Compatibility.pdb" />
+    <Content Include="Library\JHSchool.Data.dll" />
+    <Content Include="Library\JHSchool.Data.pdb" />
+    <Content Include="Library\JHSchool.Data.xml" />
+    <Content Include="Library\JHSchool.dll" />
+    <Content Include="Library\JHSchool.pdb" />
+    <Content Include="Library\JHSchool.Permrec.dll" />
+    <Content Include="Library\JHSchool.Permrec.pdb" />
+    <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.Data.pdb" />
+    <Content Include="Library\K12.Data.xml" />
+    <Content Include="Library\K12.Logic.dll" />
+    <Content Include="Library\K12.Logic.pdb" />
+    <Content Include="Library\K12.Logic.XML" />
+    <Content Include="Library\K12.Presentation.dll" />
+    <Content Include="Library\K12.Presentation.xml" />
+    <Content Include="Library\SmartSchool.Customization.Data.dll" />
+    <Content Include="Library\SmartSchool.Customization.Data.xml" />
+    <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
+    <Content Include="Library\SmartSchool.Customization.PlugIn.xml" />
+    <Content Include="Library\SmartSchool.ErrorReporting.dll" />
+    <Content Include="Library\SmartSchool.ErrorReporting.pdb" />
+    <Content Include="Library\SmartSchool.ErrorReporting.xml" />
+    <Content Include="ProjectResource\LoadingIcon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ProjectResource\班級學生缺曠統計.xls" />
+    <None Include="ProjectResource\學生缺曠明細.xls" />
+    <None Include="ProjectResource\學生獎懲記錄明細.xls" />
+    <None Include="ProjectResource\獎懲通知單.doc" />
+    <None Include="ProjectResource\班級學生缺曠明細.xls" />
+    <None Include="ProjectResource\班級學生獎懲統計.xls" />
+    <None Include="ProjectResource\班級獎懲記錄明細.xls" />
+    <None Include="ProjectResource\班級點名表.xls" />
+    <None Include="ProjectResource\獎懲週報表.xls" />
+    <None Include="ProjectResource\缺曠通知單.doc" />
+    <None Include="ProjectResource\缺曠週報表_依節次.xls" />
+    <None Include="ProjectResource\缺曠週報表_依假別.xls" />
+    <None Include="ProjectResource\懲戒通知單.doc" />
+    <None Include="Resources\學生獎勵記錄明細.xls" />
+    <None Include="Resources\學生獎懲記錄明細_2.xls" />
+    <None Include="Resources\特殊組合點名表.doc" />
+    <None Include="Resources\班級通訊錄.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

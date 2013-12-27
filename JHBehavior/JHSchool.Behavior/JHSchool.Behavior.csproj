@@ -1,0 +1,813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5AD0E353-7357-4D42-A72B-55D2960146CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JHSchool.Behavior</RootNamespace>
+    <AssemblyName>JHSchool.Behavior</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/JHSchool.Behavior/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\Documents and Settings\Dylan.Huang\桌面\系統\FiscaAE國中開發\addmodules\開發模組\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Aspose.Cells.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Aspose.Words.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="FISCA, Version=2.1.4.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.Authentication, Version=1.9.0.16, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Authentication.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.DSAClient, Version=1.0.1.16, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.DSAClient.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.DSAUtil, Version=3.9.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.DSAUtil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.LogAgent, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.LogAgent.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.Permission, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Permission.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FISCA.Presentation, Version=1.1.0.19, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\FISCA.Presentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Framework, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IntelliSchool.DSA.ClientFramework, Version=1.2.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\IntelliSchool.DSA.ClientFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool, Version=1.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Affair, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Affair.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Data, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="JHSchool.Logic, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\JHSchool.Logic.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K12.Data, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K12.Presentation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\K12.Presentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.API.PlugIn, Version=0.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.API.PlugIn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Common, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Common.DotNetBar, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.Common.DotNetBar.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.Customization.PlugIn, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.Customization.PlugIn.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SmartSchool.ErrorReporting, Version=1.0.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SmartSchool.ErrorReporting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttendanceFinder.cs" />
+    <Compile Include="BL\AbsenceCountRecord.cs" />
+    <Compile Include="BL\AutoSummary.cs" />
+    <Compile Include="BL\AutoSummaryRecord.cs" />
+    <Compile Include="BL\SchoolYearSemester.cs" />
+    <Compile Include="ClassExtendControls\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\AttendanceScClick.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.Designer.cs">
+      <DependentUpon>BalanceConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\DemeritScClick.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\MeritScClick.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\NoAbsenceScClick.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\PrintObj.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.Designer.cs">
+      <DependentUpon>SpecialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Demerit.cs" />
+    <Compile Include="DemeritRecord.cs" />
+    <Compile Include="Editor\AttendanceRecordEditor.cs" />
+    <Compile Include="Editor\ClearDemeritRecordEditor.cs" />
+    <Compile Include="Editor\DemeritRecordEditor.cs" />
+    <Compile Include="Editor\MeritRecordEditor.cs" />
+    <Compile Include="Attendance_ExtendMethod.cs" />
+    <Compile Include="Demerit_ExtendMethods.cs" />
+    <Compile Include="ImportExport\ImportDisciplineStatistics.cs" />
+    <Compile Include="ImportExport\ExportAttendanceStatistics.cs" />
+    <Compile Include="ImportExport\ExportAttendance.cs" />
+    <Compile Include="ImportExport\ExportDemerit.cs" />
+    <Compile Include="ImportExport\ExportDisciplineStatistics.cs" />
+    <Compile Include="ImportExport\ExportMerit.cs" />
+    <Compile Include="ImportExport\ExportDiscipline.cs" />
+    <Compile Include="ImportExport\ExportStudentV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\ExportStudentV2.designer.cs">
+      <DependentUpon>ExportStudentV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExport\ImportAttendance.cs" />
+    <Compile Include="ImportExport\ImportAttendanceStatistics.cs" />
+    <Compile Include="ImportExport\ImportDiscipline.cs" />
+    <Compile Include="ImportExport\ImportStudentV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport\ImportStudentV2.designer.cs">
+      <DependentUpon>ImportStudentV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\AttendanceEditor\Searchday.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Legacy\AttendanceEditor\Searchday.Designer.cs">
+      <DependentUpon>Searchday.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Merit_ExtendMethods.cs" />
+    <Compile Include="Feature\EditAttendance.cs" />
+    <Compile Include="Feature\EditDemerit.cs" />
+    <Compile Include="Feature\QueryAttendance.cs" />
+    <Compile Include="Feature\QueryDemerit.cs" />
+    <Compile Include="Feature\EditMerit.cs" />
+    <Compile Include="Feature\QueryDiscipline.cs" />
+    <Compile Include="Feature\QueryMerit.cs" />
+    <Compile Include="Legacy\PeriodCollection.cs" />
+    <Compile Include="Permissions.cs" />
+    <Compile Include="SortClass.cs" />
+    <Compile Include="SortClassIndex.cs" />
+    <Compile Include="StuAdminExtendControls\AbsenceConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\AbsenceConfigForm.Designer.cs">
+      <DependentUpon>AbsenceConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\AttendanceEditor\AbsenceInfo.cs" />
+    <Compile Include="Legacy\AttendanceEditor\AbsenceCellInfo.cs" />
+    <Compile Include="Legacy\AttendanceEditor\MutiEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Legacy\AttendanceEditor\MutiEditor.designer.cs">
+      <DependentUpon>MutiEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\Discipline.cs" />
+    <Compile Include="Legacy\AttendanceEditor\ICellInfo.cs" />
+    <Compile Include="Legacy\ISemesterProvider.cs" />
+    <Compile Include="Legacy\KeyConverter.cs" />
+    <Compile Include="Legacy\PeriodComparer.cs" />
+    <Compile Include="Legacy\PeriodControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Legacy\PeriodControl.designer.cs">
+      <DependentUpon>PeriodControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\PeriodInfo.cs" />
+    <Compile Include="Legacy\AttendanceEditor\SemesterCellInfo.cs" />
+    <Compile Include="Legacy\AttendanceEditor\SingleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Legacy\AttendanceEditor\SingleEditor.designer.cs">
+      <DependentUpon>SingleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\AbsenceInfo.cs" />
+    <Compile Include="StuAdminExtendControls\CompleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\CompleteForm.designer.cs">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\DataGridViewExport.cs" />
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\AbsenceItem.cs" />
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\BehaviorStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\BehaviorStatistics.Designer.cs">
+      <DependentUpon>BehaviorStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\DisciplineItem.cs" />
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\PeriodMap.cs" />
+    <Compile Include="StuAdminExtendControls\BehaviorStatistics\StudentSummary.cs" />
+    <Compile Include="StuAdminExtendControls\DisciplineControl\ResonText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\DisciplineControl\ResonText.Designer.cs">
+      <DependentUpon>ResonText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\DisciplineControl\DisciplineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\DisciplineControl\DisciplineForm.designer.cs">
+      <DependentUpon>DisciplineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\ImportConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\ImportConfirm.designer.cs">
+      <DependentUpon>ImportConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\ChangeTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\ChangeTextForm.designer.cs">
+      <DependentUpon>ChangeTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\MerDemEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\MerDemEditForm.designer.cs">
+      <DependentUpon>MerDemEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\ModifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\ModifyForm.designer.cs">
+      <DependentUpon>ModifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\SetValueSchoolYearSemester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MeritAndDemeritControl\SetValueSchoolYearSemester.designer.cs">
+      <DependentUpon>SetValueSchoolYearSemester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MoralityMapping\ImportConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MoralityMapping\ImportConfirm.designer.cs">
+      <DependentUpon>ImportConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MoralityMapping\MoralityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\MoralityMapping\MoralityForm.designer.cs">
+      <DependentUpon>MoralityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\PeriodConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\PeriodConfigForm.Designer.cs">
+      <DependentUpon>PeriodConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\PeriodInfo.cs" />
+    <Compile Include="StuAdminExtendControls\SchoolDayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\SchoolDayForm.designer.cs">
+      <DependentUpon>SchoolDayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\ReduceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\ReduceForm.designer.cs">
+      <DependentUpon>ReduceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Merit.cs" />
+    <Compile Include="MeritRecord.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.designer.cs">
+      <DependentUpon>AttendanceStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.designer.cs">
+      <DependentUpon>DemeritStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.designer.cs">
+      <DependentUpon>DeXingStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\IDeXingExport.cs" />
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.designer.cs">
+      <DependentUpon>MeritStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.designer.cs">
+      <DependentUpon>NoAbsenceStatistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\Ribbon\DailyLifeInputControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\Ribbon\DailyLifeInputControl.designer.cs">
+      <DependentUpon>DailyLifeInputControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\Ribbon\PerformanceDegreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\Ribbon\PerformanceDegreeForm.designer.cs">
+      <DependentUpon>PerformanceDegreeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\StudentDemeritClear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StuAdminExtendControls\StudentDemeritClear.Designer.cs">
+      <DependentUpon>StudentDemeritClear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItem.Designer.cs">
+      <DependentUpon>AttendanceItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbsenceMappingInfo.cs" />
+    <Compile Include="Feature\AbsenceList.cs" />
+    <Compile Include="StudentExtendControls\AttendanceItemControls\AttendanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItemControls\AttendanceForm.designer.cs">
+      <DependentUpon>AttendanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItemControls\CustomDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItemControls\PeriodControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceItemControls\PeriodControl.designer.cs">
+      <DependentUpon>PeriodControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Feature\PeriodList.cs" />
+    <Compile Include="PeriodMappingInfo.cs" />
+    <Compile Include="StudentExtendControls\AttendanceStatisticsControls\AbsData.cs" />
+    <Compile Include="StudentExtendControls\AttendanceStatisticsControls\AbsItem.cs" />
+    <Compile Include="StudentExtendControls\AttendanceStatisticsControls\MStaData.cs" />
+    <Compile Include="StudentExtendControls\AttendanceStatisticsControls\MStaItem.cs" />
+    <Compile Include="StudentExtendControls\AttendanceStatisticsControls\SHistory.cs" />
+    <Compile Include="StudentExtendControls\BehaviorNewItemControls\AttendanceSetupObj.cs" />
+    <Compile Include="StudentExtendControls\BehaviorNewItemControls\AttendanceUnifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\BehaviorNewItemControls\AttendanceUnifyForm.designer.cs">
+      <DependentUpon>AttendanceUnifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceUnifytIItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\AttendanceUnifytIItem.designer.cs">
+      <DependentUpon>AttendanceUnifytIItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\BehaviorNewItemControls\ColumnAddInUnify.cs" />
+    <Compile Include="StudentExtendControls\BehaviorNewItemControls\SummarySetupObj.cs" />
+    <Compile Include="StudentExtendControls\Ribbon\LogStudent.cs" />
+    <Compile Include="StudentExtendControls\Ribbon\MutiAttendance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\Ribbon\MutiAttendance.designer.cs">
+      <DependentUpon>MutiAttendance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\Ribbon\MutiStudentObj.cs" />
+    <Compile Include="StudentExtendControls\Ribbon\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Attendance.cs" />
+    <Compile Include="AttendanceRecord.cs" />
+    <Compile Include="StudentExtendControls\Ribbon\StudBehaviorStatistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\Ribbon\StudBehaviorStatistics.Designer.cs">
+      <DependentUpon>StudBehaviorStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentExtendControls\Ribbon\TestSingleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\Ribbon\TestSingleEditor.designer.cs">
+      <DependentUpon>TestSingleEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StudentSortObj.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ClassExtendControls\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.resx">
+      <DependentUpon>BalanceConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.resx">
+      <DependentUpon>SpecialForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\ExportStudentV2.resx">
+      <DependentUpon>ExportStudentV2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportExport\ImportStudentV2.resx">
+      <DependentUpon>ImportStudentV2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legacy\AttendanceEditor\Searchday.resx">
+      <DependentUpon>Searchday.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\AbsenceConfigForm.resx">
+      <DependentUpon>AbsenceConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legacy\AttendanceEditor\MutiEditor.resx">
+      <DependentUpon>MutiEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legacy\PeriodControl.resx">
+      <DependentUpon>PeriodControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legacy\AttendanceEditor\SingleEditor.resx">
+      <DependentUpon>SingleEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\CompleteForm.resx">
+      <DependentUpon>CompleteForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\BehaviorStatistics\BehaviorStatistics.resx">
+      <DependentUpon>BehaviorStatistics.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\DisciplineControl\ResonText.resx">
+      <DependentUpon>ResonText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\DisciplineControl\DisciplineForm.resx">
+      <DependentUpon>DisciplineForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\ImportConfirm.resx">
+      <DependentUpon>ImportConfirm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MeritAndDemeritControl\ChangeTextForm.resx">
+      <DependentUpon>ChangeTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MeritAndDemeritControl\MerDemEditForm.resx">
+      <DependentUpon>MerDemEditForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MeritAndDemeritControl\ModifyForm.resx">
+      <DependentUpon>ModifyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MeritAndDemeritControl\SetValueSchoolYearSemester.resx">
+      <DependentUpon>SetValueSchoolYearSemester.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MoralityMapping\ImportConfirm.resx">
+      <DependentUpon>ImportConfirm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\MoralityMapping\MoralityForm.resx">
+      <DependentUpon>MoralityForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\PeriodConfigForm.resx">
+      <DependentUpon>PeriodConfigForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\SchoolDayForm.resx">
+      <DependentUpon>SchoolDayForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\ReduceForm.resx">
+      <DependentUpon>ReduceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.resx">
+      <DependentUpon>AttendanceStatistic.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.resx">
+      <DependentUpon>DemeritStatistic.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.resx">
+      <DependentUpon>DeXingStatistic.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.resx">
+      <DependentUpon>MeritStatistic.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.resx">
+      <DependentUpon>NoAbsenceStatistic.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\Ribbon\DailyLifeInputControl.resx">
+      <DependentUpon>DailyLifeInputControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\Ribbon\PerformanceDegreeForm.resx">
+      <DependentUpon>PerformanceDegreeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StuAdminExtendControls\StudentDemeritClear.resx">
+      <DependentUpon>StudentDemeritClear.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\AttendanceItem.resx">
+      <DependentUpon>AttendanceItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\AttendanceItemControls\AttendanceForm.resx">
+      <DependentUpon>AttendanceForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\AttendanceItemControls\PeriodControl.resx">
+      <DependentUpon>PeriodControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\BehaviorNewItemControls\AttendanceUnifyForm.resx">
+      <DependentUpon>AttendanceUnifyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\AttendanceUnifytIItem.resx">
+      <DependentUpon>AttendanceUnifytIItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\Ribbon\MutiAttendance.resx">
+      <DependentUpon>MutiAttendance.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\Ribbon\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\Ribbon\StudBehaviorStatistics.resx">
+      <DependentUpon>StudBehaviorStatistics.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\Ribbon\TestSingleEditor.resx">
+      <DependentUpon>TestSingleEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Library\Aspose.Cells.dll" />
+    <Content Include="Library\Aspose.Cells.xml" />
+    <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Aspose.Words.xml" />
+    <Content Include="Library\DevComponents.DotNetBar2.dll" />
+    <Content Include="Library\FISCA.Authentication.dll" />
+    <Content Include="Library\FISCA.Authentication.pdb" />
+    <Content Include="Library\FISCA.Authentication.xml" />
+    <Content Include="Library\FISCA.dll" />
+    <Content Include="Library\FISCA.DSAClient.dll" />
+    <Content Include="Library\FISCA.DSAClient.pdb" />
+    <Content Include="Library\FISCA.DSAClient.xml" />
+    <Content Include="Library\FISCA.DSAUtil.dll" />
+    <Content Include="Library\FISCA.DSAUtil.pdb" />
+    <Content Include="Library\FISCA.DSAUtil.xml" />
+    <Content Include="Library\FISCA.LogAgent.dll" />
+    <Content Include="Library\FISCA.LogAgent.pdb" />
+    <Content Include="Library\FISCA.LogAgent.xml" />
+    <Content Include="Library\FISCA.pdb" />
+    <Content Include="Library\FISCA.Permission.dll" />
+    <Content Include="Library\FISCA.Permission.pdb" />
+    <Content Include="Library\FISCA.Permission.xml" />
+    <Content Include="Library\FISCA.Presentation.dll" />
+    <Content Include="Library\FISCA.Presentation.pdb" />
+    <Content Include="Library\FISCA.Presentation.xml" />
+    <Content Include="Library\Framework.dll" />
+    <Content Include="Library\Framework.pdb" />
+    <Content Include="Library\IntelliSchool.DSA.ClientFramework.dll" />
+    <Content Include="Library\IntelliSchool.DSA.ClientFramework.xml" />
+    <Content Include="Library\JHSchool.Affair.dll" />
+    <Content Include="Library\JHSchool.Affair.pdb" />
+    <Content Include="Library\JHSchool.Data.dll" />
+    <Content Include="Library\JHSchool.Data.pdb" />
+    <Content Include="Library\JHSchool.Data.xml" />
+    <Content Include="Library\JHSchool.dll" />
+    <Content Include="Library\JHSchool.Logic.dll" />
+    <Content Include="Library\JHSchool.Logic.pdb" />
+    <Content Include="Library\JHSchool.Logic.XML" />
+    <Content Include="Library\JHSchool.pdb" />
+    <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.Data.pdb" />
+    <Content Include="Library\K12.Data.xml" />
+    <Content Include="Library\K12.Presentation.dll" />
+    <Content Include="Library\K12.Presentation.xml" />
+    <Content Include="Library\SmartSchool.API.PlugIn.dll" />
+    <Content Include="Library\SmartSchool.Common.dll" />
+    <Content Include="Library\SmartSchool.Common.DotNetBar.dll" />
+    <Content Include="Library\SmartSchool.Common.DotNetBar.pdb" />
+    <Content Include="Library\SmartSchool.Common.DotNetBar.xml" />
+    <Content Include="Library\SmartSchool.Common.pdb" />
+    <Content Include="Library\SmartSchool.Common.xml" />
+    <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
+    <Content Include="Library\SmartSchool.Customization.PlugIn.xml" />
+    <Content Include="Library\SmartSchool.ErrorReporting.dll" />
+    <Content Include="Library\SmartSchool.ErrorReporting.pdb" />
+    <Content Include="Library\SmartSchool.ErrorReporting.xml" />
+    <None Include="Resources\paste_64.png" />
+    <None Include="Resources\laws_clock_64.png" />
+    <None Include="Resources\laws_64.png" />
+    <None Include="Resources\desk_clock_64.png" />
+    <None Include="Resources\desk_64.png" />
+    <None Include="Resources\achievement_clock_64.png" />
+    <None Include="Resources\achievement_64.png" />
+    <None Include="Resources\laws_ok_64.png" />
+    <None Include="Resources\loading5.gif" />
+    <Content Include="ClassExtendControls\Resources\查詢特殊學生.png" />
+    <None Include="Resources\attach_write_64.png" />
+    <None Include="Resources\preview_64.png" />
+    <None Include="Resources\star_write_64.png" />
+    <None Include="Resources\sandglass_unlock_64.png" />
+    <None Include="Resources\notepad_lock_64.png" />
+    <None Include="Resources\network_lock_64.png" />
+    <None Include="Resources\home_write_64.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\unlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Feature\Legacy\" />
+    <Folder Include="StuAdminExtendControls\Resources\" />
+    <Folder Include="StudentExtendControls\Ribbon\Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
