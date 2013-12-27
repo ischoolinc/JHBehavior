@@ -339,6 +339,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MeritAndDemeritControl
             _endDate = dateTimeInput2.Text;
             _txtReason = txtReason.Text.Trim();
             btnRefresh.Enabled = false; //關掉開關
+            DelRowRecordList.Clear();
 
             if (cbRange.SelectedIndex == 0)
             {
@@ -674,6 +675,9 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MeritAndDemeritControl
             txtHelpStudentCount.Text = "學生人數：" + StudentCount.Count;
 
             dataGridViewX1.ResumeLayout();
+
+            if (dataGridViewX1.Rows.Count > 0)
+                dataGridViewX1.Rows[0].Selected = false;
             #endregion
         }
 
@@ -942,9 +946,11 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MeritAndDemeritControl
 
             foreach (DataGridViewRow row in dataGridViewX1.SelectedRows)
             {
-                DelRowIdList.Add("" + row.Cells[0].Value);
-                DelRowRecordList.Add((JHDisciplineRecord)row.Tag);
-                //JHDisciplineRecord
+                if (row.Tag != null)
+                {
+                    DelRowIdList.Add("" + row.Cells[0].Value);
+                    DelRowRecordList.Add((JHDisciplineRecord)row.Tag);
+                }
             }
             #endregion
         }
