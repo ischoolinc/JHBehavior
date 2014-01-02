@@ -20,13 +20,22 @@ namespace JHSchool.Behavior.ImportExport
         {
             wizard.ExportableFields.AddRange("學年度", "學期", "大功", "小功", "嘉獎", "大過", "小過", "警告");
 
-            wizard.ExportPackage += (sender,e) => 
+            wizard.ExportPackage += (sender, e) =>
             {
                 //取得選取學生的缺曠記錄                
-                List<AutoSummaryRecord> records = AutoSummary.Select(e.List, null);
+                List<AutoSummaryRecord> data = AutoSummary.Select(e.List, null);
 
                 //var sortrecords = from record in records orderby record.RefStudentID,record.SchoolYear,record.Semester select record;
 
+                //added by Cloud 2014/1/2
+                List<AutoSummaryRecord> records = new List<AutoSummaryRecord>();
+                foreach (AutoSummaryRecord record in data)
+                {
+                    if (record.DemeritA + record.DemeritB + record.DemeritC + record.MeritA + record.MeritB + record.MeritC > 0)
+                    {
+                        records.Add(record);
+                    }
+                }
                 records.Sort(SortStudent);
 
                 //尋訪每個缺曠記錄
@@ -76,19 +85,24 @@ namespace JHSchool.Behavior.ImportExport
             };
         }
 
+        //modified by Cloud 2014/1/2
         private int SortStudent(AutoSummaryRecord xx, AutoSummaryRecord yy)
         {
             JHStudentRecord x = xx.Student;
             JHStudentRecord y = yy.Student;
             string xx1 = x.Class != null ? x.Class.Name : "";
-            string xx2 = x.SeatNo.HasValue ? x.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
-            string xx3 = xx1 + xx2;
+            xx1 += x.SeatNo.HasValue ? x.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
+            xx1 += x.Name.PadLeft(10, '0');
+            xx1 += xx.SchoolYear.ToString().PadLeft(4, '0');
+            xx1 += xx.Semester.ToString().PadLeft(2, '0');
 
             string yy1 = y.Class != null ? y.Class.Name : "";
-            string yy2 = y.SeatNo.HasValue ? y.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
-            string yy3 = yy1 + yy2;
+            yy1 += y.SeatNo.HasValue ? y.SeatNo.Value.ToString().PadLeft(3, '0') : "000";
+            yy1 += y.Name.PadLeft(10, '0');
+            yy1 += yy.SchoolYear.ToString().PadLeft(4, '0');
+            yy1 += yy.Semester.ToString().PadLeft(2, '0');
 
-            return xx3.CompareTo(yy3);
+            return xx1.CompareTo(yy1);
         }
     }
 }
