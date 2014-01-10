@@ -235,6 +235,7 @@ namespace JHSchool.Behavior.StudentExtendControls
 
                 foreach (AutoSummaryRecord each in AutoSummaryList)
                 {
+                    int count = 0; //Cloud 2014/1/10
                     SummarySetupObj obj = new SummarySetupObj(each.AutoSummary);
 
                     ListViewItem itms = new ListViewItem(each.SchoolYear.ToString());
@@ -250,12 +251,17 @@ namespace JHSchool.Behavior.StudentExtendControls
                         if (ColumnDic.ContainsKey(AttEach.PeritodTypeName))
                         {
                             itms.SubItems[ColumnDic[AttEach.PeritodTypeName]].Text = AttEach.Count.ToString();
+                            count += AttEach.Count; //Cloud 2014/1/10
                         }
                     }
 
 
                     itms.Tag = each;
-                    listView.Items.Add(itms);
+                    if (count > 0) //Cloud 2014/1/10
+                    {
+                        listView.Items.Add(itms);
+                    }
+                    count = 0;
                 }
             }
         }
@@ -333,6 +339,17 @@ namespace JHSchool.Behavior.StudentExtendControls
                 {
                     BGW.RunWorkerAsync();
                 }
+            }
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            SelectSchoolYearSemester fm = new SelectSchoolYearSemester(this.PrimaryKey, UserPermission);
+            fm.ShowDialog();
+
+            if (!BGW.IsBusy)
+            {
+                BGW.RunWorkerAsync();
             }
         }
     }

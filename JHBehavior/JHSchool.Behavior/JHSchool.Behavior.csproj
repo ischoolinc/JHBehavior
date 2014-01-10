@@ -526,6 +526,12 @@
     <Compile Include="StudentExtendControls\Ribbon\TestSingleEditor.designer.cs">
       <DependentUpon>TestSingleEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="StudentExtendControls\SelectSchoolYearSemester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StudentExtendControls\SelectSchoolYearSemester.Designer.cs">
+      <DependentUpon>SelectSchoolYearSemester.cs</DependentUpon>
+    </Compile>
     <Compile Include="StudentSortObj.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnEdit = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.SuspendLayout();
             // 
             // listView
@@ -74,10 +75,23 @@ namespace JHSchool.Behavior.StudentExtendControls
             this.btnEdit.Text = "編輯";
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(96, 176);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 17;
+            this.buttonX1.Text = "新增";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
+            // 
             // AttendanceUnifytIItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.listView);
             this.Name = "AttendanceUnifytIItem";
@@ -92,5 +106,6 @@ namespace JHSchool.Behavior.StudentExtendControls
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader8;
         private DevComponents.DotNetBar.ButtonX btnEdit;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }
