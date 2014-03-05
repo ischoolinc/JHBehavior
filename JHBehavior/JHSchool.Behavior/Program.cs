@@ -6,7 +6,6 @@ using JHSchool.Affair;
 using JHSchool.Behavior.Legacy;
 using JHSchool.Behavior.StuAdminExtendControls;
 using JHSchool.Behavior.StuAdminExtendControls.BehaviorStatistics;
-using JHSchool.Behavior.StuAdminExtendControls.MeritAndDemeritControl;
 using JHSchool.Behavior.StuAdminExtendControls.MoralityMapping;
 using JHSchool.Behavior.StuAdminExtendControls.Ribbon;
 using JHSchool.Behavior.StudentExtendControls;
@@ -239,16 +238,6 @@ namespace JHSchool.Behavior
                 new SchoolDayForm().ShowDialog();
             };
 
-            RibbonBarItem batchEdit = StuAdmin.Instance.RibbonBarItems["批次作業/查詢"];
-            batchEdit.Index = 1;
-            batchEdit["獎懲批次修改"].Image = Properties.Resources.star_write_64;
-            batchEdit["獎懲批次修改"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0050"].Executable;
-            batchEdit["獎懲批次修改"].Click += delegate
-            {
-                MerDemEditForm DiscipTotal = new MerDemEditForm();
-                DiscipTotal.ShowDialog();
-            };
-
             //batchEdit["缺曠資料檢視"].Image = Properties.Resources.preview_64;
             //batchEdit["缺曠資料檢視"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0060"].Executable;
             //batchEdit["缺曠資料檢視"].Click += delegate
@@ -425,7 +414,6 @@ namespace JHSchool.Behavior
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0030", "每日節次管理"));
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0040", "獎懲事由管理"));
 
-            ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0050", "獎懲批次修改"));
             //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0060", "缺曠資料檢視"));
 
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0090", "導師評語代碼表"));
