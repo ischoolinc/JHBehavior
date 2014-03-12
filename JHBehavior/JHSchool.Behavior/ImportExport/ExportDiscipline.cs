@@ -39,7 +39,7 @@ namespace JHSchool.Behavior.ImportExport
                 }
                 #endregion
 
-                students.Sort(SortStudent);
+                students = SortClassIndex.JHSchoolData_JHStudentRecord(students);
 
                 foreach (JHStudentRecord stud in students)
                 {

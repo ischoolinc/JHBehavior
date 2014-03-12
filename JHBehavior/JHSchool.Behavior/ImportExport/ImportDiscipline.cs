@@ -44,6 +44,9 @@ namespace JHSchool.Behavior.ImportExport
             chose1.Checked = true;
             wizard.PackageLimit = 1000;
             bool allPass = true;
+            int insertRecords = 0;
+            int updataRecords = 0;
+
             wizard.ValidateStart += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
             {
                 foreach (JHDisciplineRecord record in JHDiscipline.SelectByStudentIDs(e.List))
@@ -52,8 +55,7 @@ namespace JHSchool.Behavior.ImportExport
 
                 allPass = true;
             };
-            int insertRecords = 0;
-            int updataRecords = 0;
+
             wizard.ValidateRow += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
             {
                 #region 驗證資料
@@ -201,7 +203,7 @@ namespace JHSchool.Behavior.ImportExport
                 #region 驗證可選則欄位值
                 int integer;
                 DateTime dateTime;
-                bool hasAward = false, hasFault = false;
+                bool hasAward = false, hasFault = false, IsErrorAward = true;
                 foreach (string field in e.SelectFields)
                 {
                     switch (field)
@@ -218,7 +220,19 @@ namespace JHSchool.Behavior.ImportExport
                                     pass = false;
                                 }
                                 else
-                                    hasAward |= integer > 0;
+                                {
+                                    if (integer < 0)
+                                    {
+                                        e.ErrorFields.Add(field, "不可為負數");
+                                        pass = false;
+
+                                    }
+                                    else
+                                    {
+                                        IsErrorAward = false;
+                                        hasAward |= integer > 0;
+                                    }
+                                }
                             }
                             break;
                         case "大過":
@@ -232,7 +246,19 @@ namespace JHSchool.Behavior.ImportExport
                                     pass = false;
                                 }
                                 else
-                                    hasFault |= integer > 0;
+                                {
+                                    if (integer < 0)
+                                    {
+                                        e.ErrorFields.Add(field, "不可為負數");
+                                        pass = false;
+
+                                    }
+                                    else
+                                    {
+                                        IsErrorAward = false;
+                                        hasFault |= integer > 0;
+                                    }
+                                }
                             }
                             break;
                         case "銷過日期":
@@ -260,11 +286,91 @@ namespace JHSchool.Behavior.ImportExport
                         #endregion
                     }
                 }
+
+                bool 檢查是否獎都是0 = false;
+                bool 檢查是否懲都是0 = false;
+                bool 檢查獎是空值 = false;
+                bool 檢查懲是空值 = false;
+                int 大功A = 0;
+                int 小功A = 0;
+                int 嘉獎A = 0;
+                int 大過A = 0;
+                int 小過A = 0;
+                int 警告A = 0;
+                if (e.SelectFields.Contains("大功") && e.SelectFields.Contains("小功") && e.SelectFields.Contains("嘉獎"))
+                {
+                    #region 獎
+                    //,是否都是空值
+                    if (!string.IsNullOrEmpty(e.Data["大功"]) || !string.IsNullOrEmpty(e.Data["小功"]) || !string.IsNullOrEmpty(e.Data["嘉獎"]))
+                    {
+
+                        int.TryParse(e.Data["大功"], out 大功A);
+                        int.TryParse(e.Data["小功"], out 小功A);
+                        int.TryParse(e.Data["嘉獎"], out 嘉獎A);
+
+                        //相加是否為0
+                        if (大功A == 0 && 小功A == 0 && 嘉獎A == 0)
+                        {
+                            檢查是否獎都是0 = true;
+                        }
+                    }
+                    else
+                    {
+                        檢查獎是空值 = true;
+                    }
+                    #endregion
+                }
+
+                if (e.SelectFields.Contains("大過") && e.SelectFields.Contains("小過") && e.SelectFields.Contains("警告"))
+                {
+                    #region 懲
+                    //是否都是空值
+                    if (!string.IsNullOrEmpty(e.Data["大過"]) || !string.IsNullOrEmpty(e.Data["小過"]) || !string.IsNullOrEmpty(e.Data["警告"]))
+                    {
+                        int.TryParse(e.Data["大過"], out 大過A);
+                        int.TryParse(e.Data["小過"], out 小過A);
+                        int.TryParse(e.Data["警告"], out 警告A);
+
+                        if (大過A == 0 && 小過A == 0 && 警告A == 0)
+                        {
+                            檢查是否懲都是0 = true;
+                        }
+                    }
+                    else
+                    {
+                        檢查懲是空值 = true;
+                    }
+                    #endregion
+                }
+
+                if (檢查是否獎都是0 && 檢查是否懲都是0)
+                {
+                    e.ErrorMessage = "獎懲皆為0,系統無法判斷此類型資料。";
+                    pass = false;
+                }
+                else if (檢查是否獎都是0 && 檢查懲是空值)
+                {
+                    e.ErrorMessage = "獎懲皆為0,系統無法判斷此類型資料。";
+                    pass = false;
+                }
+                else if (檢查是否懲都是0 && 檢查獎是空值)
+                {
+                    e.ErrorMessage = "獎懲皆為0,系統無法判斷此類型資料。";
+                    pass = false;
+                }
+
+                if (IsErrorAward)
+                {
+                    e.ErrorMessage = "獎勵與懲戒不可同時未輸入內容!!";
+                    pass = false;
+                }
+
                 if (hasAward && hasFault)
                 {
                     e.ErrorMessage = "系統愚昧無法理解同時記功又記過的情況。";
                     pass = false;
                 }
+
                 if (!pass && isInsert && (!e.SelectFields.Contains("留校察看") || e.Data["留校察看"] != "是") && (!hasFault && !hasAward))
                 {
                     e.ErrorMessage = "無法新增沒有獎懲的記錄。";
@@ -297,9 +403,12 @@ namespace JHSchool.Behavior.ImportExport
 
                 if (sb.ToString() != "")
                 {
-                    sb.AppendLine("\n因為目前無法批次刪除獎懲，\n如與資料筆數不符請勿繼續。");
+                    sb.AppendLine("\n如與資料筆數不符請勿繼續。");
                     MsgBox.Show(sb.ToString(), "新增與更新獎懲", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                 }
+
+                insertRecords = 0;
+                updataRecords = 0;
             };
             wizard.ImportComplete += (sender, e) => MessageBox.Show("匯入完成!");
             wizard.ImportPackage += delegate(object sender, SmartSchool.API.PlugIn.Import.ImportPackageEventArgs e)
@@ -308,6 +417,19 @@ namespace JHSchool.Behavior.ImportExport
 
                 List<JHDisciplineRecord> updateDisciplines = new List<JHDisciplineRecord>();
                 List<JHDisciplineRecord> insertDisciplines = new List<JHDisciplineRecord>();
+
+                //2014/3/6日新增Log記錄
+                StringBuilder Log_sb = new StringBuilder();
+                if (chose1.Checked)
+                {
+                    Log_sb.AppendLine("以事由更新獎懲記錄：");
+                    Log_sb.AppendLine("");
+                }
+                if (chose2.Checked)
+                {
+                    Log_sb.AppendLine("以次數更新獎懲記錄：");
+                    Log_sb.AppendLine("");
+                }
 
                 foreach (RowData row in e.Items)
                 {
@@ -620,11 +742,68 @@ namespace JHSchool.Behavior.ImportExport
                     }
                 }
 
-                if (hasUpdate)
-                    JHDiscipline.Update(updateDisciplines);
                 if (hasInsert)
+                {
                     JHDiscipline.Insert(insertDisciplines);
+                    Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(insertDisciplines);
+                    Log_sb.AppendLine("新增" + "「" + updateDisciplines.Count + "」筆資料");
+                    foreach (JHDisciplineRecord record in insertDisciplines)
+                    {
+                        if (StudentDic.ContainsKey(record.RefStudentID))
+                            Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
+                    }
+                }
+
+                if (hasUpdate)
+                {
+                    JHDiscipline.Update(updateDisciplines);
+                    Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(updateDisciplines);
+                    Log_sb.AppendLine("更新" + "「" + updateDisciplines.Count + "」筆資料");
+                    foreach (JHDisciplineRecord record in updateDisciplines)
+                    {
+                        if (StudentDic.ContainsKey(record.RefStudentID))
+                            Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
+                    }
+                }
+                if (hasUpdate || hasInsert)
+                {
+                    FISCA.LogAgent.ApplicationLog.Log("匯入獎懲記錄", "新增或更新", Log_sb.ToString());
+                }
             };
+        }
+        private string GetLogContext(JHDisciplineRecord record, K12.Data.StudentRecord studentRecord)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (record.MeritFlag == "1")
+                sb.AppendLine("獎勵：");
+            else if (record.MeritFlag == "0")
+                sb.AppendLine("懲戒：");
+            sb.Append("班級「" + studentRecord.Name + "」座號「" + studentRecord.Name + "」姓名「" + studentRecord.Name + "」");
+            sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」事由「" + record.Reason + "」");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 取得學生清單
+        /// </summary>
+        private Dictionary<string, K12.Data.StudentRecord> GetStudent(List<JHDisciplineRecord> updateDisciplines)
+        {
+            Dictionary<string, K12.Data.StudentRecord> StudentDic = new Dictionary<string, K12.Data.StudentRecord>();
+            List<string> StudentIDList = new List<string>();
+            foreach (JHDisciplineRecord dis in updateDisciplines)
+            {
+                if (!StudentIDList.Contains(dis.RefStudentID))
+                    StudentIDList.Add(dis.RefStudentID);
+            }
+            List<K12.Data.StudentRecord> StudentRecordList = K12.Data.Student.SelectByIDs(StudentIDList);
+            foreach (K12.Data.StudentRecord stud in StudentRecordList)
+            {
+                if (!StudentDic.ContainsKey(stud.ID))
+                {
+                    StudentDic.Add(stud.ID, stud);
+                }
+            }
+            return StudentDic;
         }
     }
 }

@@ -245,7 +245,6 @@
     <Compile Include="ImportExport\ImportAttendance.cs" />
     <Compile Include="ImportExport\ImportAttendanceStatistics.cs" />
     <Compile Include="ImportExport\ImportDiscipline.cs" />
-    <Compile Include="ImportExport\ImportDiscipline_S.cs" />
     <Compile Include="ImportExport\ImportStudentV2.cs">
       <SubType>Form</SubType>
     </Compile>
