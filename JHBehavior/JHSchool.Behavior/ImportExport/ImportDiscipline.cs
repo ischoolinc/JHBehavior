@@ -269,7 +269,6 @@ namespace JHSchool.Behavior.ImportExport
                             }
                             break;
                         case "是否銷過":
-                        case "留校察看":
                             if (e.Data[field] != "" && e.Data[field] != "是" && e.Data[field] != "否")
                             {
                                 e.ErrorFields.Add(field, "如果為是請填入\"是\"否則請保留空白或填入\"否\"");
@@ -371,7 +370,7 @@ namespace JHSchool.Behavior.ImportExport
                     pass = false;
                 }
 
-                if (!pass && isInsert && (!e.SelectFields.Contains("留校察看") || e.Data["留校察看"] != "是") && (!hasFault && !hasAward))
+                if (!pass && isInsert && (!hasFault && !hasAward))
                 {
                     e.ErrorMessage = "無法新增沒有獎懲的記錄。";
                     pass = false;
@@ -450,7 +449,7 @@ namespace JHSchool.Behavior.ImportExport
                         DateTime? cleardate = null;
                         DateTime? registerdate = null;
                         string clearreason = "";
-                        bool ultimateAdmonition = false;
+                        //bool ultimateAdmonition = false;
 
                         if (row.ContainsKey("大功"))
                             awardA = (row["大功"] == "") ? 0 : int.Parse(row["大功"]);
@@ -473,8 +472,6 @@ namespace JHSchool.Behavior.ImportExport
                         //    cleardate = DateTime.Now;
 
                         clearreason = e.ImportFields.Contains("銷過事由") ? row["銷過事由"] : "";
-
-                        ultimateAdmonition = e.ImportFields.Contains("留校察看") ? ((row["留校察看"] == "是") ? true : false) : false;
 
                         if (e.ImportFields.Contains("登錄日期") && row["登錄日期"] != "")
                             registerdate = DateTime.Parse(row["登錄日期"]);
@@ -505,10 +502,6 @@ namespace JHSchool.Behavior.ImportExport
                                     row["銷過事由"] :
                                     rewardInfo.ClearReason;
 
-                                //ultimateAdmonition = e.ImportFields.Contains("留校察看") ?
-                                //    ((row["留校察看"] == "是") ? true : false) :
-                                //    rewardInfo.UltimateAdmonition;
-
                                 #endregion
                                 JHDisciplineRecord record = new JHDisciplineRecord();
 
@@ -530,7 +523,7 @@ namespace JHSchool.Behavior.ImportExport
                                     record.Reason = clearreason;
                                 }
 
-                                record.MeritFlag = ultimateAdmonition ? "2" : isAward ? "1" : "0";
+                                record.MeritFlag = isAward ? "1" : "0";
                                 record.RefStudentID = row.ID;
                                 record.SchoolYear = schoolYear;
                                 record.Semester = semester;
@@ -567,7 +560,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.Reason = clearreason;
                             }
 
-                            record.MeritFlag = ultimateAdmonition ? "2" : isAward ? "1" : "0";
+                            record.MeritFlag = isAward ? "1" : "0";
                             record.RefStudentID = row.ID;
                             record.SchoolYear = schoolYear;
                             record.Semester = semester;
@@ -595,7 +588,7 @@ namespace JHSchool.Behavior.ImportExport
                         DateTime? cleardate = null;
                         DateTime? registerdate = null;
                         string clearreason = "";
-                        bool ultimateAdmonition = false;
+                        //bool ultimateAdmonition = false;
                         string reason = row.ContainsKey("事由") ? row["事由"] : "";
 
                         if (row.ContainsKey("大功"))
@@ -620,9 +613,6 @@ namespace JHSchool.Behavior.ImportExport
 
                         clearreason = e.ImportFields.Contains("銷過事由") ?
                             row["銷過事由"] : "";
-
-                        ultimateAdmonition = e.ImportFields.Contains("留校察看") ?
-                            ((row["留校察看"] == "是") ? true : false) : false;
 
                         bool match = false;
                         foreach (JHDisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == row.ID))
@@ -664,10 +654,6 @@ namespace JHSchool.Behavior.ImportExport
                                 clearreason = e.ImportFields.Contains("銷過事由") ?
                                     row["銷過事由"] :
                                     rewardInfo.ClearReason;
-
-                                //ultimateAdmonition = e.ImportFields.Contains("留校察看") ?
-                                //    ((row["留校察看"] == "是") ? true : false) :
-                                //    rewardInfo.UltimateAdmonition;
                                 #endregion
 
                                 JHDisciplineRecord record = new JHDisciplineRecord();
@@ -689,7 +675,7 @@ namespace JHSchool.Behavior.ImportExport
                                     record.Reason = clearreason;
                                 }
 
-                                record.MeritFlag = ultimateAdmonition ? "2" : isAward ? "1" : "0";
+                                record.MeritFlag = isAward ? "1" : "0";
                                 record.RefStudentID = row.ID;
                                 record.SchoolYear = schoolYear;
                                 record.Semester = semester;
@@ -709,7 +695,6 @@ namespace JHSchool.Behavior.ImportExport
                             JHDisciplineRecord record = new JHDisciplineRecord();
 
                             isAward = awardA + awardB + awardC > 0;
-
                             if (isAward)
                             {
                                 record.MeritA = awardA;
@@ -726,7 +711,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.Reason = clearreason;
                             }
 
-                            record.MeritFlag = ultimateAdmonition ? "2" : isAward ? "1" : "0";
+                            record.MeritFlag = isAward ? "1" : "0";
                             record.RefStudentID = row.ID;
                             record.SchoolYear = schoolYear;
                             record.Semester = semester;

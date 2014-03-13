@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using JHSchool.Data;
 using SmartSchool.API.PlugIn;
+using System.Text;
 
 namespace JHSchool.Behavior.ImportExport
 {
@@ -16,7 +17,7 @@ namespace JHSchool.Behavior.ImportExport
         public ImportAttendance()
         {
             this.Image = null;
-            this.Text = "匯入缺曠記錄";            
+            this.Text = "匯入缺曠記錄";
         }
 
         public override void InitializeImport(SmartSchool.API.PlugIn.Import.ImportWizard wizard)
@@ -31,7 +32,7 @@ namespace JHSchool.Behavior.ImportExport
             //驗證每行資料的事件
             wizard.ValidateRow += new System.EventHandler<SmartSchool.API.PlugIn.Import.ValidateRowEventArgs>(wizard_ValidateRow);
             //實際匯入資料的事件
-            wizard.ImportPackage += new System.EventHandler<SmartSchool.API.PlugIn.Import.ImportPackageEventArgs>(wizard_ImportPackage); 
+            wizard.ImportPackage += new System.EventHandler<SmartSchool.API.PlugIn.Import.ImportPackageEventArgs>(wizard_ImportPackage);
             //匯入完成事件
             wizard.ImportComplete += (sender, v) => MessageBox.Show("匯入完成");
         }
@@ -39,8 +40,8 @@ namespace JHSchool.Behavior.ImportExport
         void wizard_ValidateStart(object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
         {
             //取得系統假別及節次對照表
-            periodList = JHPeriodMapping.SelectAll().Select(x=>x.Name).ToList();
-            absenceList = JHAbsenceMapping.SelectAll().Select(x=>x.Name).ToList();
+            periodList = JHPeriodMapping.SelectAll().Select(x => x.Name).ToList();
+            absenceList = JHAbsenceMapping.SelectAll().Select(x => x.Name).ToList();
             //Keys.Clear();
         }
 
@@ -49,49 +50,49 @@ namespace JHSchool.Behavior.ImportExport
             //"學年度", "學期", "日期", "缺曠假別", "缺曠節次"
             #region 驗各欄位填寫格式
             int t;
-            foreach ( string field in e.SelectFields )
+            foreach (string field in e.SelectFields)
             {
                 string value = e.Data[field];
-                switch ( field )
+                switch (field)
                 {
                     default:
                         break;
                     case "學年度":
-                        if ( value == "" || !int.TryParse(value, out t) )
+                        if (value == "" || !int.TryParse(value, out t))
                             e.ErrorFields.Add(field, "此欄為必填欄位，必須填入整數。");
                         break;
                     case "學期":
-                        if ( value == "" || !int.TryParse(value, out t) )
+                        if (value == "" || !int.TryParse(value, out t))
                         {
                             e.ErrorFields.Add(field, "此欄為必填欄位，必須填入整數。");
                         }
-                        else if ( t != 1 && t != 2 )
+                        else if (t != 1 && t != 2)
                         {
                             e.ErrorFields.Add(field, "必須填入1或2");
                         }
                         break;
                     case "日期":
                         DateTime date = DateTime.Now;
-                        if ( value == "" || !DateTime.TryParse(value, out date) )
+                        if (value == "" || !DateTime.TryParse(value, out date))
                             e.ErrorFields.Add(field, "此欄為必填欄位，\n請依照\"西元年/月/日\"格式輸入。");
                         break;
                     case "缺曠假別":
-                        if ( value == "" )
+                        if (value == "")
                         {
                             e.WarningFields.Add(field, "將會消除學生此筆缺曠記錄。");
                         }
-                        else if ( !absenceList.Contains(value) )
+                        else if (!absenceList.Contains(value))
                         {
                             e.ErrorFields.Add(field, "輸入值" + value + "不在假別清單中。");
                         }
                         break;
                     case "缺曠節次":
-                        if ( !periodList.Contains(value) )
+                        if (!periodList.Contains(value))
                             e.ErrorFields.Add(field, "輸入值" + value + "不在節次清單中。");
                         break;
                 }
             }
-            #endregion        
+            #endregion
             #region 驗證主鍵
             string errorMessage = string.Empty;
             string Key = e.Data.ID + "-" + e.Data["日期"] + "-" + e.Data["缺曠節次"];
@@ -143,11 +144,11 @@ namespace JHSchool.Behavior.ImportExport
                 {
                     testDic[studentID][date.ToShortDateString()].Add(schoolYear + "_" + semester);
                 }
-                #endregion   
+                #endregion
 
 
                 //string key = schoolYear + "^_^" + semester + "^_^" + date.ToShortDateString() + "^_^" + studentID;
-                string key = studentID + "^_^"+ date.ToShortDateString();
+                string key = studentID + "^_^" + date.ToShortDateString();
 
                 if (!keyList.Contains(key))
                 {
@@ -171,7 +172,7 @@ namespace JHSchool.Behavior.ImportExport
 
 
             #region 抓學生現有的缺曠記錄
-            foreach (JHAttendanceRecord  var in JHAttendance.SelectByStudentIDs(studentIDMapping.Values.Distinct()))
+            foreach (JHAttendanceRecord var in JHAttendance.SelectByStudentIDs(studentIDMapping.Values.Distinct()))
             {
                 if (!studentAttendanceInfo.ContainsKey(var.RefStudentID))
                     studentAttendanceInfo.Add(var.RefStudentID, new List<JHAttendanceRecord>());
@@ -194,7 +195,7 @@ namespace JHSchool.Behavior.ImportExport
                 if (!testDic[studentID][date.ToShortDateString()].Contains(schoolYear + "_" + semester))
                 {
                     testDic[studentID][date.ToShortDateString()].Add(schoolYear + "_" + semester);
-                } 
+                }
                 #endregion
             }
             #endregion
@@ -241,7 +242,7 @@ namespace JHSchool.Behavior.ImportExport
                 if (studentAttendanceInfo.ContainsKey(studentIDMapping[key]))
                 {
                     records = studentAttendanceInfo[studentIDMapping[key]].Where(x => x.OccurDate == dateMapping[key]).ToList();
-//                    records = studentAttendanceInfo[studentIDMapping[key]].Where(x => x.SchoolYear == schoolYearMapping[key] && x.Semester == semesterMapping[key] && x.OccurDate == dateMapping[key]).ToList();
+                    //                    records = studentAttendanceInfo[studentIDMapping[key]].Where(x => x.SchoolYear == schoolYearMapping[key] && x.Semester == semesterMapping[key] && x.OccurDate == dateMapping[key]).ToList();
                 }
 
                 //根據鍵值取得匯入資料，該匯入資料應該是有相同的學生編號、學年度、學期及缺曠日期
@@ -307,11 +308,46 @@ namespace JHSchool.Behavior.ImportExport
                 }
             }
 
-            if (InsertAttendances.Count>0)
-                JHAttendance.Insert(InsertAttendances);
+            StringBuilder Log_sb = new StringBuilder();
 
-            if (UpdateAttendances.Count>0)
+            if (InsertAttendances.Count > 0)
+            {
+                Log_sb.AppendLine(GetString(InsertAttendances, "新增"));
+                JHAttendance.Insert(InsertAttendances);
+            }
+
+            if (UpdateAttendances.Count > 0)
+            {
+                Log_sb.AppendLine(GetString(UpdateAttendances, "更新"));
                 JHAttendance.Update(UpdateAttendances);
+            }
+
+            if (InsertAttendances.Count > 0 || UpdateAttendances.Count > 0)
+            {
+                FISCA.LogAgent.ApplicationLog.Log("匯入缺曠記錄", "新增或更新", Log_sb.ToString());
+            }
+        }
+        private string GetString(List<JHAttendanceRecord> attendList, string state)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(state + "「" + attendList.Count + "」筆資料");
+            foreach (JHAttendanceRecord attend in attendList)
+            {
+                K12.Data.StudentRecord sr = K12.Data.Student.SelectByID(attend.RefStudentID);
+                if (sr != null)
+                {
+                    string Name = sr.Name;
+                    string Class_Name = sr.Class != null ? sr.Class.Name : "";
+                    string Seat_No = sr.SeatNo.HasValue ? sr.SeatNo.Value.ToString() : "";
+                    string OccurDate = attend.OccurDate.ToShortDateString();
+
+                    sb.Append("班級「" + Class_Name + "」");
+                    sb.Append("座號「" + Seat_No + "」");
+                    sb.Append("姓名「" + Name + "」");
+                    sb.AppendLine("日期「" + OccurDate + "」");
+                }
+            }
+            return sb.ToString();
         }
     }
 }
