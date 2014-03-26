@@ -182,35 +182,38 @@ namespace JHSchool.Behavior.Report.缺曠通知單
             #endregion
 
             #region 取得 Period List
+
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
+            PeriodList.Sort(tool.SortPeriod);
+
             Dictionary<string, string> TestPeriodList = new Dictionary<string, string>();
-
-            DSResponse dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetPeriodList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Period"))
+            foreach (PeriodMappingInfo var in PeriodList)
             {
-                if (!periodList.Contains(var.GetAttribute("Name")))
-                    periodList.Add(var.GetAttribute("Name"));
+                if (!periodList.Contains(var.Name))
+                    periodList.Add(var.Name);
 
-                if (!TestPeriodList.ContainsKey(var.GetAttribute("Name")))
+                if (!TestPeriodList.ContainsKey(var.Name))
                 {
-                    TestPeriodList.Add(var.GetAttribute("Name"), var.GetAttribute("Type"));
+                    TestPeriodList.Add(var.Name, var.Type);
                 }
             }
             #endregion
 
             #region 取得 Absence List
-            Dictionary<string, string> dirCC = new Dictionary<string, string>(); //代碼替換(新)
 
-            dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetAbsenceList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Absence"))
+            List<K12.Data.AbsenceMappingInfo> AbsenceList = K12.Data.AbsenceMapping.SelectAll();
+
+            Dictionary<string, string> dirCC = new Dictionary<string, string>(); //代碼替換(新)
+            foreach (K12.Data.AbsenceMappingInfo var in AbsenceList)
             {
-                if (!absenceList.ContainsKey(var.GetAttribute("Name")))
+                if (!absenceList.ContainsKey(var.Name))
                 {
-                    absenceList.Add(var.GetAttribute("Name"), var.GetAttribute("Abbreviation"));
+                    absenceList.Add(var.Name, var.Abbreviation);
                 }
 
-                if (!dirCC.ContainsKey(var.GetAttribute("Name")))
+                if (!dirCC.ContainsKey(var.Name))
                 {
-                    dirCC.Add(var.GetAttribute("Abbreviation"), var.GetAttribute("Name"));
+                    dirCC.Add(var.Abbreviation, var.Name);
                 }
             }
             #endregion
@@ -228,7 +231,7 @@ namespace JHSchool.Behavior.Report.缺曠通知單
             helper.AddElement("Condition", "EndDate", endDate.ToShortDateString());
             helper.AddElement("Order");
             helper.AddElement("Order", "OccurDate", "asc");
-            dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
+            DSResponse dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
             foreach (XmlElement var in dsrsp.GetContent().GetElements("Attendance"))
             {
                 string studentID = var.SelectSingleNode("RefStudentID").InnerText;

@@ -89,24 +89,23 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
             }
 
             //取得 Absence List
-            DSResponse dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetAbsenceList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Absence"))
+            List<K12.Data.AbsenceMappingInfo> AbsenceList = K12.Data.AbsenceMapping.SelectAll();
+            foreach (K12.Data.AbsenceMappingInfo var in AbsenceList)
             {
-                string name = var.GetAttribute("Name");
+                string name = var.Name;
 
                 if (!absenceList.ContainsKey(name))
-                    absenceList.Add(name, var.GetAttribute("Abbreviation"));
+                    absenceList.Add(name, var.Abbreviation);
             }
 
             //取得 Period List
-            dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetPeriodList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Period"))
-            {
-                if (!var.HasAttribute("Name"))
-                    continue;
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
+            PeriodList.Sort(tool.SortPeriod);
 
-                string name = var.GetAttribute("Name");
-                string type = var.GetAttribute("Type");
+            foreach (K12.Data.PeriodMappingInfo var in PeriodList)
+            {
+                string name = var.Name;
+                string type = var.Type;
 
                 if (!periodList.ContainsKey(name))
                     periodList.Add(name, type);

@@ -97,11 +97,11 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             }
 
             //取得 Period List
-            DSResponse dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetPeriodList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Period"))
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
+            foreach (K12.Data.PeriodMappingInfo var in PeriodList)
             {
-                if (!periodList.Contains(var.GetAttribute("Name")))
-                    periodList.Add(var.GetAttribute("Name"));
+                if (!periodList.Contains(var.Name))
+                    periodList.Add(var.Name);
             }
 
             //取得缺曠明細，產生 DSRequest
@@ -117,7 +117,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             helper.AddElement("Condition", "EndDate", endDate.ToShortDateString());
             helper.AddElement("Order");
             helper.AddElement("Order", "OccurDate", "asc");
-            dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
+            DSResponse dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
 
             foreach (XmlElement var in dsrsp.GetContent().GetElements("Attendance"))
             {

@@ -270,9 +270,9 @@ namespace JHSchool.Behavior.StudentExtendControls
         public static List<string> GetPeriodTypeItems()
         {
             List<string> list = new List<string>();
-            List<PeriodMappingInfo> _periodList = QueryPeriodMapping.Load();
+            List<K12.Data.PeriodMappingInfo> _periodList = K12.Data.PeriodMapping.SelectAll();
 
-            foreach (PeriodMappingInfo each in _periodList)
+            foreach (K12.Data.PeriodMappingInfo each in _periodList)
             {
                 if (!list.Contains(each.Type))
                     list.Add(each.Type);
@@ -288,9 +288,9 @@ namespace JHSchool.Behavior.StudentExtendControls
         public static List<string> GetAbsenceItems()
         {
             List<string> list = new List<string>();
-            List<AbsenceMappingInfo> _absenceList = QueryAbsenceMapping.Load();
+            List<K12.Data.AbsenceMappingInfo> _absenceList = K12.Data.AbsenceMapping.SelectAll();
 
-            foreach (AbsenceMappingInfo each in _absenceList)
+            foreach (K12.Data.AbsenceMappingInfo each in _absenceList)
             {
                 if (!list.Contains(each.Name))
                 {

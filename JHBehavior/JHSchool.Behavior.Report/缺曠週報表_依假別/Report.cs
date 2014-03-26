@@ -8,6 +8,7 @@ using System.Xml;
 using Aspose.Cells;
 using FISCA.DSAUtil;
 using Framework;
+using K12.Data;
 
 namespace JHSchool.Behavior.Report.缺曠週報表_依假別
 {
@@ -153,11 +154,12 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
             }
 
             //取得 Period List
-            DSResponse dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetPeriodList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Period"))
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
+            PeriodList.Sort(tool.SortPeriod);
+            foreach (K12.Data.PeriodMappingInfo var in PeriodList)
             {
-                string name = var.GetAttribute("Name");
-                string type = var.GetAttribute("Type");
+                string name = var.Name;
+                string type = var.Type;
                 if (!periodList.ContainsKey(name))
                     periodList.Add(name, type);
             }
@@ -184,7 +186,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
 
             helper.AddElement("Order");
             helper.AddElement("Order", "OccurDate", "desc");
-            dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
+            DSResponse dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
 
             foreach (XmlElement var in dsrsp.GetContent().GetElements("Attendance"))
             {
@@ -579,7 +581,10 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
             e.Result = new object[] { reportName, path, wb };
         }
         #endregion
-
+        private int SortPeriod(PeriodMappingInfo info1, PeriodMappingInfo info2)
+        {
+            return info1.Sort.CompareTo(info2.Sort);
+        }
 
     }
 }

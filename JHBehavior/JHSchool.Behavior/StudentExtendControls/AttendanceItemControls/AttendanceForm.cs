@@ -28,10 +28,10 @@ namespace JHSchool.Behavior.StudentExtendControls
         private EditorStatus _status;
 
         private JHAttendanceRecord _editor;
-        private List<AbsenceMappingInfo> _absenceList;
-        private List<PeriodMappingInfo> _periodList;
-        private List<AbsenceMappingInfo> absenceList;
-        private AbsenceMappingInfo _checkedAbsence;
+        private List<K12.Data.AbsenceMappingInfo> _absenceList;
+        private List<K12.Data.PeriodMappingInfo> _periodList;
+        private List<K12.Data.AbsenceMappingInfo> absenceList;
+        private K12.Data.AbsenceMappingInfo _checkedAbsence;
 
         //Log使用
         //之前
@@ -39,7 +39,7 @@ namespace JHSchool.Behavior.StudentExtendControls
         //之後
         private Dictionary<string, string> DicAfterLog = new Dictionary<string, string>();
 
-        public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<PeriodMappingInfo> periodList, FeatureAce permission, int SchoolYear, int Semester)
+        public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<K12.Data.PeriodMappingInfo> periodList, FeatureAce permission, int SchoolYear, int Semester)
         {
             InitializeComponent();
 
@@ -65,9 +65,9 @@ namespace JHSchool.Behavior.StudentExtendControls
             #region 初始化缺曠類別
 
             //初始化時,即取得最新缺曠資料
-            absenceList = QueryAbsenceMapping.Load();
+            absenceList = K12.Data.AbsenceMapping.SelectAll();
 
-            foreach (AbsenceMappingInfo info in absenceList)
+            foreach (K12.Data.AbsenceMappingInfo info in absenceList)
             {
                 RadioButton rb = new RadioButton();
                 //缺曠別,縮寫,熱鍵
@@ -81,7 +81,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                     {
                         foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
                         {
-                            cell.Value = (rb.Tag as AbsenceMappingInfo).Abbreviation;
+                            cell.Value = (rb.Tag as K12.Data.AbsenceMappingInfo).Abbreviation;
                         }
                     }
                 };
@@ -95,7 +95,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             #endregion
 
             #region 初始化節次表
-            foreach (PeriodMappingInfo info in periodList)
+            foreach (K12.Data.PeriodMappingInfo info in periodList)
             {
                 //Log使用
                 if (!DicBeforeLog.ContainsKey(info.Name))
@@ -180,7 +180,7 @@ namespace JHSchool.Behavior.StudentExtendControls
         //    }
         //}
 
-        public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<PeriodMappingInfo> periodList, FeatureAce permission)
+        public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<K12.Data.PeriodMappingInfo> periodList, FeatureAce permission)
         {
             InitializeComponent();
 
@@ -204,9 +204,9 @@ namespace JHSchool.Behavior.StudentExtendControls
             #region 初始化缺曠類別
 
             //初始化時,即取得最新缺曠資料
-            absenceList = QueryAbsenceMapping.Load();
+            absenceList = K12.Data.AbsenceMapping.SelectAll();
 
-            foreach (AbsenceMappingInfo info in absenceList)
+            foreach (K12.Data.AbsenceMappingInfo info in absenceList)
             {
                 RadioButton rb = new RadioButton();
                 rb.Text = info.Name + "(" + info.HotKey.ToUpper() + ")";
@@ -219,7 +219,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                     {
                         foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
                         {
-                            cell.Value = (rb.Tag as AbsenceMappingInfo).Abbreviation;
+                            cell.Value = (rb.Tag as K12.Data.AbsenceMappingInfo).Abbreviation;
                         }
                     }
                 };
@@ -233,7 +233,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             #endregion
 
             #region 初始化節次表
-            foreach (PeriodMappingInfo info in periodList)
+            foreach (K12.Data.PeriodMappingInfo info in periodList)
             {
                 //Log使用
                 DicBeforeLog.Add(info.Name, "");
@@ -307,13 +307,13 @@ namespace JHSchool.Behavior.StudentExtendControls
 
                     foreach (DataGridViewCell cell in dataGridViewX1.Rows[0].Cells)
                     {
-                        PeriodMappingInfo info = cell.OwningColumn.Tag as PeriodMappingInfo;
+                        K12.Data.PeriodMappingInfo info = cell.OwningColumn.Tag as K12.Data.PeriodMappingInfo;
 
                         if (info == null) continue;
                         if (period.Period != info.Name) continue;
                         if (period.AbsenceType == null) continue;
 
-                        foreach (AbsenceMappingInfo ai in absenceList)
+                        foreach (K12.Data.AbsenceMappingInfo ai in absenceList)
                         {
                             if (ai.Name != period.AbsenceType) continue;
 
@@ -366,11 +366,11 @@ namespace JHSchool.Behavior.StudentExtendControls
                 {
                     K12.Data.AttendancePeriod ap = new K12.Data.AttendancePeriod();
 
-                    foreach (AbsenceMappingInfo ai in _absenceList)
+                    foreach (K12.Data.AbsenceMappingInfo ai in _absenceList)
                     {
                         if (ai.Abbreviation == ("" + cell.Value).Trim())
                         {
-                            ap.Period = (cell.OwningColumn.Tag as PeriodMappingInfo).Name;
+                            ap.Period = (cell.OwningColumn.Tag as K12.Data.PeriodMappingInfo).Name;
                             ap.AbsenceType = ai.Name;
                             //ap.AttendanceType = "一般";
 
@@ -444,7 +444,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                 }
 
                 bool LogMode = false;
-                foreach (PeriodMappingInfo each in _periodList)
+                foreach (K12.Data.PeriodMappingInfo each in _periodList)
                 {
                     if (DicAfterLog[each.Name] != "" && DicBeforeLog[each.Name] != "" && DicAfterLog[each.Name] != DicBeforeLog[each.Name])
                     {
@@ -508,7 +508,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             {
                 if (var.Checked)
                 {
-                    _checkedAbsence = (AbsenceMappingInfo)var.Tag;
+                    _checkedAbsence = (K12.Data.AbsenceMappingInfo)var.Tag;
                     DataGridViewCell dgvCell = dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex];
                     //如果有值,就清空
                     if ("" + dgvCell.Value == _checkedAbsence.Abbreviation)
@@ -544,7 +544,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             {
                 //如果不是空白資料,就比對對照表
                 string Abbreviation = "";
-                foreach (AbsenceMappingInfo absenceInfo in absenceList)
+                foreach (K12.Data.AbsenceMappingInfo absenceInfo in absenceList)
                 {
                     if (absenceInfo.HotKey.ToUpper() == CurrentCellValue.ToUpper())
                     {

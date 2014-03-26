@@ -203,6 +203,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortClassIndex.cs" />
     <Compile Include="StudentSortObj.cs" />
+    <Compile Include="tool.cs" />
     <Compile Include="學生獎勵明細\Report.cs" />
     <Compile Include="學生獎勵明細\SelectMeritForm.cs">
       <SubType>Form</SubType>
@@ -210,11 +211,11 @@
     <Compile Include="學生獎勵明細\SelectMeritForm.designer.cs">
       <DependentUpon>SelectMeritForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="學生獎懲明細\Report.cs" />
-    <Compile Include="學生獎懲明細\SelectMeritDemeritForm.cs">
+    <Compile Include="學生獎勵懲戒明細\Report.cs" />
+    <Compile Include="學生獎勵懲戒明細\SelectMeritDemeritForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="學生獎懲明細\SelectMeritDemeritForm.designer.cs">
+    <Compile Include="學生獎勵懲戒明細\SelectMeritDemeritForm.designer.cs">
       <DependentUpon>SelectMeritDemeritForm.cs</DependentUpon>
     </Compile>
     <Compile Include="學生缺曠明細\Report.cs" />
@@ -380,7 +381,7 @@
       <DependentUpon>SelectMeritForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="學生獎懲明細\SelectMeritDemeritForm.resx">
+    <EmbeddedResource Include="學生獎勵懲戒明細\SelectMeritDemeritForm.resx">
       <DependentUpon>SelectMeritDemeritForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

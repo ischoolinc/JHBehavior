@@ -520,7 +520,7 @@ namespace JHSchool.Behavior.ImportExport
                                     record.DemeritC = faultC;
                                     record.Cleared = cleared;
                                     record.ClearDate = cleardate;
-                                    record.Reason = clearreason;
+                                    record.ClearReason = clearreason;
                                 }
 
                                 record.MeritFlag = isAward ? "1" : "0";
@@ -557,7 +557,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.DemeritC = faultC;
                                 record.Cleared = cleared;
                                 record.ClearDate = cleardate;
-                                record.Reason = clearreason;
+                                record.ClearReason = clearreason;
                             }
 
                             record.MeritFlag = isAward ? "1" : "0";
@@ -672,7 +672,7 @@ namespace JHSchool.Behavior.ImportExport
                                     record.DemeritC = faultC;
                                     record.Cleared = cleared;
                                     record.ClearDate = cleardate;
-                                    record.Reason = clearreason;
+                                    record.ClearReason = clearreason;
                                 }
 
                                 record.MeritFlag = isAward ? "1" : "0";
@@ -708,7 +708,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.DemeritC = faultC;
                                 record.Cleared = cleared;
                                 record.ClearDate = cleardate;
-                                record.Reason = clearreason;
+                                record.ClearReason = clearreason;
                             }
 
                             record.MeritFlag = isAward ? "1" : "0";

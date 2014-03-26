@@ -34,8 +34,8 @@ namespace JHSchool.Behavior.StudentExtendControls
         private List<AutoSummaryRecord> AutoRecord = new List<AutoSummaryRecord>();
         private JHMoralScoreRecord MSRecord;
 
-        private List<PeriodMappingInfo> _periodList = new List<PeriodMappingInfo>();
-        private List<AbsenceMappingInfo> _absenceList = new List<AbsenceMappingInfo>();
+        private List<K12.Data.PeriodMappingInfo> _periodList = new List<K12.Data.PeriodMappingInfo>();
+        private List<K12.Data.AbsenceMappingInfo> _absenceList = new List<K12.Data.AbsenceMappingInfo>();
 
         private List<string> _periodTypes = new List<string>();
         private List<string> _absenceTypes = new List<string>();
@@ -154,9 +154,9 @@ namespace JHSchool.Behavior.StudentExtendControls
             listViewAttendance.Items.Clear();
 
             _periodList.Clear();
-            _periodList = QueryPeriodMapping.Load();
+            _periodList = K12.Data.PeriodMapping.SelectAll();
             _absenceList.Clear();
-            _absenceList = QueryAbsenceMapping.Load();
+            _absenceList = K12.Data.AbsenceMapping.SelectAll();
 
             listViewAttendance.Columns.Clear();
             listViewAttendance.Columns.Add("OccurDate", "缺曠日期");
@@ -164,7 +164,7 @@ namespace JHSchool.Behavior.StudentExtendControls
 
             PeriodDic.Clear(); //節次對照表
 
-            foreach (PeriodMappingInfo info in _periodList)
+            foreach (K12.Data.PeriodMappingInfo info in _periodList)
             {
                 //節次對照表
                 if (!PeriodDic.ContainsKey(info.Name))
@@ -231,7 +231,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                 for (int i = 2; i < listViewAttendance.Columns.Count; i++)
                 {
                     ColumnHeader column = listViewAttendance.Columns[i];
-                    PeriodMappingInfo info = column.Tag as PeriodMappingInfo;
+                    K12.Data.PeriodMappingInfo info = column.Tag as K12.Data.PeriodMappingInfo;
 
                     //if (record.PeriodDetail == null) continue;
 
@@ -252,7 +252,7 @@ namespace JHSchool.Behavior.StudentExtendControls
 
                         System.Windows.Forms.ListViewItem.ListViewSubItem subitem = lvItem.SubItems[i];
 
-                        foreach (AbsenceMappingInfo ai in _absenceList)
+                        foreach (K12.Data.AbsenceMappingInfo ai in _absenceList)
                         {
                             if (ai.Name != period.AbsenceType) continue;
 
@@ -381,9 +381,9 @@ namespace JHSchool.Behavior.StudentExtendControls
         public static List<string> GetPeriodTypeItems()
         {
             List<string> list = new List<string>();
-            List<PeriodMappingInfo> _periodList = QueryPeriodMapping.Load();
+            List<K12.Data.PeriodMappingInfo> _periodList = K12.Data.PeriodMapping.SelectAll();
 
-            foreach (PeriodMappingInfo each in _periodList)
+            foreach (K12.Data.PeriodMappingInfo each in _periodList)
             {
                 if (!list.Contains(each.Type))
                     list.Add(each.Type);
@@ -398,9 +398,9 @@ namespace JHSchool.Behavior.StudentExtendControls
         public static List<string> GetAbsenceItems()
         {
             List<string> list = new List<string>();
-            List<AbsenceMappingInfo> _absenceList = QueryAbsenceMapping.Load();
+            List<K12.Data.AbsenceMappingInfo> _absenceList = K12.Data.AbsenceMapping.SelectAll();
 
-            foreach (AbsenceMappingInfo each in _absenceList)
+            foreach (K12.Data.AbsenceMappingInfo each in _absenceList)
             {
                 if (!list.Contains(each.Name))
                 {

@@ -206,24 +206,27 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
             userDefinedPeriodList = config;
 
             //取得 Period List
-            DSResponse dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetPeriodList();
+
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
+            PeriodList.Sort(tool.SortPeriod);
             Dictionary<string, string> PeriodTypeDic = new Dictionary<string, string>();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Period"))
+            foreach (K12.Data.PeriodMappingInfo var in PeriodList)
             {
-                if (!periodList.Contains(var.GetAttribute("Name")))
-                    periodList.Add(var.GetAttribute("Name"));
-                if (!PeriodTypeDic.ContainsKey(var.GetAttribute("Name")))
+                if (!periodList.Contains(var.Name))
+                    periodList.Add(var.Name);
+                if (!PeriodTypeDic.ContainsKey(var.Name))
                 {
-                    PeriodTypeDic.Add(var.GetAttribute("Name"), var.GetAttribute("Type"));
+                    PeriodTypeDic.Add(var.Name, var.Type);
                 }
             }
 
             //取得 Absence List
-            dsrsp = JHSchool.Compatibility.Feature.Basic.Config.GetAbsenceList();
-            foreach (XmlElement var in dsrsp.GetContent().GetElements("Absence"))
+            List<K12.Data.AbsenceMappingInfo> AbsenceListMapp = K12.Data.AbsenceMapping.SelectAll();
+
+            foreach (K12.Data.AbsenceMappingInfo var in AbsenceListMapp)
             {
-                if (!absenceList.ContainsKey(var.GetAttribute("Name")))
-                    absenceList.Add(var.GetAttribute("Name"), var.GetAttribute("Abbreviation"));
+                if (!absenceList.ContainsKey(var.Name))
+                    absenceList.Add(var.Name, var.Abbreviation);
             }
 
             //產生 DSRequest
@@ -248,7 +251,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
 
             helper.AddElement("Order");
             helper.AddElement("Order", "OccurDate", "desc");
-            dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
+            DSResponse dsrsp = JHSchool.Compatibility.Feature.Student.QueryAttendance.GetAttendance(new DSRequest(helper));
 
             foreach (XmlElement var in dsrsp.GetContent().GetElements("Attendance"))
             {
