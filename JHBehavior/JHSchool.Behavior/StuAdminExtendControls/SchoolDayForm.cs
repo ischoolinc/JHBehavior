@@ -9,17 +9,35 @@ using System.Windows.Forms;
 using SmartSchool.Common;
 using Framework;
 using DevComponents.DotNetBar.Controls;
+using K12.Data;
+using FISCA.Data;
+using System.Xml.Linq;
+using System.Xml.XPath;
+
 namespace JHSchool.Behavior.StuAdminExtendControls
 {
     public partial class SchoolDayForm : FISCA.Presentation.Controls.BaseForm
     {
-        private K12.Data.SchoolHolidayRecord record;
+        //因為K12只提供到SchoolDayCountG3,所以改為直接存取
+        //private K12.Data.SchoolHolidayRecord record;
         private List<DevComponents.AdvTree.Node> allDays;
+
+        private const string SchoolHodidayConfigString = "SCHOOL_HOLIDAY_CONFIG_STRING";
+        private const string configString = "CONFIG_STRING";
+
+        private QueryHelper _Q;
+        private List<DateTime> _Holidays;
+        
+        private ConfigData _CD;
+        private DateTime _OldStartDate;
+        private DateTime _OldEndDate;
 
         public SchoolDayForm()
         {
             InitializeComponent();
-            
+            _Q = new QueryHelper();
+            _Holidays = new List<DateTime>();
+            _CD = School.Configuration[SchoolHodidayConfigString];
         }
 
         //1。找出目前學年度學期
@@ -29,22 +47,62 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             schoolyear.Text = School.DefaultSchoolYear + "學年度第" + School.DefaultSemester + "學期";
 
-            record = K12.Data.SchoolHoliday.SelectSchoolHolidayRecord();
+            //取得之前設定設定
+            XElement rootXml = null;
+            string xmlContent = _CD[configString];
 
-            if (record == null)
-            {
-                this.dtBeginDate.Value = DateTime.Today;
-                this.dtEndDate.Value = DateTime.Today;  //會觸發 FillDateList()
-            }
+            if (!string.IsNullOrWhiteSpace(xmlContent))
+                rootXml = XElement.Parse(xmlContent);
             else
-            {
-                this.dtBeginDate.Value = this.record.BeginDate;
-                this.dtEndDate.Value = this.record.EndDate;
+                rootXml = new XElement("SchoolHolidays");
 
-                this.txtG1Count.Text = record.SchoolDayCountG1.ToString();
-                this.txtG2Count.Text = record.SchoolDayCountG2.ToString();
-                this.txtG3Count.Text = record.SchoolDayCountG3.ToString();
+            //讀出之前的假日清單
+            foreach (XElement holiday in rootXml.XPathSelectElements("//Holiday"))
+            {
+                DateTime date;
+                if (DateTime.TryParse(holiday.Value, out date))
+                    _Holidays.Add(date);
             }
+
+            //開始時間
+            XElement BeginDate = rootXml.XPathSelectElement("//BeginDate");
+            _OldStartDate = BeginDate == null || string.IsNullOrWhiteSpace(BeginDate.Value) ? DateTime.Today : DateTime.Parse(BeginDate.Value);
+            this.dtBeginDate.Value = _OldStartDate;
+
+            //結束時間
+            XElement EndDate = rootXml.XPathSelectElement("//EndDate");
+            _OldEndDate = EndDate == null || string.IsNullOrWhiteSpace(EndDate.Value) ? DateTime.Today : DateTime.Parse(EndDate.Value);
+            this.dtEndDate.Value = _OldEndDate;
+
+            //取得全校既有的年級並帶入設定
+            DataTable dt = _Q.Select("select distinct grade_year from class where grade_year is not null order by grade_year");
+            foreach (DataRow row in dt.Rows)
+            {
+                DataGridViewRow dgvRow = new DataGridViewRow();
+                dgvRow.Tag = row["grade_year"] + "";
+                string grade = "//SchoolDayCountG" + dgvRow.Tag;
+                XElement elem = rootXml.XPathSelectElement(grade);
+                string value = elem == null ? string.Empty : elem.Value;
+                dgvRow.CreateCells(dgv, dgvRow.Tag + "年級", value);
+                dgv.Rows.Add(dgvRow);
+            }
+
+            //record = K12.Data.SchoolHoliday.SelectSchoolHolidayRecord();
+
+            //if (record == null)
+            //{
+            //    this.dtBeginDate.Value = DateTime.Today;
+            //    this.dtEndDate.Value = DateTime.Today;  //會觸發 FillDateList()
+            //}
+            //else
+            //{
+            //    this.dtBeginDate.Value = this.record.BeginDate;
+            //    this.dtEndDate.Value = this.record.EndDate;
+
+            //    this.txtG1Count.Text = record.SchoolDayCountG1.ToString();
+            //    this.txtG2Count.Text = record.SchoolDayCountG2.ToString();
+            //    this.txtG3Count.Text = record.SchoolDayCountG3.ToString();
+            //}
         }
 
 
@@ -62,11 +120,9 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             int month = 0;
             int day = 0;
 
-
             DevComponents.AdvTree.Node ndYear= new DevComponents.AdvTree.Node();
             DevComponents.AdvTree.Node ndMonth = new DevComponents.AdvTree.Node();
             DevComponents.AdvTree.Node ndDay = new DevComponents.AdvTree.Node();
-
 
             this.advTree1.Nodes.Clear();
 
@@ -111,7 +167,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             }
 
             this.calculateSchoolDays();
-            
         }
 
         private DevComponents.AdvTree.Node createYearNode(DateTime currentDate)
@@ -140,8 +195,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             return ndDay;
         }
             
-
-        
         void ndDay_NodeClick(object sender, EventArgs e)
         {
             this.calculateSchoolDays();
@@ -157,9 +210,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     schoolDays += 1;
             }
 
-            this.txtG1Count.Text = schoolDays.ToString();
-            this.txtG2Count.Text = schoolDays.ToString();
-            this.txtG3Count.Text = schoolDays.ToString();
+            foreach (DataGridViewRow row in dgv.Rows)
+                row.Cells[colDays.Index].Value = schoolDays + "";
+
+            //this.txtG1Count.Text = schoolDays.ToString();
+            //this.txtG2Count.Text = schoolDays.ToString();
+            //this.txtG3Count.Text = schoolDays.ToString();
         }
 
         private DevComponents.AdvTree.Cell createCell(DateTime currentDate)
@@ -210,13 +266,23 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             bool result = false;
 
+            //預設六日先打勾
             result = (dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday);
 
-            if (this.record != null)
+            //若該日期在以前設定的日期區間,則以假日清單為準
+            if (dt >= _OldStartDate && dt <= _OldEndDate)
             {
-                if (this.record.IsContained(dt))
-                    result =  this.record.IsHoliday(dt);
+                if (_Holidays.Contains(dt))
+                    result = true;
+                else
+                    result = false;
             }
+
+            //if (this.record != null)
+            //{
+            //    if (this.record.IsContained(dt))
+            //        result =  this.record.IsHoliday(dt);
+            //}
 
             return result ;
         }
@@ -225,8 +291,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             this.Close();
         }
-
-      
 
         private void dtEndDate_ValueChanged(object sender, EventArgs e)
         {
@@ -237,44 +301,69 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             FillDateList();
         }
-        private bool txtCheck(string txt,TextBoxX Text)
-        {  
-            uint x = 0;
-            if (uint.TryParse(txt, out  x) )
-            {
-                errorProvider1.Clear();
-                return true;
-            }
-            else
-            {
-                errorProvider1.SetError(Text, "請輸入正確的數字");
-                
-                return false;
-            }
-        }
 
+        //private bool txtCheck(string txt,TextBoxX Text)
+        //{  
+        //    uint x = 0;
+        //    if (uint.TryParse(txt, out  x) )
+        //    {
+        //        errorProvider1.Clear();
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        errorProvider1.SetError(Text, "請輸入正確的數字");
+                
+        //        return false;
+        //    }
+        //}
 
         private void SetButton_Click(object sender, EventArgs e)
         {
-            if (this.record == null)
-                this.record = new K12.Data.SchoolHolidayRecord();
+            bool hasError = false;
 
-            this.record.BeginDate = this.dtBeginDate.Value;
-            this.record.EndDate = this.dtEndDate.Value;
+            //主XML
+            XElement elem = new XElement("SchoolHolidays", new XElement("BeginDate", this.dtBeginDate.Value.ToShortDateString()), new XElement("EndDate", this.dtEndDate.Value.ToShortDateString()));
 
-            if (txtCheck(this.txtG1Count.Text, this.txtG1Count))
-                this.record.SchoolDayCountG1 =int.Parse(this.txtG1Count.Text);
-            else return;
+            //掛上各年級的上課天數節點(順便驗證欄位資料)
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.ErrorText = string.Empty;
+                int count;
+                if (int.TryParse(row.Cells[colDays.Index].Value + "", out count))
+                    elem.Add(new XElement("SchoolDayCountG" + row.Tag, count));
+                else
+                {
+                    row.ErrorText = "上課天數欄位必須輸入數字";
+                    hasError = true;
+                }
+            }
 
-            if(txtCheck(this.txtG2Count.Text,this.txtG2Count))
-                this.record.SchoolDayCountG2 = int.Parse(this.txtG2Count.Text);
-            else return;
+            if (hasError)
+            {
+                MessageBox.Show("資料有誤,請確認後再儲存...");
+                return;
+            }
+                
+            //if (this.record == null)
+            //    this.record = new K12.Data.SchoolHolidayRecord();
 
-            if(txtCheck(this.txtG3Count.Text,this.txtG3Count))
-                this.record.SchoolDayCountG3 = int.Parse(this.txtG3Count.Text);
-            else return;
+            //this.record.BeginDate = this.dtBeginDate.Value;
+            //this.record.EndDate = this.dtEndDate.Value;
 
-            this.record.HolidayList.Clear();
+            //if (txtCheck(this.txtG1Count.Text, this.txtG1Count))
+            //    this.record.SchoolDayCountG1 = int.Parse(this.txtG1Count.Text);
+            //else return;
+
+            //if (txtCheck(this.txtG2Count.Text, this.txtG2Count))
+            //    this.record.SchoolDayCountG2 = int.Parse(this.txtG2Count.Text);
+            //else return;
+
+            //if (txtCheck(this.txtG3Count.Text, this.txtG3Count))
+            //    this.record.SchoolDayCountG3 = int.Parse(this.txtG3Count.Text);
+            //else return;
+
+            //this.record.HolidayList.Clear();
 
             if (this.allDays == null)
             {
@@ -282,19 +371,38 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 return;
             }
 
+            //建立畫面設定的假日節點
+            XElement holidayList = new XElement("HolidayList");
             foreach (DevComponents.AdvTree.Node nd in this.allDays)
             {
                 if (nd.Cells[1].Checked)
-                    this.record.HolidayList.Add((DateTime)nd.Tag);
+                {
+                    DateTime dt = (DateTime)nd.Tag;
+                    holidayList.Add(new XElement("Holiday", dt.ToShortDateString()));
+                }
             }
+            //掛上假日節點
+            elem.Add(holidayList);
 
-            K12.Data.SchoolHoliday.SetSchoolHolidayRecord(this.record);
+            //foreach (DevComponents.AdvTree.Node nd in this.allDays)
+            //{
+            //    if (nd.Cells[1].Checked)
+            //        this.record.HolidayList.Add((DateTime)nd.Tag);
+            //}
+
+            //K12.Data.SchoolHoliday.SetSchoolHolidayRecord(this.record);
+
+            //回存
+            _CD[configString] = elem.ToString(SaveOptions.DisableFormatting);
+            _CD.Save();
 
             this.Close();
-
         }
-      
 
-        
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == colDays.Index)
+                dgv.BeginEdit(true);
+        }
     }
 }

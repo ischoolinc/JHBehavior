@@ -81,6 +81,10 @@
       <HintPath>Library\FISCA.Authentication.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FISCA.Data">
+      <HintPath>Library\FISCA.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FISCA.DSAClient, Version=1.0.1.16, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\FISCA.DSAClient.dll</HintPath>

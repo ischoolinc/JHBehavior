@@ -225,12 +225,12 @@ namespace JHSchool.Behavior
 
             rbItem1["設定"].Image = Properties.Resources.sandglass_unlock_64;
             rbItem1["設定"].Size = RibbonBarButton.MenuButtonSize.Large;
-            rbItem1["設定"]["日常生活表現輸入時間設定"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0025"].Executable;
-            rbItem1["設定"]["日常生活表現輸入時間設定"].Click += delegate
-            {
-                DailyLifeInputControl roto = new DailyLifeInputControl();
-                roto.ShowDialog();
-            };
+            //rbItem1["設定"]["日常生活表現輸入時間設定"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0025"].Executable;
+            //rbItem1["設定"]["日常生活表現輸入時間設定"].Click += delegate
+            //{
+            //    DailyLifeInputControl roto = new DailyLifeInputControl();
+            //    roto.ShowDialog();
+            //};
 
             rbItem1["設定"]["上課天數設定"].Enable = User.Acl["JJHSchool.StuAdmin.Ribbon0021"].Executable;
             rbItem1["設定"]["上課天數設定"].Click += delegate
@@ -424,7 +424,7 @@ namespace JHSchool.Behavior
             //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0100", "缺曠獎懲資料統計"));
 
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0022", "表現程度對照表"));
-            ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0025", "日常生活表現輸入時間設定"));
+            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0025", "日常生活表現輸入時間設定"));
 
             Catalog toolSetup = RoleAclSource.Instance["學務作業"];
             toolSetup.Add(new RibbonFeature("JJHSchool.StuAdmin.Ribbon0021", "上課天數設定"));
