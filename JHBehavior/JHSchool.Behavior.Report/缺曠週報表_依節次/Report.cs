@@ -17,6 +17,8 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
 
         private BackgroundWorker _BGWAbsenceWeekListByPeriod;
 
+        private Dictionary<string, int> PerIndexDic = new Dictionary<string, int>();
+
         public void Print()
         {
             if (Class.Instance.SelectedList.Count == 0)
@@ -202,14 +204,11 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                 allStudentNumber += classStudent.Count;
             }
 
-            //套用使用者的設定
-            userDefinedPeriodList = config;
-
             //取得 Period List
-
             List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
             PeriodList.Sort(tool.SortPeriod);
             Dictionary<string, string> PeriodTypeDic = new Dictionary<string, string>();
+            PerIndexDic = new Dictionary<string, int>();
             foreach (K12.Data.PeriodMappingInfo var in PeriodList)
             {
                 if (!periodList.Contains(var.Name))
@@ -218,7 +217,16 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                 {
                     PeriodTypeDic.Add(var.Name, var.Type);
                 }
+
+                if (!PerIndexDic.ContainsKey(var.Name))
+                {
+                    PerIndexDic.Add(var.Name, var.Sort);
+                }
             }
+
+            //套用使用者的設定
+            userDefinedPeriodList = config;
+            userDefinedPeriodList.Sort(SortPeriod);
 
             //取得 Absence List
             List<K12.Data.AbsenceMappingInfo> AbsenceListMapp = K12.Data.AbsenceMapping.SelectAll();
@@ -663,6 +671,22 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                 Directory.CreateDirectory(path);
             path = Path.Combine(path, reportName + ".xlt");
             e.Result = new object[] { reportName, path, wb };
+        }
+
+        private int SortPeriod(string name1, string name2)
+        {
+            int indexA = 99;
+            int indexB = 99;
+            if (PerIndexDic.ContainsKey(name1))
+            {
+                indexA = PerIndexDic[name1];
+            }
+            if (PerIndexDic.ContainsKey(name2))
+            {
+                indexB = PerIndexDic[name2];
+            }
+
+            return indexA.CompareTo(indexB);
         }
         #endregion
 

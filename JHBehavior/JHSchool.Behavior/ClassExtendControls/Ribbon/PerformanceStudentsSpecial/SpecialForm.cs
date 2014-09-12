@@ -71,21 +71,14 @@ namespace JHSchool.Behavior.ClassExtendControls.Ribbon
             AttendanceStringList.Clear();
             AttendanceIsNoabsence.Clear();
             listViewEx1.Items.Clear();
-            DSResponse dsrsp1 = Framework.Feature.Config.GetAbsenceList();
-            DSXmlHelper helper1 = dsrsp1.GetContent();
-            foreach (XmlElement e in helper1.GetElements("Absence"))
+
+            List<K12.Data.AbsenceMappingInfo> InfoList = K12.Data.AbsenceMapping.SelectAll();
+            foreach (K12.Data.AbsenceMappingInfo e in InfoList)
             {
-                AttendanceStringList.Add(e.GetAttribute("Name"));
-                listViewEx1.Items.Add(e.GetAttribute("Name"));
+                AttendanceStringList.Add(e.Name);
+                listViewEx1.Items.Add(e.Name);
 
-                bool test = false;
-
-                if (bool.TryParse(e.GetAttribute("Noabsence"), out test)) //如果是BOOL,則記錄下來
-                {
-                    AttendanceIsNoabsence.Add(e.GetAttribute("Name"), test);
-                }
-
-
+                AttendanceIsNoabsence.Add(e.Name, e.Noabsence);
             }
         }
 
@@ -109,7 +102,7 @@ namespace JHSchool.Behavior.ClassExtendControls.Ribbon
         private void btnPrint4_Click(object sender, EventArgs e)
         {
             MeritScClick Msc = new MeritScClick();
-            Msc.print(cbxSchoolYear1, intSchoolYear1, intSemester1, _StudentRecordList,tbMeritA, tbMeritB, tbMeritC, cbxIgnoreDemerit, cbxDemeritIsNull, cbxIsDemeritClear);
+            Msc.print(cbxSchoolYear1, intSchoolYear1, intSemester1, _StudentRecordList, tbMeritA, tbMeritB, tbMeritC, cbxIgnoreDemerit, cbxDemeritIsNull, cbxIsDemeritClear);
         }
 
         //列印"懲戒特殊表現"名單
@@ -170,7 +163,7 @@ namespace JHSchool.Behavior.ClassExtendControls.Ribbon
         {
             ReduceForm config = new ReduceForm();
             config.ShowDialog();
-        } 
+        }
         #endregion
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

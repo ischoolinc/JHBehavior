@@ -27,16 +27,9 @@ namespace JHSchool.Behavior.ClassExtendControls.Ribbon
         {
             //取得每日節次對照表(設定畫面)
             List<string> list = new List<string>();
-            DSResponse dsrsp = Config.GetPeriodList();
-            DSXmlHelper helper = dsrsp.GetContent();
-            List<PeriodInfo> collection = new List<PeriodInfo>();
-            foreach (XmlElement element in helper.GetElements("Period"))
-            {
-                PeriodInfo info = new PeriodInfo(element);
-                collection.Add(info);
-            }
+            List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
 
-            foreach (PeriodInfo info in collection)
+            foreach (K12.Data.PeriodMappingInfo info in PeriodList)
             {
                 if (!list.Contains(info.Type))
                 {
