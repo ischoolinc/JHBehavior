@@ -237,21 +237,22 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
             foreach (string periodName in periodList.Keys)
             {
                 ptws.Cells.CreateRange(colIndex, 1, true).Copy(tempEachColumn);
-                ptws.Cells[3, colIndex].PutValue(periodName);
+                ptws.Cells[4, colIndex].PutValue(periodName);
                 columnTable.Add(periodName, colIndex);
                 colIndex++;
             }
             endPeriodIndex = colIndex;
 
-            ptws.Cells.CreateRange(2, startPeriodIndex, 1, endPeriodIndex - startPeriodIndex).Merge();
-            ptws.Cells[2, startPeriodIndex].PutValue("節次");
+            ptws.Cells.CreateRange(3, startPeriodIndex, 1, endPeriodIndex - startPeriodIndex).Merge();
+            ptws.Cells[3, startPeriodIndex].PutValue("節次");
 
             //合併標題列
             ptws.Cells.CreateRange(0, 0, 1, endPeriodIndex).Merge();
             ptws.Cells.CreateRange(1, 0, 1, endPeriodIndex).Merge();
+            ptws.Cells.CreateRange(2, 0, 1, endPeriodIndex).Merge();
 
-            Range ptHeader = ptws.Cells.CreateRange(0, 4, false);
-            Range ptEachRow = ptws.Cells.CreateRange(4, 1, false);
+            Range ptHeader = ptws.Cells.CreateRange(0, 5, false);
+            Range ptEachRow = ptws.Cells.CreateRange(5, 1, false);
 
             //current++;
 
@@ -288,7 +289,9 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         time_2013 = string.Format("統計區間：{0}學年度 第{1}學期", form.SchoolYear, form.Semester);
                     }
                 }
-                string TitleName2 = "班級：" + ((studentInfo.Class == null ? "　" : studentInfo.Class.Name) + "　座號：" + ((studentInfo.SeatNo == null) ? "　" : studentInfo.SeatNo.ToString()) + "　姓名：" + studentInfo.Name + "　學號：" + studentInfo.StudentNumber + "　" + time_2013);
+                string TitleName2 = "班級：" + ((studentInfo.Class == null ? "　" : studentInfo.Class.Name) + "　座號：" + ((studentInfo.SeatNo == null) ? "　" : studentInfo.SeatNo.ToString()) + "　姓名：" + studentInfo.Name + "　學號：" + studentInfo.StudentNumber);
+                string TitleName3 = time_2013;
+                
                 //回報進度
                 _BGWAbsenceDetail.ReportProgress((int)(((double)studentCount++ * 100.0) / (double)selectedStudents.Count));
 
@@ -302,9 +305,9 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                    ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
 
-                    dataIndex = index + 4;
+                    dataIndex = index + 5;
                     int recordCount = 0;
 
                     //學生Row筆數超過40筆,則添加換行符號,與標頭
@@ -326,7 +329,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                     ws.Cells[index, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                     pageCount++;
                     ws.Cells[index + 1, 0].PutValue(TitleName2);
-
+                    ws.Cells[index + 2, 0].PutValue(TitleName3);
 
                     foreach (string sso in absenceDetail.Keys)
                     {
@@ -358,13 +361,13 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             //分頁
                             ws.HPageBreaks.Add(dataIndex, endPeriodIndex);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 4, false).Copy(ptHeader);
+                            ws.Cells.CreateRange(dataIndex, 5, false).Copy(ptHeader);
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
                             ws.Cells[dataIndex + 1, 0].PutValue(TitleName2);
-
-                            dataIndex += 4;
+                            ws.Cells[dataIndex + 2, 0].PutValue(TitleName3);
+                            dataIndex += 5;
                         }
 
                     }
@@ -553,9 +556,9 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                    ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
 
-                    dataIndex = index + 4;
+                    dataIndex = index + 5;
                     int recordCount = 0;
 
                     //學生Row筆數超過40筆,則添加換行符號,與標頭
@@ -577,7 +580,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                     ws.Cells[index, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                     pageCount++;
                     ws.Cells[index + 1, 0].PutValue(TitleName2);
-
+                    ws.Cells[index + 2, 0].PutValue(TitleName3);
 
                     foreach (string sso in absenceDetail.Keys)
                     {
@@ -609,13 +612,13 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             //分頁
                             ws.HPageBreaks.Add(dataIndex, endPeriodIndex);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 4, false).Copy(ptHeader);
+                            ws.Cells.CreateRange(dataIndex, 5, false).Copy(ptHeader);
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
                             ws.Cells[dataIndex + 1, 0].PutValue(TitleName2);
-
-                            dataIndex += 4;
+                            ws.Cells[dataIndex + 2, 0].PutValue(TitleName3);
+                            dataIndex += 5;
                         }
 
                     }
@@ -715,14 +718,14 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                 ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                             //複製 Header
-                            ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                            ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
 
-                            dataIndex = index + 4;
+                            dataIndex = index + 5;
 
                             //填寫基本資料
                             ws.Cells[index, 0].PutValue(TitleName1 + "(1/1)");
                             ws.Cells[index + 1, 0].PutValue(TitleName2);
-
+                            ws.Cells[index + 2, 0].PutValue(TitleName3);
                             #region 缺曠統計資訊
                             Range absenceStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex);
                             absenceStatisticsRange.Merge();
