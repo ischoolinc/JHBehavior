@@ -30,7 +30,7 @@ namespace JHSchool.Behavior.Report.班級學生獎懲統計
 
             //取得選擇班級的學生缺曠記錄
             List<JHMeritRecord> MeritList = new List<JHMeritRecord>();
-            if (_config.InsertOrSetup)
+            if (!_config.InsertOrSetup)
                 MeritList = JHMerit.SelectByOccurDate(studentList, _config.StartDate, _config.EndDate);
             else
                 MeritList = JHMerit.SelectByRegisterDate(studentList, _config.StartDate, _config.EndDate);
@@ -49,7 +49,7 @@ namespace JHSchool.Behavior.Report.班級學生獎懲統計
 
 
             List<JHDemeritRecord> DemrtieList = new List<JHDemeritRecord>();
-            if (_config.InsertOrSetup)
+            if (!_config.InsertOrSetup)
                 DemrtieList = JHDemerit.SelectByOccurDate(studentList, _config.StartDate, _config.EndDate);
             else
                 DemrtieList = JHDemerit.SelectByRegisterDate(studentList, _config.StartDate, _config.EndDate);

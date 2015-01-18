@@ -68,7 +68,7 @@ namespace JHSchool.Behavior.Report.班級學生獎懲統計
             config.EndDate = dtiEndDate.Value;
             config.Cleared = checkBoxX1.Checked;
             config.SelectItems = list;
-            config.InsertOrSetup = radioButton1.Checked;
+            config.InsertOrSetup = rbRegisterDate.Checked;
 
             BGW.RunWorkerAsync();
         }

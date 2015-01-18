@@ -39,6 +39,9 @@ namespace JHSchool.Behavior.StudentExtendControls
         //之後
         private Dictionary<string, string> DicAfterLog = new Dictionary<string, string>();
 
+        /// <summary>
+        /// 缺曠學期統計 - 使用
+        /// </summary>
         public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<K12.Data.PeriodMappingInfo> periodList, FeatureAce permission, int SchoolYear, int Semester)
         {
             InitializeComponent();
@@ -46,19 +49,8 @@ namespace JHSchool.Behavior.StudentExtendControls
             #region 初始化學年度學期
 
             //學年度
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 4);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 3);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 2);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 1);
-            int SchoolYearSelectIndex = cboSchool.Items.Add(SchoolYear);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) + 1);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) + 2);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) + 3);
-            cboSchool.SelectedIndex = SchoolYearSelectIndex;
-            //學期
-            cboSemester.Items.Add(1);
-            cboSemester.Items.Add(2);
-            cboSemester.SelectedIndex = Semester == 1 ? 0 : 1;
+            intSchoolYear.Value = SchoolYear;
+            intSemester.Value = Semester;
 
             #endregion
 
@@ -143,8 +135,8 @@ namespace JHSchool.Behavior.StudentExtendControls
             dateTimeInput1.Value = DateTime.Today;
 
             btnSave.Visible = permission.Editable;
-            cboSchool.Enabled = permission.Editable;
-            cboSemester.Enabled = permission.Editable;
+            intSchoolYear.Enabled = permission.Editable;
+            intSemester.Enabled = permission.Editable;
             panelAbsence.Enabled = permission.Editable;
             //pancelAttendence.Enabled = permission.Editable;
             dataGridViewX1.Enabled = permission.Editable;
@@ -160,26 +152,9 @@ namespace JHSchool.Behavior.StudentExtendControls
             _periodList = periodList;
         }
 
-        //void TextBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        //{
-        //    foreach (RadioButton var in flpAbsence.Controls)
-        //    {
-        //        if (var.Checked)
-        //        {
-        //            _checkedAbsence = (AbsenceMappingInfo)var.Tag;
-
-        //            TextBox textBox = sender as TextBox;
-        //            if (textBox.Text == _checkedAbsence.Abbreviation)
-        //            {
-        //                textBox.Text = "";
-        //                textBox.Tag = null;
-        //                return;
-        //            }
-        //            textBox.Text = _checkedAbsence.Abbreviation;
-        //        }
-        //    }
-        //}
-
+        /// <summary>
+        /// 更新缺曠資料
+        /// </summary>
         public AttendanceForm(EditorStatus status, JHAttendanceRecord editor, List<K12.Data.PeriodMappingInfo> periodList, FeatureAce permission)
         {
             InitializeComponent();
@@ -187,17 +162,8 @@ namespace JHSchool.Behavior.StudentExtendControls
             #region 初始化學年度學期
 
             //學年度
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 3);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 2);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) - 1);
-            int SchoolYearSelectIndex = cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear));
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) + 1);
-            cboSchool.Items.Add(int.Parse(JHSchool.School.DefaultSchoolYear) + 2);
-            cboSchool.SelectedIndex = SchoolYearSelectIndex;
-            //學期
-            cboSemester.Items.Add(1);
-            cboSemester.Items.Add(2);
-            cboSemester.SelectedIndex = JHSchool.School.DefaultSemester == "1" ? 0 : 1;
+            intSchoolYear.Value = int.Parse(K12.Data.School.DefaultSchoolYear);
+            intSemester.Value = int.Parse(K12.Data.School.DefaultSemester);
 
             #endregion
 
@@ -275,8 +241,8 @@ namespace JHSchool.Behavior.StudentExtendControls
             dateTimeInput1.Value = DateTime.Today;
 
             btnSave.Visible = permission.Editable;
-            cboSchool.Enabled = permission.Editable;
-            cboSemester.Enabled = permission.Editable;
+            intSchoolYear.Enabled = permission.Editable;
+            intSemester.Enabled = permission.Editable;
             panelAbsence.Enabled = permission.Editable;
             //pancelAttendence.Enabled = permission.Editable;
 
@@ -291,8 +257,8 @@ namespace JHSchool.Behavior.StudentExtendControls
 
                 dateTimeInput1.Value = editor.OccurDate;
                 dateTimeInput1.Enabled = false;
-                cboSchool.Text = editor.SchoolYear.ToString();
-                cboSemester.Text = editor.Semester.ToString();
+                intSchoolYear.Text = editor.SchoolYear.ToString();
+                intSemester.Text = editor.Semester.ToString();
 
                 foreach (K12.Data.AttendancePeriod period in editor.PeriodDetail)
                 {
@@ -355,8 +321,8 @@ namespace JHSchool.Behavior.StudentExtendControls
             }
 
             _editor.OccurDate = dateTimeInput1.Value;
-            _editor.SchoolYear = int.Parse(cboSchool.Text);
-            _editor.Semester = int.Parse(cboSemester.Text);
+            _editor.SchoolYear = intSchoolYear.Value;
+            _editor.Semester = intSemester.Value;
 
             List<K12.Data.AttendancePeriod> periodDetail = new List<K12.Data.AttendancePeriod>();
 
@@ -413,7 +379,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                 }
 
                 ApplicationLog.Log("學務系統.缺曠資料", "新增學生缺曠資料", "student", _editor.Student.ID, sb.ToString());
-                FISCA.Presentation.Controls.MsgBox.Show("新增學生缺曠資料成功!"); 
+                FISCA.Presentation.Controls.MsgBox.Show("新增學生缺曠資料成功!");
                 #endregion
             }
             else if (_status == EditorStatus.Update)
@@ -458,7 +424,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                     ApplicationLog.Log("學務系統.缺曠資料", "修改學生缺曠資料", "student", _editor.Student.ID, sb.ToString());
                 }
 
-                FISCA.Presentation.Controls.MsgBox.Show("修改學生缺曠資料成功!"); 
+                FISCA.Presentation.Controls.MsgBox.Show("修改學生缺曠資料成功!");
                 #endregion
             }
             this.Close();
@@ -470,24 +436,6 @@ namespace JHSchool.Behavior.StudentExtendControls
         }
 
         #region 未完成的處理
-        private void dataGridViewX1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            //DataGridViewCell dgvCell = dataGridViewX1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            //string dgvString = "" + dgvCell.Value;
-            //dgvCell.Value = "";
-            //if (!string.IsNullOrEmpty(dgvString))
-            //{
-            //    foreach (AbsenceMappingInfo absenceInfo in absenceList)
-            //    {
-            //        if (dgvString == absenceInfo.HotKey)
-            //        {
-            //            dgvCell.Value = absenceInfo.Abbreviation;
-            //            break;
-            //        }
-            //    }
-            //    dataGridViewX1.GoToNEXTCell();
-            //}
-        }
 
         private void dataGridViewX1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
@@ -529,7 +477,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             {
                 return;
             }
-            
+
 
             //如果未輸入資料(如果是按空白鍵)
             if (string.IsNullOrEmpty(CurrentCellValue))
@@ -578,11 +526,11 @@ namespace JHSchool.Behavior.StudentExtendControls
                 e.KeyCode == Keys.Down ||
                 e.KeyCode == Keys.Left ||
                 e.KeyCode == Keys.Right ||
-                e.KeyCode == Keys.Tab || 
+                e.KeyCode == Keys.Tab ||
                 e.KeyCode == Keys.ShiftKey ||
                 e.KeyCode == (Keys.ShiftKey | Keys.LButton) ||
                 e.KeyCode == (Keys.ShiftKey | Keys.RButton) ||
-                e.KeyCode == (Keys.ControlKey | Keys.LButton)||
+                e.KeyCode == (Keys.ControlKey | Keys.LButton) ||
                 e.KeyCode == (Keys.ControlKey | Keys.RButton))
             {
                 return true;

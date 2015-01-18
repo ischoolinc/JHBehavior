@@ -680,6 +680,9 @@
       <DependentUpon>TestSingleEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="StudentExtendControls\SelectSchoolYearSemester.resx">
+      <DependentUpon>SelectSchoolYearSemester.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Library\Aspose.Cells.dll" />

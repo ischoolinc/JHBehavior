@@ -56,6 +56,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             {
                 this.listView.MouseDoubleClick -= new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
                 btnEdit.Enabled = UserPermission.Editable;
+                btnNewItem.Enabled = UserPermission.Editable;
             }
         }
 

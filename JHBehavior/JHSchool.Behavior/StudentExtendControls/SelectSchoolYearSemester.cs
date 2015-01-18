@@ -26,19 +26,8 @@ namespace JHSchool.Behavior.StudentExtendControls
 
         private void SelectSchoolYearSemester_Load(object sender, EventArgs e)
         {
-            int schoolyear = int.Parse(K12.Data.School.DefaultSchoolYear);
-            int semester = int.Parse(K12.Data.School.DefaultSemester);
-
-            for (int i = schoolyear - 3; i < schoolyear + 3; i++)
-            {
-                comboBoxEx1.Items.Add(i.ToString());
-            }
-
-            comboBoxEx2.Items.Add("1");
-            comboBoxEx2.Items.Add("2");
-
-            comboBoxEx1.Text = schoolyear.ToString();
-            comboBoxEx2.Text = semester.ToString();
+            intSchoolYear.Value = int.Parse(K12.Data.School.DefaultSchoolYear);
+            intSemester.Value = int.Parse(K12.Data.School.DefaultSemester);
         }
 
         private void buttonX2_Click(object sender, EventArgs e)
@@ -48,8 +37,8 @@ namespace JHSchool.Behavior.StudentExtendControls
 
         private void buttonX1_Click(object sender, EventArgs e)
         {
-            _SchoolYear = int.Parse(comboBoxEx1.Text);
-            _Semester = int.Parse(comboBoxEx2.Text);
+            _SchoolYear = intSchoolYear.Value;
+            _Semester = intSemester.Value;
 
             AttendanceUnifyForm AttendanceForm = new AttendanceUnifyForm(_StudentID, _SchoolYear, _Semester, _UserPermission);
             AttendanceForm.ShowDialog();

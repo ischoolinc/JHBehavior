@@ -225,35 +225,12 @@ namespace JHSchool.Behavior
 
             rbItem1["設定"].Image = Properties.Resources.sandglass_unlock_64;
             rbItem1["設定"].Size = RibbonBarButton.MenuButtonSize.Large;
-            //rbItem1["設定"]["日常生活表現輸入時間設定"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0025"].Executable;
-            //rbItem1["設定"]["日常生活表現輸入時間設定"].Click += delegate
-            //{
-            //    DailyLifeInputControl roto = new DailyLifeInputControl();
-            //    roto.ShowDialog();
-            //};
 
             rbItem1["設定"]["上課天數設定"].Enable = User.Acl["JJHSchool.StuAdmin.Ribbon0021"].Executable;
             rbItem1["設定"]["上課天數設定"].Click += delegate
             {
                 new SchoolDayForm().ShowDialog();
             };
-
-            //batchEdit["缺曠資料檢視"].Image = Properties.Resources.preview_64;
-            //batchEdit["缺曠資料檢視"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0060"].Executable;
-            //batchEdit["缺曠資料檢視"].Click += delegate
-            //{
-            //    AttendanceEditForm AttendanceTotal = new AttendanceEditForm();
-            //    AttendanceTotal.ShowDialog();
-            //};
-
-            //RibbonBarItem batchEdit1 = StuAdmin.Instance.RibbonBarItems["資料統計"];
-            //batchEdit1["報表"].Image = Properties.Resources.paste_64;
-            //batchEdit1["報表"]["銷過記錄清單"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0100"].Executable;
-            //batchEdit1["報表"]["銷過記錄清單"].Click += delegate
-            //{
-            //    StudentDemeritClear clearData = new StudentDemeritClear();
-            //    clearData.ShowDialog();
-            //};
 
             #endregion
 
@@ -377,9 +354,6 @@ namespace JHSchool.Behavior
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0070", "缺曠"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0075", "長假登錄"));
 
-            //暫時註解
-            //ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0085", "缺曠獎懲資料統計"));
-
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0150", "匯出缺曠記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0152", "匯出獎勵記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0154", "匯出懲戒記錄"));
@@ -395,17 +369,8 @@ namespace JHSchool.Behavior
             detail.Add(new DetailItemFeature(typeof(AttendanceItem)));
             detail.Add(new DetailItemFeature(typeof(AttendanceUnifytIItem))); //缺曠學期統計(NEW)
 
-            //暫時註解
-            //detail.Add(new DetailItemFeature(typeof(StudentExtendControls.AttendanceStatisticsItem)));
-            //detail.Add(new DetailItemFeature(typeof(StudentExtendControls.MDStatisticsItem)));
-
-            //detail.Add(new DetailItemFeature(typeof(StudentExtendControls.MeritUnifytItem))); //獎勵整合
-            //detail.Add(new DetailItemFeature(typeof(StudentExtendControls.DemeritUnifytItem))); //懲戒整合
-            //detail.Add(new DetailItemFeature(typeof(StudentExtendControls.AttendanceUnifyItem))); //缺曠整合
-
             ribbon = RoleAclSource.Instance["班級"]["功能按鈕"];
             ribbon.Add(new RibbonFeature("JHSchool.Class.Ribbon0060", "特殊學生表現"));
-            //ribbon.Add(new RibbonFeature("JHBehavior.Class.Ribbon0210", "聯絡資訊管理"));
 
             //學務作業
             ribbon = RoleAclSource.Instance["學務作業"];
@@ -414,17 +379,9 @@ namespace JHSchool.Behavior
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0030", "每日節次管理"));
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0040", "獎懲事由管理"));
 
-            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0060", "缺曠資料檢視"));
-
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0090", "導師評語代碼表"));
 
-            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0100", "銷過記錄清單"));
-
-            //暫時註解
-            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0100", "缺曠獎懲資料統計"));
-
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0022", "表現程度對照表"));
-            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0025", "日常生活表現輸入時間設定"));
 
             Catalog toolSetup = RoleAclSource.Instance["學務作業"];
             toolSetup.Add(new RibbonFeature("JJHSchool.StuAdmin.Ribbon0021", "上課天數設定"));

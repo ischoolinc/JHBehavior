@@ -35,22 +35,24 @@
             this.lblDate = new DevComponents.DotNetBar.LabelX();
             this.btnSave = new DevComponents.DotNetBar.ButtonX();
             this.btnExit = new DevComponents.DotNetBar.ButtonX();
-            this.cboSchool = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.cboSemester = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.dataGridViewX1 = new JHSchool.Behavior.StudentExtendControls.CustomDataGridView();
+            this.intSemester = new DevComponents.Editors.IntegerInput();
+            this.intSchoolYear = new DevComponents.Editors.IntegerInput();
             this.panelEx1.SuspendLayout();
             this.panelAbsence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intSemester)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intSchoolYear)).BeginInit();
             this.SuspendLayout();
             // 
             // panelEx1
             // 
-            this.panelEx1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelEx1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.panelEx1.Controls.Add(this.panelAbsence);
@@ -70,8 +72,8 @@
             // 
             // panelAbsence
             // 
-            this.panelAbsence.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelAbsence.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelAbsence.AutoSize = true;
             this.panelAbsence.ColumnCount = 1;
             this.panelAbsence.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -86,8 +88,8 @@
             // 
             // flpAbsence
             // 
-            this.flpAbsence.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpAbsence.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpAbsence.AutoSize = true;
             this.flpAbsence.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flpAbsence.Font = new System.Drawing.Font("微軟正黑體", 8F);
@@ -137,30 +139,6 @@
             this.btnExit.Text = "離開";
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // cboSchool
-            // 
-            this.cboSchool.DisplayMember = "Text";
-            this.cboSchool.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSchool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSchool.FormattingEnabled = true;
-            this.cboSchool.ItemHeight = 19;
-            this.cboSchool.Location = new System.Drawing.Point(333, 13);
-            this.cboSchool.Name = "cboSchool";
-            this.cboSchool.Size = new System.Drawing.Size(60, 25);
-            this.cboSchool.TabIndex = 12;
-            // 
-            // cboSemester
-            // 
-            this.cboSemester.DisplayMember = "Text";
-            this.cboSemester.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboSemester.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSemester.FormattingEnabled = true;
-            this.cboSemester.ItemHeight = 19;
-            this.cboSemester.Location = new System.Drawing.Point(451, 13);
-            this.cboSemester.Name = "cboSemester";
-            this.cboSemester.Size = new System.Drawing.Size(45, 25);
-            this.cboSemester.TabIndex = 12;
-            // 
             // labelX1
             // 
             this.labelX1.AutoSize = true;
@@ -185,7 +163,7 @@
             // 
             this.labelX2.BackgroundStyle.Class = "";
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(412, 16);
+            this.labelX2.Location = new System.Drawing.Point(423, 16);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(34, 21);
             this.labelX2.TabIndex = 8;
@@ -258,9 +236,9 @@
             this.dataGridViewX1.AllowUserToDeleteRows = false;
             this.dataGridViewX1.AllowUserToResizeColumns = false;
             this.dataGridViewX1.AllowUserToResizeRows = false;
-            this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewX1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewX1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -277,7 +255,6 @@
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(601, 137);
             this.dataGridViewX1.TabIndex = 14;
-            this.dataGridViewX1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewX1_CellEndEdit);
             this.dataGridViewX1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewX1_CellMouseClick);
             this.dataGridViewX1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewX1_CellMouseDoubleClick);
             this.dataGridViewX1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewX1_ColumnHeaderMouseClick);
@@ -285,22 +262,59 @@
             this.dataGridViewX1.SelectionChanged += new System.EventHandler(this.dataGridViewX1_SelectionChanged);
             this.dataGridViewX1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataGridViewX1_KeyUp);
             // 
+            // intSemester
+            // 
+            this.intSemester.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.intSemester.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.intSemester.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.intSemester.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.intSemester.Location = new System.Drawing.Point(466, 14);
+            this.intSemester.MaxValue = 2;
+            this.intSemester.MinValue = 1;
+            this.intSemester.Name = "intSemester";
+            this.intSemester.ShowUpDown = true;
+            this.intSemester.Size = new System.Drawing.Size(80, 25);
+            this.intSemester.TabIndex = 15;
+            this.intSemester.Value = 1;
+            // 
+            // intSchoolYear
+            // 
+            this.intSchoolYear.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.intSchoolYear.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.intSchoolYear.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.intSchoolYear.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.intSchoolYear.Location = new System.Drawing.Point(334, 14);
+            this.intSchoolYear.MaxValue = 999;
+            this.intSchoolYear.MinValue = 90;
+            this.intSchoolYear.Name = "intSchoolYear";
+            this.intSchoolYear.ShowUpDown = true;
+            this.intSchoolYear.Size = new System.Drawing.Size(80, 25);
+            this.intSchoolYear.TabIndex = 16;
+            this.intSchoolYear.Value = 90;
+            // 
             // AttendanceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(626, 316);
+            this.Controls.Add(this.intSchoolYear);
+            this.Controls.Add(this.intSemester);
             this.Controls.Add(this.dataGridViewX1);
             this.Controls.Add(this.dateTimeInput1);
-            this.Controls.Add(this.cboSemester);
-            this.Controls.Add(this.cboSchool);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.labelX1);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
             this.Name = "AttendanceForm";
             this.Text = "AttendanceEditor";
             this.panelEx1.ResumeLayout(false);
@@ -309,6 +323,8 @@
             this.panelAbsence.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intSemester)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intSchoolYear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,12 +338,12 @@
         private DevComponents.DotNetBar.LabelX lblDate;
         private DevComponents.DotNetBar.ButtonX btnSave;
         private DevComponents.DotNetBar.ButtonX btnExit;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx cboSchool;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx cboSemester;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput1;
         private CustomDataGridView dataGridViewX1;
+        private DevComponents.Editors.IntegerInput intSemester;
+        private DevComponents.Editors.IntegerInput intSchoolYear;
 
     }
 }

@@ -38,8 +38,8 @@
             this.dtiStartDate = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.dtiEndDate = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbRegisterDate = new System.Windows.Forms.RadioButton();
+            this.rbStartDate = new System.Windows.Forms.RadioButton();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             ((System.ComponentModel.ISupportInitialize)(this.dtiStartDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtiEndDate)).BeginInit();
@@ -60,6 +60,11 @@
             // 
             this.SelectAllChecked.AutoSize = true;
             this.SelectAllChecked.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.SelectAllChecked.BackgroundStyle.Class = "";
+            this.SelectAllChecked.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.SelectAllChecked.Checked = true;
             this.SelectAllChecked.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SelectAllChecked.CheckValue = "Y";
@@ -85,6 +90,11 @@
             // lbStartTxt
             // 
             this.lbStartTxt.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lbStartTxt.BackgroundStyle.Class = "";
+            this.lbStartTxt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lbStartTxt.Location = new System.Drawing.Point(129, 37);
             this.lbStartTxt.Name = "lbStartTxt";
             this.lbStartTxt.Size = new System.Drawing.Size(46, 23);
@@ -106,6 +116,11 @@
             // lbEndTxt
             // 
             this.lbEndTxt.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lbEndTxt.BackgroundStyle.Class = "";
+            this.lbEndTxt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lbEndTxt.Location = new System.Drawing.Point(129, 68);
             this.lbEndTxt.Name = "lbEndTxt";
             this.lbEndTxt.Size = new System.Drawing.Size(46, 23);
@@ -116,6 +131,11 @@
             // 
             this.lbSetupTxt.AutoSize = true;
             this.lbSetupTxt.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.lbSetupTxt.BackgroundStyle.Class = "";
+            this.lbSetupTxt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lbSetupTxt.Location = new System.Drawing.Point(129, 9);
             this.lbSetupTxt.Name = "lbSetupTxt";
             this.lbSetupTxt.Size = new System.Drawing.Size(127, 21);
@@ -129,10 +149,12 @@
             // 
             // 
             this.dtiStartDate.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.dtiStartDate.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiStartDate.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dtiStartDate.ButtonDropDown.Visible = true;
             this.dtiStartDate.ButtonFreeText.Checked = true;
             this.dtiStartDate.FreeTextEntryMode = true;
+            this.dtiStartDate.IsPopupCalendarOpen = false;
             this.dtiStartDate.Location = new System.Drawing.Point(180, 36);
             // 
             // 
@@ -142,6 +164,8 @@
             // 
             // 
             this.dtiStartDate.MonthCalendar.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
+            this.dtiStartDate.MonthCalendar.BackgroundStyle.Class = "";
+            this.dtiStartDate.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiStartDate.MonthCalendar.ClearButtonVisible = true;
             // 
             // 
@@ -152,6 +176,8 @@
             this.dtiStartDate.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.dtiStartDate.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.dtiStartDate.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1;
+            this.dtiStartDate.MonthCalendar.CommandsBackgroundStyle.Class = "";
+            this.dtiStartDate.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiStartDate.MonthCalendar.DayNames = new string[] {
         "日",
         "一",
@@ -169,6 +195,8 @@
             this.dtiStartDate.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
             this.dtiStartDate.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90;
             this.dtiStartDate.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.dtiStartDate.MonthCalendar.NavigationBackgroundStyle.Class = "";
+            this.dtiStartDate.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiStartDate.MonthCalendar.TodayButtonVisible = true;
             this.dtiStartDate.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dtiStartDate.Name = "dtiStartDate";
@@ -182,10 +210,12 @@
             // 
             // 
             this.dtiEndDate.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.dtiEndDate.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiEndDate.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dtiEndDate.ButtonDropDown.Visible = true;
             this.dtiEndDate.ButtonFreeText.Checked = true;
             this.dtiEndDate.FreeTextEntryMode = true;
+            this.dtiEndDate.IsPopupCalendarOpen = false;
             this.dtiEndDate.Location = new System.Drawing.Point(180, 67);
             // 
             // 
@@ -195,6 +225,8 @@
             // 
             // 
             this.dtiEndDate.MonthCalendar.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
+            this.dtiEndDate.MonthCalendar.BackgroundStyle.Class = "";
+            this.dtiEndDate.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiEndDate.MonthCalendar.ClearButtonVisible = true;
             // 
             // 
@@ -205,6 +237,8 @@
             this.dtiEndDate.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.dtiEndDate.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.dtiEndDate.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1;
+            this.dtiEndDate.MonthCalendar.CommandsBackgroundStyle.Class = "";
+            this.dtiEndDate.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiEndDate.MonthCalendar.DayNames = new string[] {
         "日",
         "一",
@@ -222,6 +256,8 @@
             this.dtiEndDate.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
             this.dtiEndDate.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90;
             this.dtiEndDate.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.dtiEndDate.MonthCalendar.NavigationBackgroundStyle.Class = "";
+            this.dtiEndDate.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiEndDate.MonthCalendar.TodayButtonVisible = true;
             this.dtiEndDate.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dtiEndDate.Name = "dtiEndDate";
@@ -232,41 +268,51 @@
             // 
             this.checkBoxX1.AutoSize = true;
             this.checkBoxX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.checkBoxX1.BackgroundStyle.Class = "";
+            this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.checkBoxX1.Location = new System.Drawing.Point(14, 200);
             this.checkBoxX1.Name = "checkBoxX1";
             this.checkBoxX1.Size = new System.Drawing.Size(107, 21);
             this.checkBoxX1.TabIndex = 23;
             this.checkBoxX1.Text = "包含銷過記錄";
             // 
-            // radioButton1
+            // rbRegisterDate
             // 
-            this.radioButton1.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(66)))), ((int)(((byte)(133)))));
-            this.radioButton1.Location = new System.Drawing.Point(180, 125);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(107, 21);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.Text = "獎懲登錄日期";
-            this.radioButton1.UseVisualStyleBackColor = false;
+            this.rbRegisterDate.BackColor = System.Drawing.Color.Transparent;
+            this.rbRegisterDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(66)))), ((int)(((byte)(133)))));
+            this.rbRegisterDate.Location = new System.Drawing.Point(180, 125);
+            this.rbRegisterDate.Name = "rbRegisterDate";
+            this.rbRegisterDate.Size = new System.Drawing.Size(107, 21);
+            this.rbRegisterDate.TabIndex = 0;
+            this.rbRegisterDate.Text = "獎懲登錄日期";
+            this.rbRegisterDate.UseVisualStyleBackColor = false;
             // 
-            // radioButton2
+            // rbStartDate
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.BackColor = System.Drawing.Color.Transparent;
-            this.radioButton2.Checked = true;
-            this.radioButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(66)))), ((int)(((byte)(133)))));
-            this.radioButton2.Location = new System.Drawing.Point(180, 98);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(104, 21);
-            this.radioButton2.TabIndex = 24;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "獎懲發生日期";
-            this.radioButton2.UseVisualStyleBackColor = false;
+            this.rbStartDate.AutoSize = true;
+            this.rbStartDate.BackColor = System.Drawing.Color.Transparent;
+            this.rbStartDate.Checked = true;
+            this.rbStartDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(66)))), ((int)(((byte)(133)))));
+            this.rbStartDate.Location = new System.Drawing.Point(180, 98);
+            this.rbStartDate.Name = "rbStartDate";
+            this.rbStartDate.Size = new System.Drawing.Size(104, 21);
+            this.rbStartDate.TabIndex = 24;
+            this.rbStartDate.TabStop = true;
+            this.rbStartDate.Text = "獎懲發生日期";
+            this.rbStartDate.UseVisualStyleBackColor = false;
             // 
             // labelX1
             // 
             this.labelX1.AutoSize = true;
             this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Location = new System.Drawing.Point(129, 152);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(167, 21);
@@ -279,8 +325,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(322, 232);
             this.Controls.Add(this.labelX1);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.rbStartDate);
+            this.Controls.Add(this.rbRegisterDate);
             this.Controls.Add(this.checkBoxX1);
             this.Controls.Add(this.dtiEndDate);
             this.Controls.Add(this.dtiStartDate);
@@ -291,6 +337,7 @@
             this.Controls.Add(this.lbEndTxt);
             this.Controls.Add(this.SelectAllChecked);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
             this.Name = "MeritDemeritStatistics";
             this.Text = "班級獎懲狀況統計";
             this.Load += new System.EventHandler(this.MeritDemeritStatistics_Load);
@@ -313,8 +360,8 @@
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dtiStartDate;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dtiEndDate;
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rbRegisterDate;
+        private System.Windows.Forms.RadioButton rbStartDate;
         private DevComponents.DotNetBar.LabelX labelX1;
     }
 }
