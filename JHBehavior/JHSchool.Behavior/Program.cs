@@ -142,16 +142,16 @@ namespace JHSchool.Behavior
 
             #region 在班級上增加RibbonBar
 
-            RibbonBarItem classSpecialItem = Class.Instance.RibbonBarItems["學務"];
+            //RibbonBarItem classSpecialItem = Class.Instance.RibbonBarItems["學務"];
 
-            classSpecialItem["特殊學生表現"].Size = RibbonBarButton.MenuButtonSize.Medium;
-            classSpecialItem["特殊學生表現"].Image = JHSchool.Behavior.ClassExtendControls.Resources.查詢特殊學生;
-            classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
-            classSpecialItem["特殊學生表現"].Click += delegate
-            {
-                SpecialForm SpecialFormNew = new SpecialForm();
-                SpecialFormNew.ShowDialog();
-            };
+            //classSpecialItem["特殊學生表現"].Size = RibbonBarButton.MenuButtonSize.Medium;
+            //classSpecialItem["特殊學生表現"].Image = JHSchool.Behavior.ClassExtendControls.Resources.查詢特殊學生;
+            //classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
+            //classSpecialItem["特殊學生表現"].Click += delegate
+            //{
+            //    SpecialForm SpecialFormNew = new SpecialForm();
+            //    SpecialFormNew.ShowDialog();
+            //};
 
             //classSpecialItem["聯絡資訊管理"].Size = RibbonBarButton.MenuButtonSize.Medium;
             //classSpecialItem["聯絡資訊管理"].Image = Properties.Resources.home_write_64;
@@ -163,11 +163,11 @@ namespace JHSchool.Behavior
             //};
 
             //當選擇班級後,重新檢查一次
-            Class.Instance.SelectedListChanged += delegate
-            {
-                classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
-                //classSpecialItem["聯絡資訊管理"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHBehavior.Class.Ribbon0210"].Executable);
-            };
+            //Class.Instance.SelectedListChanged += delegate
+            //{
+            //    classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
+            //    //classSpecialItem["聯絡資訊管理"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHBehavior.Class.Ribbon0210"].Executable);
+            //};
 
             #endregion
 
@@ -197,6 +197,27 @@ namespace JHSchool.Behavior
                 ReduceForm RedForm = new ReduceForm();
                 RedForm.ShowDialog();
             };
+
+            string URL缺曠類別管理 = "ischool/國中系統/學務/管理/缺曠類別管理";
+            FISCA.Features.Register(URL缺曠類別管理, arg =>
+            {
+                AbsenceConfigForm AbsForm = new AbsenceConfigForm();
+                AbsForm.ShowDialog();
+            });
+
+            string URL每日節次管理 = "ischool/國中系統/學務/管理/每日節次管理";
+            FISCA.Features.Register(URL每日節次管理, arg =>
+            {
+                PeriodConfigForm PerForm = new PeriodConfigForm();
+                PerForm.ShowDialog();
+            });
+
+            string URL功過換算管理 = "ischool/國中系統/學務/管理/功過換算管理";
+            FISCA.Features.Register(URL功過換算管理, arg =>
+            {
+                ReduceForm RedForm = new ReduceForm();
+                RedForm.ShowDialog();
+            });
 
             rbItem1["對照/代碼"].Image = Properties.Resources.notepad_lock_64;
             rbItem1["對照/代碼"].Size = RibbonBarButton.MenuButtonSize.Large;
@@ -369,8 +390,8 @@ namespace JHSchool.Behavior
             detail.Add(new DetailItemFeature(typeof(AttendanceItem)));
             detail.Add(new DetailItemFeature(typeof(AttendanceUnifytIItem))); //缺曠學期統計(NEW)
 
-            ribbon = RoleAclSource.Instance["班級"]["功能按鈕"];
-            ribbon.Add(new RibbonFeature("JHSchool.Class.Ribbon0060", "特殊學生表現"));
+            //ribbon = RoleAclSource.Instance["班級"]["功能按鈕"];
+            //ribbon.Add(new RibbonFeature("JHSchool.Class.Ribbon0060", "特殊學生表現"));
 
             //學務作業
             ribbon = RoleAclSource.Instance["學務作業"];
