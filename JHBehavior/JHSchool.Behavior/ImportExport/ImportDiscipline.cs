@@ -62,6 +62,7 @@ namespace JHSchool.Behavior.ImportExport
                 bool pass = true;
                 int schoolYear, semester;
                 DateTime occurdate;
+               
                 bool isInsert = false;
                 bool isUpdata = false;
                 #region 驗共同必填欄位
@@ -75,11 +76,22 @@ namespace JHSchool.Behavior.ImportExport
                     e.ErrorFields.Add("學期", "必需輸入數字");
                     pass = false;
                 }
-                if (!DateTime.TryParse(e.Data["日期"], out occurdate))
-                {
+
+                // 2016/6/21 穎驊修改，因有學校反映在匯入獎懲資料時，會將日期打成民國年計算(應該要西元)，此舉會造成系統後續錯誤，
+                // 經過討論，決定新增提示訊息，以後只要輸入民國年、空白年，會在錯誤報告Excel中標示提醒，
+                // 下面運作的邏輯是:
+                //1. 假如資料為null、型別錯誤 使得TryParse失敗 會中止
+                //2. 假如TryParse成功，轉換輸出到occurdate，但其來源明顯是民國年(EX:105/6/6)，按它原本的邏輯會把他當成西元105/6/6
+                //所以在此就另外加一個判斷，假如此年份比1911小，就視為使用者輸入的是民國年，後續程序會擋住他，放入錯誤報告Excel中，
+                // 能夠如此大膽設條件，建立在兩個前提之下:1. 我們的正常資料不會有西元1911年前的資料 2.我們的資料也不會有民國1911後的資料
+                // 如果能等到民國1911年 還要再來處理這個Bug，那我也覺得心滿意足了哈哈
+
+                if (!DateTime.TryParse(e.Data["日期"], out occurdate) || occurdate.Year<1911)
+                {                    
                     e.ErrorFields.Add("日期", "輸入格式為 西元年//月//日");
                     pass = false;
                 }
+         
                 #endregion
                 if (!pass)
                 {
@@ -261,11 +273,24 @@ namespace JHSchool.Behavior.ImportExport
                                 }
                             }
                             break;
+                        // 2016/6/21 穎驊修改，因有學校反映在匯入獎懲資料時，會將日期打成民國年計算(應該要西元)，此舉會造成系統後續錯誤，
+                        // 經過討論，決定新增提示訊息，以後只要輸入民國年、空白年，會在錯誤報告Excel中標示提醒，
+                        // 下面運作的邏輯是:
+                        //1. 假如資料為null、型別錯誤 使得TryParse失敗 會中止
+                        //2. 假如TryParse成功，轉換輸出到occurdate，但其來源明顯是民國年(EX:105/6/6)，按它原本的邏輯會把他當成西元105/6/6
+                        //所以在此就另外加一個判斷，假如此年份比1911小，就視為使用者輸入的是民國年，後續程序會擋住他，放入錯誤報告Excel中，
+                        // 能夠如此大膽設條件，建立在兩個前提之下:1. 我們的正常資料不會有西元1911年前的資料 2.我們的資料也不會有民國1911後的資料
+                        // 如果能等到民國1911年 還要再來處理這個Bug，那我也覺得心滿意足了哈哈
+
                         case "銷過日期":
-                            if (e.Data[field] != "" && !DateTime.TryParse(e.Data[field], out dateTime))
+                            if (e.Data[field] != "")
                             {
-                                e.ErrorFields.Add(field, "輸入格式為 西元年//月//日");
-                                pass = false;
+                                if (!DateTime.TryParse(e.Data[field], out dateTime) || dateTime.Year < 1911)
+                                {
+                                    e.ErrorFields.Add(field, "輸入格式為 西元年//月//日");
+                                    pass = false;
+                                }
+                                break;
                             }
                             break;
                         case "是否銷過":
@@ -275,11 +300,17 @@ namespace JHSchool.Behavior.ImportExport
                                 pass = false;
                             }
                             break;
+
+
                         case "登錄日期":
-                            if (e.Data[field] != "" && !DateTime.TryParse(e.Data[field], out dateTime))
+                            if (e.Data[field] != "")
                             {
-                                e.ErrorFields.Add(field, "輸入格式為 西元年//月//日");
-                                pass = false;
+                                if (!DateTime.TryParse(e.Data[field], out dateTime) || dateTime.Year < 1911)
+                                {
+                                    e.ErrorFields.Add(field, "輸入格式為 西元年//月//日");
+                                    pass = false;
+                                }
+                                break;
                             }
                             break;
                         #endregion
