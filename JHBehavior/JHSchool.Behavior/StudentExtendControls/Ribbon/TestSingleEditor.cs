@@ -17,6 +17,8 @@ using FISCA.LogAgent;
 using JHSchool.Behavior.Legacy.AttendanceEditor;
 using JHSchool.Behavior.Legacy;
 using JHSchool.Data;
+using System.Xml.Linq;
+using System.Xml.XPath;
 //using SmartSchool.StudentRelated;
 //using SmartSchool.ApplicationLog;
 //using SmartSchool.Properties;
@@ -34,10 +36,9 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
         private DateTime _currentStartDate;
         private DateTime _currentEndDate;
 
-        List<DataGridViewRow> _hiddenRows; //隱藏的Rows
-
         List<string> WeekDay = new List<string>();
         List<DayOfWeek> nowWeekDay = new List<DayOfWeek>();
+        List<DateTime> _Holidays = new List<DateTime>();
 
         Dictionary<string, int> ColumnIndex = new Dictionary<string, int>();
 
@@ -56,8 +57,6 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             _studentList = studentList;
             _absenceList = new Dictionary<string, AbsenceInfo>();
             _semesterProvider = SemesterProvider.GetInstance(); 
-
-            _hiddenRows = new List<DataGridViewRow>();
         }
 
         private void SingleEditor_Load(object sender, EventArgs e)
@@ -67,8 +66,8 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             InitializeRadioButton(); //缺曠類別建立
             InitializeDateRange(); //取得日期定義
             InitializeDataGridViewColumn(); //DataGridView的Column建立
-            SearchDateRange();
-            GetAbsense();
+            //SearchDateRange();
+            //GetAbsense();
             LoadAbsense();
 
             #endregion
@@ -314,11 +313,6 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
 
                 while (date.CompareTo(end) <= 0)
                 {
-                    if (!nowWeekDay.Contains(date.DayOfWeek)) //這裡
-                    {
-                        date = date.AddDays(1);
-                        continue;
-                    }
                     string dateValue = date.ToShortDateString();
 
                     DataGridViewRow row = new DataGridViewRow();
@@ -774,9 +768,30 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             nowWeekDay = ChengDayOfWeel(WeekDay);
             #endregion
 
+            #region 取得假別清單
+            ConfigData _CD;
+            //取得之前設定設定
+            _CD = School.Configuration["SCHOOL_HOLIDAY_CONFIG_STRING"];
+            XElement rootXml = null;
+            string xmlContent = _CD["CONFIG_STRING"];
+
+            if (!string.IsNullOrWhiteSpace(xmlContent))
+                rootXml = XElement.Parse(xmlContent);
+            else
+                rootXml = new XElement("SchoolHolidays");
+
+            //讀出之前的假日清單
+            foreach (XElement holiday in rootXml.XPathSelectElements("//Holiday"))
+            {
+                DateTime date;
+                if (DateTime.TryParse(holiday.Value, out date))
+                    _Holidays.Add(date);
+            }
+            #endregion
+
             SearchDateRange();
             GetAbsense();
-            chkHasData_CheckedChanged(null, null);
+            filterRows(null, null);
 
         }
 
@@ -1033,40 +1048,53 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             #endregion
         }
 
-        private void chkHasData_CheckedChanged(object sender, EventArgs e)
+        private void filterRows(object sender, EventArgs e)
         {
-            #region 僅顯示有缺曠的資料
             dataGridView.SuspendLayout();
 
-            if (chkHasData.Checked == true)
+            foreach (DataGridViewRow row in dataGridView.Rows)
             {
-                foreach (DataGridViewRow row in dataGridView.Rows)
+                row.Visible = true;
+
+                bool hasData = false;
+                foreach (DataGridViewCell cell in row.Cells)
                 {
-                    bool hasData = false;
-                    foreach (DataGridViewCell cell in row.Cells)
+                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (!string.IsNullOrEmpty("" + cell.Value))
                     {
-                        if (cell.ColumnIndex < _startIndex) continue;
-                        if (!string.IsNullOrEmpty("" + cell.Value))
-                        {
-                            hasData = true;
-                            break;
-                        }
-                    }
-                    if (hasData == false)
-                    {
-                        _hiddenRows.Add(row);
-                        row.Visible = false;
+                        hasData = true;
+                        break;
                     }
                 }
-            }
-            else
-            {
-                foreach (DataGridViewRow row in _hiddenRows)
-                    row.Visible = true;
+
+                bool isHolday = false;
+                RowTag rowTag = row.Tag as RowTag;
+                if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //篩選不顯示的星期
+                {
+                    isHolday = true;
+                }
+                else if (_Holidays.Contains(rowTag.Date)) //篩選假日
+                {
+                    isHolday = true;
+                }
+
+                if (hasData)
+                {
+                    if (isHolday)
+                    {
+                        row.Cells[ColumnIndex["星期"]].Style.ForeColor = Color.Red;
+                    }
+                }
+                else
+                {
+                    if (chkHasData.Checked == true)
+                        row.Visible = false;
+                    if (isHolday)
+                        row.Visible = false;
+                }
             }
 
             dataGridView.ResumeLayout(); 
-            #endregion
         }
 
         private void btnDay_Click(object sender, EventArgs e)

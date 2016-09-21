@@ -403,7 +403,7 @@
             this.chkHasData.Size = new System.Drawing.Size(146, 21);
             this.chkHasData.TabIndex = 6;
             this.chkHasData.Text = "僅顯示有缺曠之資料";
-            this.chkHasData.CheckedChanged += new System.EventHandler(this.chkHasData_CheckedChanged);
+            this.chkHasData.CheckedChanged += new System.EventHandler(this.filterRows);
             // 
             // SingleEditor
             // 

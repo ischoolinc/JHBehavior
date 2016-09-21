@@ -15,6 +15,8 @@ using Framework;
 using Framework.Legacy;
 using FISCA.LogAgent;
 using JHSchool.Behavior.Legacy.AttendanceEditor;
+using System.Xml.Linq;
+using System.Xml.XPath;
 //using SmartSchool.StudentRelated;
 //using SmartSchool.ApplicationLog;
 //using SmartSchool.Properties;
@@ -34,10 +36,9 @@ namespace JHSchool.Behavior.Legacy
 
         Dictionary<string, int> ColumnIndex = new Dictionary<string, int>();
 
-        List<DataGridViewRow> _hiddenRows; //隱藏的Rows
-
         List<string> WeekDay = new List<string>();
         List<DayOfWeek> nowWeekDay = new List<DayOfWeek>();
+        List<DateTime> _Holidays = new List<DateTime>();
 
         //System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
 
@@ -53,10 +54,9 @@ namespace JHSchool.Behavior.Legacy
             _errorProvider = new ErrorProvider();
             _student = student;
             _absenceList = new Dictionary<string, AbsenceInfo>();
-            _semesterProvider = SemesterProvider.GetInstance(); 
+            _semesterProvider = SemesterProvider.GetInstance();
             //_startIndex = 4;
 
-            _hiddenRows = new List<DataGridViewRow>();
         }
 
         private void SingleEditor_Load(object sender, EventArgs e)
@@ -263,11 +263,6 @@ namespace JHSchool.Behavior.Legacy
 
             while (date.CompareTo(end) <= 0)
             {
-                if (!nowWeekDay.Contains(date.DayOfWeek)) //這裡
-                {
-                    date = date.AddDays(1);
-                    continue;
-                }
                 string dateValue = date.ToShortDateString();
 
                 DataGridViewRow row = new DataGridViewRow();
@@ -370,7 +365,7 @@ namespace JHSchool.Behavior.Legacy
                         }
                     }
                 }
-            } 
+            }
             #endregion
         }
 
@@ -482,7 +477,7 @@ namespace JHSchool.Behavior.Legacy
                         deleteData.Add(tag.Date.ToShortDateString());
                     }
                 }
-                    #endregion
+                #endregion
             }
 
             #region InsertHelper
@@ -669,9 +664,30 @@ namespace JHSchool.Behavior.Legacy
             nowWeekDay = ChengDayOfWeel(WeekDay);
             #endregion
 
+            #region 取得假別清單
+            ConfigData _CD;
+            //取得之前設定設定
+            _CD = School.Configuration["SCHOOL_HOLIDAY_CONFIG_STRING"];
+            XElement rootXml = null;
+            string xmlContent = _CD["CONFIG_STRING"];
+
+            if (!string.IsNullOrWhiteSpace(xmlContent))
+                rootXml = XElement.Parse(xmlContent);
+            else
+                rootXml = new XElement("SchoolHolidays");
+
+            //讀出之前的假日清單
+            foreach (XElement holiday in rootXml.XPathSelectElements("//Holiday"))
+            {
+                DateTime date;
+                if (DateTime.TryParse(holiday.Value, out date))
+                    _Holidays.Add(date);
+            }
+            #endregion
+
             SearchDateRange();
             GetAbsense();
-            chkHasData_CheckedChanged(null, null);
+            filterRows(null, null);
 
         }
 
@@ -711,7 +727,7 @@ namespace JHSchool.Behavior.Legacy
                 }
             }
 
-            return DOW; 
+            return DOW;
             #endregion
         }
 
@@ -734,7 +750,7 @@ namespace JHSchool.Behavior.Legacy
                     return "六";
                 default:
                     return "日";
-            } 
+            }
             #endregion
         }
 
@@ -750,7 +766,7 @@ namespace JHSchool.Behavior.Legacy
             else
                 this.Close();
         }
-        
+
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             #region CellDoubleClick
@@ -772,7 +788,7 @@ namespace JHSchool.Behavior.Legacy
                 cell.Value = string.Empty;
                 acInfo.SetValue(AbsenceInfo.Empty);
             }
-            cell.Tag = acInfo; 
+            cell.Tag = acInfo;
             #endregion
         }
 
@@ -817,7 +833,7 @@ namespace JHSchool.Behavior.Legacy
                 {
                     cell.ErrorText = string.Empty;
                 }
-            } 
+            }
             #endregion
         }
 
@@ -861,10 +877,10 @@ namespace JHSchool.Behavior.Legacy
                     }
                     cell.Tag = acInfo;
                 }
-            } 
+            }
             #endregion
         }
-                
+
         //private void picLock_Click(object sender, EventArgs e)
         //{
         //    bool isLock = false;
@@ -905,7 +921,7 @@ namespace JHSchool.Behavior.Legacy
             }
             _currentStartDate = dateTimeInput1.Value;
             dataGridView.Rows.Clear();
-            LoadAbsense(); 
+            LoadAbsense();
             #endregion
         }
 
@@ -925,9 +941,9 @@ namespace JHSchool.Behavior.Legacy
             }
             _currentEndDate = dateTimeInput2.Value;
             dataGridView.Rows.Clear();
-            LoadAbsense();  
-            #endregion  
-        } 
+            LoadAbsense();
+            #endregion
+        }
 
         private bool IsDirty()
         {
@@ -949,44 +965,57 @@ namespace JHSchool.Behavior.Legacy
                     }
                 }
             }
-            return false; 
+            return false;
             #endregion
         }
 
-        private void chkHasData_CheckedChanged(object sender, EventArgs e)
+        private void filterRows(object sender, EventArgs e)
         {
-            #region 僅顯示有缺曠的資料
             dataGridView.SuspendLayout();
-
-            if (chkHasData.Checked == true)
+            
+            foreach (DataGridViewRow row in dataGridView.Rows)
             {
-                foreach (DataGridViewRow row in dataGridView.Rows)
+                row.Visible = true;
+
+                bool hasData = false;
+                foreach (DataGridViewCell cell in row.Cells)
                 {
-                    bool hasData = false;
-                    foreach (DataGridViewCell cell in row.Cells)
+                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (!string.IsNullOrEmpty("" + cell.Value))
                     {
-                        if (cell.ColumnIndex < _startIndex) continue;
-                        if (!string.IsNullOrEmpty("" + cell.Value))
-                        {
-                            hasData = true;
-                            break;
-                        }
-                    }
-                    if (hasData == false)
-                    {
-                        _hiddenRows.Add(row);
-                        row.Visible = false;
+                        hasData = true;
+                        break;
                     }
                 }
-            }
-            else
-            {
-                foreach (DataGridViewRow row in _hiddenRows)
-                    row.Visible = true;
+
+                bool isHolday = false;
+                RowTag rowTag = row.Tag as RowTag;
+                if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //篩選不顯示的星期
+                {
+                    isHolday = true;
+                }
+                else if (_Holidays.Contains(rowTag.Date)) //篩選假日
+                {
+                    isHolday = true;
+                }
+
+                if (hasData)
+                {
+                    if (isHolday)
+                    {
+                        row.Cells[ColumnIndex["星期"]].Style.ForeColor = Color.Red;
+                    }
+                }
+                else
+                {
+                    if (chkHasData.Checked == true)
+                        row.Visible = false;
+                    if (isHolday)
+                        row.Visible = false;
+                }
             }
 
-            dataGridView.ResumeLayout(); 
-            #endregion
+            dataGridView.ResumeLayout();
         }
 
         private void btnDay_Click(object sender, EventArgs e)
@@ -996,7 +1025,7 @@ namespace JHSchool.Behavior.Legacy
             if (Sday.ShowDialog() == DialogResult.Yes)
             {
                 LoadAbsense();
-            } 
+            }
             #endregion
         }
 
@@ -1056,7 +1085,7 @@ namespace JHSchool.Behavior.Legacy
         {
             get { return _key; }
             set { _key = value; }
-        } 
+        }
 
         #endregion
     }
