@@ -175,7 +175,7 @@ namespace JHSchool.Behavior.Legacy
                 _checkedAbsence = rb.Tag as AbsenceInfo;
                 foreach (DataGridViewCell cell in dataGridView.SelectedCells)
                 {
-                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (cell.ColumnIndex < _startIndex || cell.OwningRow.Visible == false) continue;
                     cell.Value = _checkedAbsence.Abbreviation;
                     AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
                     if (acInfo == null)
@@ -847,7 +847,7 @@ namespace JHSchool.Behavior.Legacy
                 if (e.KeyCode != Keys.Space && e.KeyCode != Keys.Delete) return;
                 foreach (DataGridViewCell cell in dataGridView.SelectedCells)
                 {
-                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (cell.ColumnIndex < _startIndex || cell.OwningRow.Visible == false) continue;
                     cell.Value = null;
                     AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
                     if (acInfo != null)
@@ -859,7 +859,7 @@ namespace JHSchool.Behavior.Legacy
                 AbsenceInfo info = _absenceList[key];
                 foreach (DataGridViewCell cell in dataGridView.SelectedCells)
                 {
-                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (cell.ColumnIndex < _startIndex || cell.OwningRow.Visible == false) continue;
                     AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
 
                     if (acInfo == null)
@@ -972,7 +972,7 @@ namespace JHSchool.Behavior.Legacy
         private void filterRows(object sender, EventArgs e)
         {
             dataGridView.SuspendLayout();
-            
+
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 row.Visible = true;
