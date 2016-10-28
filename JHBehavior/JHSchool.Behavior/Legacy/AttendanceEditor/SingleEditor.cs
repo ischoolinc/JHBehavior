@@ -147,7 +147,17 @@ namespace JHSchool.Behavior.Legacy
             foreach (XmlElement element in helper.GetElements("Absence"))
             {
                 AbsenceInfo info = new AbsenceInfo(element);
-                _absenceList.Add(info.Hotkey.ToUpper(), info);
+                //熱鍵不重覆
+                if (!_absenceList.ContainsKey(info.Hotkey.ToUpper()))
+                {
+                    _absenceList.Add(info.Hotkey.ToUpper(), info);
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("缺曠別：{0}\n熱鍵：{1} 已重覆\n(英文字母大小寫視為相同熱鍵)");
+                    MsgBox.Show(string.Format(sb.ToString(), info.Name, info.Hotkey));
+                }
 
                 RadioButton rb = new RadioButton();
                 rb.Text = info.Name + "(" + info.Hotkey + ")";
