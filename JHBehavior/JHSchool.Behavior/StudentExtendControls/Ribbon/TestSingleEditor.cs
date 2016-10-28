@@ -1069,7 +1069,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 bool hasData = false;
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    if (cell.ColumnIndex < _startIndex) continue;
+                    if (cell.ColumnIndex < _startIndex || cell.OwningRow.Visible == false) continue;
                     if (!string.IsNullOrEmpty("" + cell.Value))
                     {
                         hasData = true;
