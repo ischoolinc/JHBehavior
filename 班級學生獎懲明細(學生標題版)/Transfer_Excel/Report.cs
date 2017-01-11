@@ -247,13 +247,13 @@ namespace Transfer_Excel
                 #region 判斷紙張大小
                 if (size == 0)
                 {
-                    ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
-                    ws.PageSetup.Zoom = 140;
-                }
-                else if (size == 1)
-                {
                     ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
                     ws.PageSetup.Zoom = 100;
+                }
+                else if (size == 1)
+                {                    
+                    ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
+                    ws.PageSetup.Zoom = 140;
                 }
                 else if (size == 2)
                 {
