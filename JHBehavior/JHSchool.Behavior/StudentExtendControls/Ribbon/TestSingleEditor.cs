@@ -1081,7 +1081,11 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 RowTag rowTag = row.Tag as RowTag;
                 if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //篩選不顯示的星期
                 {
-                    isHolday = true;
+
+                    //2017/4/28 穎驊更新，因應 高雄小組 [02-04][02] 長假登錄問題 項目，
+                    // 日後將不會顯示"非在星期設定內的缺曠資料"，另外此次更新 也將UI左下 "僅顯示有缺曠之資料"Chkbox 設為看不見。
+                    row.Visible = false;
+                    //isHolday = true;
                 }
                 else if (_Holidays.Contains(rowTag.Date)) //篩選假日
                 {

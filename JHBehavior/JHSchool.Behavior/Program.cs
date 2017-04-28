@@ -361,6 +361,14 @@ namespace JHSchool.Behavior
             };
 
             rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Enable = User.Acl["JHSchool.Student.Ribbon0161"].Executable;
+
+            // 2017/4/28 穎驊更新，因應高雄小組會議 [02-05][01] 非明細獎懲紀錄問題 項目， 局端決議 將各校 匯入獎勵懲戒統計 拿掉，避免使用者誤使用
+            // 在此將其改為不可以見。
+            // 另外由於局端要求，希望在test.kh.edu.tw 能暫時保留此選項，供它們 2017/9 教育訓練說明用，另外做了一個專門掛給test.kh.edu.tw的模組，
+            // 會將此功能開啟
+
+            rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Visible = false;
+
             rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Import.Importer importer = new JHSchool.Behavior.ImportExport.ImportDisciplineStatistics();
