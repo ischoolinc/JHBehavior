@@ -30,6 +30,8 @@ namespace JHSchool.Behavior.Report
         private void InitializeComponent()
         {
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
@@ -37,8 +39,8 @@ namespace JHSchool.Behavior.Report
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
-            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.cb2item1 = new DevComponents.Editors.ComboItem();
+            this.cb2item2 = new DevComponents.Editors.ComboItem();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,10 +89,40 @@ namespace JHSchool.Behavior.Report
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "列印設定";
             // 
+            // labelX2
+            // 
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(11, 49);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(60, 21);
+            this.labelX2.TabIndex = 3;
+            this.labelX2.Text = "樣板種類";
+            // 
+            // comboBoxEx2
+            // 
+            this.comboBoxEx2.DisplayMember = "Text";
+            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEx2.FormattingEnabled = true;
+            this.comboBoxEx2.ItemHeight = 19;
+            this.comboBoxEx2.Items.AddRange(new object[] {
+            this.cb2item1,
+            this.cb2item2});
+            this.comboBoxEx2.Location = new System.Drawing.Point(77, 45);
+            this.comboBoxEx2.Name = "comboBoxEx2";
+            this.comboBoxEx2.Size = new System.Drawing.Size(77, 25);
+            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comboBoxEx2.TabIndex = 2;
+            // 
             // comboBoxEx1
             // 
             this.comboBoxEx1.DisplayMember = "Text";
             this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEx1.FormattingEnabled = true;
             this.comboBoxEx1.ItemHeight = 19;
             this.comboBoxEx1.Items.AddRange(new object[] {
@@ -153,30 +185,13 @@ namespace JHSchool.Behavior.Report
             this.buttonX2.Text = "取消";
             this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
             // 
-            // comboBoxEx2
+            // cb2item1
             // 
-            this.comboBoxEx2.DisplayMember = "Text";
-            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx2.FormattingEnabled = true;
-            this.comboBoxEx2.ItemHeight = 19;
-            this.comboBoxEx2.Location = new System.Drawing.Point(77, 45);
-            this.comboBoxEx2.Name = "comboBoxEx2";
-            this.comboBoxEx2.Size = new System.Drawing.Size(77, 25);
-            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx2.TabIndex = 2;
+            this.cb2item1.Text = "中文版";
             // 
-            // labelX2
+            // cb2item2
             // 
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(11, 49);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(60, 21);
-            this.labelX2.TabIndex = 3;
-            this.labelX2.Text = "樣板種類";
+            this.cb2item2.Text = "英文版";
             // 
             // AttendanceConfig
             // 
@@ -187,6 +202,7 @@ namespace JHSchool.Behavior.Report
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AttendanceConfig";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -209,5 +225,7 @@ namespace JHSchool.Behavior.Report
         private DevComponents.Editors.ComboItem comboItem3;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx2;
+        private DevComponents.Editors.ComboItem cb2item1;
+        private DevComponents.Editors.ComboItem cb2item2;
     }
 }

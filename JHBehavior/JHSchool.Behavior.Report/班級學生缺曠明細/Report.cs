@@ -252,7 +252,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             }
             else
             {
-                titlename1 = "Studnet Attendance Checklist";
+                titlename1 = " Studnet Attendance Checklist";
                 titlename2 = "Date:";
             }
             #endregion

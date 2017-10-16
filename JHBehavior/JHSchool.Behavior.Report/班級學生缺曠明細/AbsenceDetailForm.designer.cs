@@ -74,8 +74,6 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput2.ButtonDropDown.Visible = true;
-            this.dateTimeInput2.ButtonFreeText.Checked = true;
-            this.dateTimeInput2.FreeTextEntryMode = true;
             this.dateTimeInput2.Location = new System.Drawing.Point(172, 64);
             // 
             // 
@@ -131,8 +129,7 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput1.ButtonDropDown.Visible = true;
-            this.dateTimeInput1.ButtonFreeText.Checked = true;
-            this.dateTimeInput1.FreeTextEntryMode = true;
+            this.dateTimeInput1.IsInputReadOnly = true;
             this.dateTimeInput1.Location = new System.Drawing.Point(19, 64);
             // 
             // 
@@ -213,6 +210,7 @@ namespace JHSchool.Behavior.Report
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.buttonX2);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3);
             this.Name = "AbsenceDetailForm";
             this.Text = "班級缺曠記錄明細";

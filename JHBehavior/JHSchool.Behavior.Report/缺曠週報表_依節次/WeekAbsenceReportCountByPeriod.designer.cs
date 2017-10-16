@@ -87,8 +87,6 @@
             this.dateTimeInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput2.ButtonDropDown.Visible = true;
-            this.dateTimeInput2.ButtonFreeText.Checked = true;
-            this.dateTimeInput2.FreeTextEntryMode = true;
             this.dateTimeInput2.Location = new System.Drawing.Point(205, 59);
             // 
             // 
@@ -143,8 +141,6 @@
             this.dateTimeInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput1.ButtonDropDown.Visible = true;
-            this.dateTimeInput1.ButtonFreeText.Checked = true;
-            this.dateTimeInput1.FreeTextEntryMode = true;
             this.dateTimeInput1.Location = new System.Drawing.Point(16, 59);
             // 
             // 
@@ -234,6 +230,7 @@
             this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
+            this.DoubleBuffered = true;
             this.Name = "WeekAbsenceReportCountByPeriod";
             this.Text = "列印週統計報表(依節次)";
             this.Controls.SetChildIndex(this.dateTimeInput2, 0);

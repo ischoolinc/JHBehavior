@@ -13,8 +13,7 @@ namespace JHSchool.Behavior.Report
         {
             get { return _sizeIndex; }
         }
-
-        // 2017/10/13
+        
         public string ReportStyle
         {
             get { return _reportstyle; }

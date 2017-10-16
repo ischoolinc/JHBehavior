@@ -121,8 +121,6 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput2.ButtonDropDown.Visible = true;
-            this.dateTimeInput2.ButtonFreeText.Checked = true;
-            this.dateTimeInput2.FreeTextEntryMode = true;
             this.dateTimeInput2.IsPopupCalendarOpen = false;
             this.dateTimeInput2.Location = new System.Drawing.Point(86, 66);
             // 
@@ -182,8 +180,6 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput1.ButtonDropDown.Visible = true;
-            this.dateTimeInput1.ButtonFreeText.Checked = true;
-            this.dateTimeInput1.FreeTextEntryMode = true;
             this.dateTimeInput1.IsPopupCalendarOpen = false;
             this.dateTimeInput1.Location = new System.Drawing.Point(86, 36);
             // 
@@ -341,6 +337,7 @@ namespace JHSchool.Behavior.Report
             this.Controls.Add(this.labelX7);
             this.Controls.Add(this.checkBoxX1);
             this.Controls.Add(this.buttonX1);
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SelectAttendanceForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

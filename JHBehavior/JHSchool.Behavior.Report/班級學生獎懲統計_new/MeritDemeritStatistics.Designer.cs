@@ -152,8 +152,6 @@
             this.dtiStartDate.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiStartDate.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dtiStartDate.ButtonDropDown.Visible = true;
-            this.dtiStartDate.ButtonFreeText.Checked = true;
-            this.dtiStartDate.FreeTextEntryMode = true;
             this.dtiStartDate.IsPopupCalendarOpen = false;
             this.dtiStartDate.Location = new System.Drawing.Point(180, 36);
             // 
@@ -213,8 +211,6 @@
             this.dtiEndDate.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dtiEndDate.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dtiEndDate.ButtonDropDown.Visible = true;
-            this.dtiEndDate.ButtonFreeText.Checked = true;
-            this.dtiEndDate.FreeTextEntryMode = true;
             this.dtiEndDate.IsPopupCalendarOpen = false;
             this.dtiEndDate.Location = new System.Drawing.Point(180, 67);
             // 
