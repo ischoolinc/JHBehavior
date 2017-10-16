@@ -201,6 +201,11 @@
       <DependentUpon>ProjectResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SortClassIndex.cs" />
     <Compile Include="StudentSortObj.cs" />
     <Compile Include="tool.cs" />
@@ -377,6 +382,10 @@
       <LastGenOutput>ProjectResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="學生獎勵明細\SelectMeritForm.resx">
       <DependentUpon>SelectMeritForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -508,6 +517,7 @@
     <Content Include="ProjectResource\LoadingIcon.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ProjectResource\班級學生缺曠明細_英文.xls" />
     <None Include="ProjectResource\班級學生缺曠統計.xls" />
     <None Include="ProjectResource\學生缺曠明細.xls" />
     <None Include="ProjectResource\學生獎懲記錄明細.xls" />

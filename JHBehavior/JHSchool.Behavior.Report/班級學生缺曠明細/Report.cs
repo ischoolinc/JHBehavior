@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Xml;
 using Aspose.Cells;
 using FISCA.DSAUtil;
+using K12.Data;
+using K12.Presentation;
 
 namespace JHSchool.Behavior.Report.班級學生缺曠明細
 {
@@ -25,8 +27,8 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             if (form.ShowDialog() == DialogResult.OK)
             {
                 FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化班級學生缺曠明細...");
-
-                object[] args = new object[] { form.StartDate, form.EndDate, form.PaperSize };
+                // 2017/10/13
+                object[] args = new object[] { form.StartDate, form.EndDate, form.PaperSize, form.ReportStyle };
 
                 _BGWClassStudentAbsenceDetail = new BackgroundWorker();
                 _BGWClassStudentAbsenceDetail.DoWork += new DoWorkEventHandler(_BGWClassStudentAbsenceDetail_DoWork);
@@ -50,7 +52,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             DateTime startDate = (DateTime)args[0];
             DateTime endDate = (DateTime)args[1];
             int size = (int)args[2];
-
+            string style = (string)args[3];
             #region 快取資料
 
             List<ClassRecord> selectedClass = Class.Instance.SelectedList;
@@ -67,7 +69,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
             //所有學生ID
             List<string> allStudentID = new List<string>();
-
+            
             //缺曠筆數
             int currentCount = 1;
             int totalNumber = 0;
@@ -95,6 +97,9 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
                 allAbsenceDetail.Add(aClass.ID, new Dictionary<string, Dictionary<string, Dictionary<string, string>>>());
             }
+
+            // 2017/10/16 因為JHSchool.StudentRecord沒有英文姓名，所以用K12.Data.StudentRecord 取得學生資訊
+            List<K12.Data.StudentRecord> sr_list = K12.Data.Student.SelectByIDs(allStudentID);
 
             //取得 Period List
             List<K12.Data.PeriodMappingInfo> PeriodList = K12.Data.PeriodMapping.SelectAll();
@@ -152,19 +157,27 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             #endregion
 
             #region 產生範本
-
+            int column;
             Workbook template = new Workbook();
-            template.Open(new MemoryStream(ProjectResource.班級學生缺曠明細), FileFormatType.Excel2003);
-
-            Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 3, true);
-            Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(3, 1, true);
+            if (style == "中文版")
+            {
+                column = 3;
+                template.Open(new MemoryStream(ProjectResource.班級學生缺曠明細), FileFormatType.Excel2003);
+            }
+            else
+            {
+                column = 4;
+                template.Open(new MemoryStream(ProjectResource.班級學生缺曠明細_英文), FileFormatType.Excel2003);
+            }
+            Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, column, true);
+            Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(column, 1, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
 
-            prototype.Worksheets[0].Cells.CreateRange(0, 3, true).Copy(tempStudent);
+            prototype.Worksheets[0].Cells.CreateRange(0, column, true).Copy(tempStudent);
 
-            int colIndex = 3;
+            int colIndex = column;
 
             int startIndex = colIndex;
             int endIndex;
@@ -184,7 +197,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                     each.ColumnWidth = width;
                 }
                 prototype.Worksheets[0].Cells[1, colIndex].PutValue(period);
-                columnTable.Add(period, colIndex - 3);
+                columnTable.Add(period, colIndex - column);
                 colIndex++;
             }
 
@@ -209,6 +222,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             wb.Copy(prototype);
             Worksheet ws = wb.Worksheets[0];
 
+
             #region 判斷紙張大小
             if (size == 0)
             {
@@ -227,13 +241,29 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             }
             #endregion
 
+            string titlename1;
+            string titlename2;
+
+            #region 判斷 中文or英文樣板
+            if (style == "中文版")
+            {
+                titlename1 = " 班級缺曠記錄明細";
+                titlename2 = "統計日期：";
+            }
+            else
+            {
+                titlename1 = "Studnet Attendance Checklist";
+                titlename2 = "Date:";
+            }
+            #endregion
+
             int index = 0;
             int dataIndex = 0;
 
             foreach (ClassRecord classInfo in selectedClass)
             {
-                string TitleName1 = classInfo.Name + " 班級缺曠記錄明細";
-                string TitleName2 = "統計日期：" + startDate.ToShortDateString() + " ~ " + endDate.ToShortDateString();
+                string TitleName1 = classInfo.Name + titlename1;
+                string TitleName2 = titlename2 + startDate.ToShortDateString() + " ~ " + endDate.ToShortDateString();
             
                 //班級/學生/日期/詳細資料
                 Dictionary<string, Dictionary<string, Dictionary<string, string>>> classAbsenceDetail = allAbsenceDetail[classInfo.ID];
@@ -304,12 +334,27 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
                         ws.Cells[dataIndex, 0].PutValue(studentInfoDict[studentID].SeatNo);
                         ws.Cells[dataIndex, 1].PutValue(studentInfoDict[studentID].Name);
-                        ws.Cells[dataIndex, 2].PutValue(occurDate);
+                        if (style == "中文版")
+                        {
+                            ws.Cells[dataIndex, 2].PutValue(occurDate);
+                        }
+                        else
+                        {
+                            foreach (K12.Data.StudentRecord sr in sr_list)
+                            {
+                                if (studentID == sr.ID)
+                                {
+                                    ws.Cells[dataIndex, 2].PutValue(sr.EnglishName);
+                                }
+                            }
+                            ws.Cells[dataIndex, 3].PutValue(occurDate);
+                        }
+                        
 
                         foreach (string period in studentAbsenceDetail[occurDate].Keys)
                         {
                             if (columnTable.ContainsKey(period))
-                                ws.Cells[dataIndex, columnTable[period] + 3].PutValue(studentAbsenceDetail[occurDate][period]);
+                                ws.Cells[dataIndex, columnTable[period] + column].PutValue(studentAbsenceDetail[occurDate][period]);
                         }
 
                         dataIndex++;

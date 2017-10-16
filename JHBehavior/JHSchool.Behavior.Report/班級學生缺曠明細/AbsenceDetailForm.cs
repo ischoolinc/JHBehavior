@@ -8,10 +8,16 @@ namespace JHSchool.Behavior.Report
     public partial class AbsenceDetailForm : SelectDateRangeForm
     {
         private int _sizeIndex = 0;
-
+        private string _reportstyle;
         public int PaperSize
         {
             get { return _sizeIndex; }
+        }
+
+        // 2017/10/13
+        public string ReportStyle
+        {
+            get { return _reportstyle; }
         }
 
         public AbsenceDetailForm()
@@ -36,6 +42,8 @@ namespace JHSchool.Behavior.Report
                 {
                     if (print.HasAttribute("PaperSize"))
                         _sizeIndex = int.Parse(print.GetAttribute("PaperSize"));
+                    if (print.HasAttribute("ReportStyle"))
+                        _reportstyle = print.GetAttribute("ReportStyle");
                 }
                 else
                 {
@@ -65,7 +73,8 @@ namespace JHSchool.Behavior.Report
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            AttendanceConfig config = new AttendanceConfig("¯Z¯Å¯ÊÃm°O¿ý©ú²Ó", _sizeIndex);
+            //-----
+            AttendanceConfig config = new AttendanceConfig("¯Z¯Å¯ÊÃm°O¿ý©ú²Ó", _sizeIndex, _reportstyle);
             if (config.ShowDialog() == DialogResult.OK)
             {
                 LoadPreference();

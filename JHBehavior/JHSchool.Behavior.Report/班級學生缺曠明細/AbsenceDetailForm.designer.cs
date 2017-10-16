@@ -40,12 +40,22 @@ namespace JHSchool.Behavior.Report
             // 
             // labelX1
             // 
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Location = new System.Drawing.Point(10, 13);
             this.labelX1.Margin = new System.Windows.Forms.Padding(3);
             this.labelX1.Size = new System.Drawing.Size(167, 21);
             // 
             // labelX2
             // 
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.Location = new System.Drawing.Point(143, 66);
             this.labelX2.Margin = new System.Windows.Forms.Padding(3);
             this.labelX2.Size = new System.Drawing.Size(20, 21);
@@ -61,6 +71,7 @@ namespace JHSchool.Behavior.Report
             // 
             // 
             this.dateTimeInput2.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.dateTimeInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput2.ButtonDropDown.Visible = true;
             this.dateTimeInput2.ButtonFreeText.Checked = true;
@@ -74,6 +85,8 @@ namespace JHSchool.Behavior.Report
             // 
             // 
             this.dateTimeInput2.MonthCalendar.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
+            this.dateTimeInput2.MonthCalendar.BackgroundStyle.Class = "";
+            this.dateTimeInput2.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.MonthCalendar.ClearButtonVisible = true;
             // 
             // 
@@ -84,6 +97,8 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput2.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.dateTimeInput2.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.dateTimeInput2.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1;
+            this.dateTimeInput2.MonthCalendar.CommandsBackgroundStyle.Class = "";
+            this.dateTimeInput2.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.MonthCalendar.DayNames = new string[] {
         "日",
         "一",
@@ -101,6 +116,8 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput2.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
             this.dateTimeInput2.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90;
             this.dateTimeInput2.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.dateTimeInput2.MonthCalendar.NavigationBackgroundStyle.Class = "";
+            this.dateTimeInput2.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput2.MonthCalendar.TodayButtonVisible = true;
             this.dateTimeInput2.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dateTimeInput2.Size = new System.Drawing.Size(115, 25);
@@ -111,6 +128,7 @@ namespace JHSchool.Behavior.Report
             // 
             // 
             this.dateTimeInput1.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.dateTimeInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown;
             this.dateTimeInput1.ButtonDropDown.Visible = true;
             this.dateTimeInput1.ButtonFreeText.Checked = true;
@@ -124,6 +142,8 @@ namespace JHSchool.Behavior.Report
             // 
             // 
             this.dateTimeInput1.MonthCalendar.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
+            this.dateTimeInput1.MonthCalendar.BackgroundStyle.Class = "";
+            this.dateTimeInput1.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.MonthCalendar.ClearButtonVisible = true;
             // 
             // 
@@ -134,6 +154,8 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.dateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.dateTimeInput1.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1;
+            this.dateTimeInput1.MonthCalendar.CommandsBackgroundStyle.Class = "";
+            this.dateTimeInput1.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.MonthCalendar.DayNames = new string[] {
         "日",
         "一",
@@ -151,6 +173,8 @@ namespace JHSchool.Behavior.Report
             this.dateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
             this.dateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90;
             this.dateTimeInput1.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.dateTimeInput1.MonthCalendar.NavigationBackgroundStyle.Class = "";
+            this.dateTimeInput1.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.dateTimeInput1.MonthCalendar.TodayButtonVisible = true;
             this.dateTimeInput1.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dateTimeInput1.Size = new System.Drawing.Size(115, 25);
@@ -166,7 +190,7 @@ namespace JHSchool.Behavior.Report
             this.linkLabel1.Size = new System.Drawing.Size(60, 17);
             this.linkLabel1.TabIndex = 3;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "紙張設定";
+            this.linkLabel1.Text = "列印設定";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // buttonX2
@@ -188,6 +212,7 @@ namespace JHSchool.Behavior.Report
             this.ClientSize = new System.Drawing.Size(302, 166);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.buttonX2);
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(3);
             this.Name = "AbsenceDetailForm";
             this.Text = "班級缺曠記錄明細";

@@ -9,12 +9,21 @@ namespace JHSchool.Behavior.Report
     public partial class AttendanceConfig : BaseForm
     {
         private string _reportName = "";
-        public AttendanceConfig(string reportname, int sizeIndex)
+        public AttendanceConfig(string reportname, int sizeIndex,string reportstyle)
         {
             InitializeComponent();
 
             _reportName = reportname;
             comboBoxEx1.SelectedIndex = sizeIndex;
+
+            // 2017/10/13 羿均新增樣板種類控制項，因應實中雙語部要求英文樣板
+            //---comboBoX 初始值---
+            comboBoxEx2.Text = reportstyle;
+            comboBoxEx2.Items.Add("中文版");
+            comboBoxEx2.Items.Add("英文版");
+            
+            
+
         }
 
         private void buttonX1_Click(object sender, EventArgs e)
@@ -30,6 +39,7 @@ namespace JHSchool.Behavior.Report
 
             XmlElement print = config.OwnerDocument.CreateElement("Print");
             print.SetAttribute("PaperSize", comboBoxEx1.SelectedIndex.ToString());
+            print.SetAttribute("ReportStyle",comboBoxEx2.Text);
 
             if (config.SelectSingleNode("Print") == null)
                 config.AppendChild(print);

@@ -37,19 +37,24 @@ namespace JHSchool.Behavior.Report
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
+            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupPanel1
             // 
+            this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.labelX2);
+            this.groupPanel1.Controls.Add(this.comboBoxEx2);
             this.groupPanel1.Controls.Add(this.comboBoxEx1);
             this.groupPanel1.Controls.Add(this.labelX1);
             this.groupPanel1.Location = new System.Drawing.Point(5, 5);
             this.groupPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(178, 74);
+            this.groupPanel1.Size = new System.Drawing.Size(178, 104);
             // 
             // 
             // 
@@ -65,9 +70,20 @@ namespace JHSchool.Behavior.Report
             this.groupPanel1.Style.BorderRightWidth = 1;
             this.groupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid;
             this.groupPanel1.Style.BorderTopWidth = 1;
+            this.groupPanel1.Style.Class = "";
             this.groupPanel1.Style.CornerDiameter = 4;
             this.groupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded;
             this.groupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseDown.Class = "";
+            this.groupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.groupPanel1.StyleMouseOver.Class = "";
+            this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "列印設定";
             // 
@@ -76,14 +92,14 @@ namespace JHSchool.Behavior.Report
             this.comboBoxEx1.DisplayMember = "Text";
             this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxEx1.FormattingEnabled = true;
-            this.comboBoxEx1.ItemHeight = 18;
+            this.comboBoxEx1.ItemHeight = 19;
             this.comboBoxEx1.Items.AddRange(new object[] {
             this.comboItem1,
             this.comboItem2,
             this.comboItem3});
             this.comboBoxEx1.Location = new System.Drawing.Point(77, 6);
             this.comboBoxEx1.Name = "comboBoxEx1";
-            this.comboBoxEx1.Size = new System.Drawing.Size(77, 24);
+            this.comboBoxEx1.Size = new System.Drawing.Size(77, 25);
             this.comboBoxEx1.TabIndex = 1;
             // 
             // comboItem1
@@ -102,17 +118,23 @@ namespace JHSchool.Behavior.Report
             // 
             this.labelX1.AutoSize = true;
             this.labelX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.Class = "";
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Location = new System.Drawing.Point(11, 10);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(60, 19);
+            this.labelX1.Size = new System.Drawing.Size(60, 21);
             this.labelX1.TabIndex = 0;
             this.labelX1.Text = "列印尺寸";
             // 
             // buttonX1
             // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(48, 83);
+            this.buttonX1.Location = new System.Drawing.Point(48, 116);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(65, 23);
             this.buttonX1.TabIndex = 1;
@@ -122,31 +144,52 @@ namespace JHSchool.Behavior.Report
             // buttonX2
             // 
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.Location = new System.Drawing.Point(118, 83);
+            this.buttonX2.Location = new System.Drawing.Point(118, 116);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(65, 23);
             this.buttonX2.TabIndex = 1;
             this.buttonX2.Text = "取消";
             this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
             // 
-            // WeekReportCountConfig
+            // comboBoxEx2
+            // 
+            this.comboBoxEx2.DisplayMember = "Text";
+            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx2.FormattingEnabled = true;
+            this.comboBoxEx2.ItemHeight = 19;
+            this.comboBoxEx2.Location = new System.Drawing.Point(77, 45);
+            this.comboBoxEx2.Name = "comboBoxEx2";
+            this.comboBoxEx2.Size = new System.Drawing.Size(77, 25);
+            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comboBoxEx2.TabIndex = 2;
+            // 
+            // labelX2
+            // 
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(11, 49);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(60, 21);
+            this.labelX2.TabIndex = 3;
+            this.labelX2.Text = "樣板種類";
+            // 
+            // AttendanceConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 110);
+            this.ClientSize = new System.Drawing.Size(188, 144);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.groupPanel1);
-            this.Font = new System.Drawing.Font(Framework.DotNetBar.FontStyles.GeneralFontFamily, 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "WeekReportCountConfig";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.Name = "AttendanceConfig";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "列印設定";
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
@@ -164,5 +207,7 @@ namespace JHSchool.Behavior.Report
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
         private DevComponents.Editors.ComboItem comboItem3;
+        private DevComponents.DotNetBar.LabelX labelX2;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx2;
     }
 }

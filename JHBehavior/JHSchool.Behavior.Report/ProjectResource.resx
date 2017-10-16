@@ -151,6 +151,9 @@
   <data name="班級學生缺曠明細" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>projectresource\班級學生缺曠明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="班級學生缺曠明細_英文" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>projectresource\班級學生缺曠明細_英文.xls;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="班級學生缺曠統計" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>projectresource\班級學生缺曠統計.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
