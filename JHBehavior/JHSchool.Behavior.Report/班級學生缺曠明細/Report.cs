@@ -185,12 +185,13 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
             int splitLineIndex = 0;
 
+            // 2017/10/17，英文版固定欄寬。
             //根據節次對照表產生欄位，並且隨著節次字數調整欄寬
             foreach (string period in periodList)
             {
                 Range each = prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true);
                 each.Copy(tempEachColumn);
-                if (period.Length > 2)
+                if (period.Length > 2 && style == "中文版")
                 {
                     double width = 4.5;
                     width += (double)((period.Length - 2) * 2);
@@ -201,6 +202,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                 colIndex++;
             }
 
+            
             endIndex = colIndex;
             splitLineIndex = (colIndex + 1) / 2;
 
@@ -347,6 +349,8 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                                     ws.Cells[dataIndex, 2].PutValue(sr.EnglishName);
                                 }
                             }
+                            // 2017/10/17，羿均，英文版欄位高度自動調整。
+                            ws.AutoFitRows();
                             ws.Cells[dataIndex, 3].PutValue(occurDate);
                         }
                         
