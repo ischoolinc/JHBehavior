@@ -44,6 +44,14 @@
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.btnDay = new DevComponents.DotNetBar.ButtonX();
             this.chkHasData = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.colClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWeek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSchoolYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSemester = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEx1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -141,6 +149,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colClassName,
+            this.colSeatNo,
+            this.colStudentName,
+            this.colStudentNumber,
+            this.colDate,
+            this.colWeek,
+            this.colSchoolYear,
+            this.colSemester});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -395,6 +412,54 @@
             this.chkHasData.Visible = false;
             this.chkHasData.CheckedChanged += new System.EventHandler(this.filterRows);
             // 
+            // colClassName
+            // 
+            this.colClassName.HeaderText = "班級";
+            this.colClassName.Name = "colClassName";
+            this.colClassName.Width = 59;
+            // 
+            // colSeatNo
+            // 
+            this.colSeatNo.HeaderText = "座號";
+            this.colSeatNo.Name = "colSeatNo";
+            this.colSeatNo.Width = 59;
+            // 
+            // colStudentName
+            // 
+            this.colStudentName.HeaderText = "姓名";
+            this.colStudentName.Name = "colStudentName";
+            this.colStudentName.Width = 59;
+            // 
+            // colStudentNumber
+            // 
+            this.colStudentNumber.HeaderText = "學號";
+            this.colStudentNumber.Name = "colStudentNumber";
+            this.colStudentNumber.Width = 59;
+            // 
+            // colDate
+            // 
+            this.colDate.HeaderText = "日期";
+            this.colDate.Name = "colDate";
+            this.colDate.Width = 59;
+            // 
+            // colWeek
+            // 
+            this.colWeek.HeaderText = "星期";
+            this.colWeek.Name = "colWeek";
+            this.colWeek.Width = 59;
+            // 
+            // colSchoolYear
+            // 
+            this.colSchoolYear.HeaderText = "學年度";
+            this.colSchoolYear.Name = "colSchoolYear";
+            this.colSchoolYear.Width = 71;
+            // 
+            // colSemester
+            // 
+            this.colSemester.HeaderText = "學期";
+            this.colSemester.Name = "colSemester";
+            this.colSemester.Width = 59;
+            // 
             // TestSingleEditor
             // 
             this.ClientSize = new System.Drawing.Size(752, 546);
@@ -439,5 +504,13 @@
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput2;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput1;
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colClassName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSeatNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStudentName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStudentNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colWeek;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSchoolYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSemester;
     }
 }

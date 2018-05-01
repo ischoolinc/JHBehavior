@@ -66,10 +66,45 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             InitializeRadioButton(); //缺曠類別建立
             InitializeDateRange(); //取得日期定義
             InitializeDataGridViewColumn(); //DataGridView的Column建立
-            //SearchDateRange();
-            //GetAbsense();
             LoadAbsense();
 
+            #endregion
+        }
+
+        private void InitializeRadioButton()
+        {
+            #region 缺曠類別建立
+            DSResponse dsrsp = Config.GetAbsenceList();
+            DSXmlHelper helper = dsrsp.GetContent();
+            foreach (XmlElement element in helper.GetElements("Absence"))
+            {
+                AbsenceInfo info = new AbsenceInfo(element);
+                //熱鍵不重覆
+                if (!_absenceList.ContainsKey(info.Hotkey.ToUpper()))
+                {
+                    _absenceList.Add(info.Hotkey.ToUpper(), info);
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("缺曠別：{0}\n熱鍵：{1} 已重覆\n(英文字母大小寫視為相同熱鍵)");
+                    MsgBox.Show(string.Format(sb.ToString(), info.Name, info.Hotkey));
+                }
+
+                RadioButton rb = new RadioButton();
+                rb.Text = info.Name + "(" + info.Hotkey + ")";
+                rb.AutoSize = true;
+                rb.Font = new Font(Framework.DotNetBar.FontStyles.GeneralFontFamily, 9.25f);
+                rb.Tag = info;
+                rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
+                rb.Click += new EventHandler(rb_CheckedChanged);
+                panel.Controls.Add(rb);
+                if (_checkedAbsence == null)
+                {
+                    _checkedAbsence = info;
+                    rb.Checked = true;
+                }
+            }
             #endregion
         }
 
@@ -132,43 +167,6 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             #endregion
         }
 
-        private void InitializeRadioButton()
-        {
-            #region 缺曠類別建立
-            DSResponse dsrsp = Config.GetAbsenceList();
-            DSXmlHelper helper = dsrsp.GetContent();
-            foreach (XmlElement element in helper.GetElements("Absence"))
-            {
-                AbsenceInfo info = new AbsenceInfo(element);
-                //熱鍵不重覆
-                if (!_absenceList.ContainsKey(info.Hotkey.ToUpper()))
-                {
-                    _absenceList.Add(info.Hotkey.ToUpper(), info);
-                }
-                else
-                {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("缺曠別：{0}\n熱鍵：{1} 已重覆\n(英文字母大小寫視為相同熱鍵)");
-                    MsgBox.Show(string.Format(sb.ToString(), info.Name, info.Hotkey));
-                }
-
-                RadioButton rb = new RadioButton();
-                rb.Text = info.Name + "(" + info.Hotkey + ")";
-                rb.AutoSize = true;
-                rb.Font = new Font(Framework.DotNetBar.FontStyles.GeneralFontFamily, 9.25f);
-                rb.Tag = info;
-                rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
-                rb.Click += new EventHandler(rb_CheckedChanged);
-                panel.Controls.Add(rb);
-                if (_checkedAbsence == null)
-                {
-                    _checkedAbsence = info;
-                    rb.Checked = true;
-                }
-            }
-            #endregion
-        }
-
         void rb_CheckedChanged(object sender, EventArgs e)
         {
             #region 缺曠類別建立(事件)
@@ -209,51 +207,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 collection.Items.Add(info);
             }
 
-            int ColumnsIndex = dataGridView.Columns.Add("colClassName", "班級");
-            ColumnIndex.Add("班級", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colSeatNo", "座號");
-            ColumnIndex.Add("座號", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colStudentName", "姓名");
-            ColumnIndex.Add("姓名", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-            dataGridView.Columns[ColumnsIndex].Frozen = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colStudentNumber", "學號");
-            ColumnIndex.Add("學號", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colDate", "日期");
-            ColumnIndex.Add("日期", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colWeek", "星期");
-            ColumnIndex.Add("星期", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = true;
-
-            ColumnsIndex = dataGridView.Columns.Add("colSchoolYear", "學年度");
-            ColumnIndex.Add("學年度", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = false;
-
-            ColumnsIndex = dataGridView.Columns.Add("colSemester", "學期");
-            ColumnIndex.Add("學期", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[ColumnsIndex].ReadOnly = false;
-
-            _startIndex = ColumnIndex["學期"] + 1;
+            _startIndex = dataGridView.Columns["colSemester"].Index + 1;
 
             foreach (PeriodInfo info in collection.GetSortedList())
             {
@@ -340,18 +294,18 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     tag.IsNew = true;
                     row.Tag = tag; //RowTag
                     row.Cells[0].Tag = each.ID; //系統編號
+                    int index = 0;
+                    row.Cells[index++].Value = each.Class != null ? each.Class.Name : ""; // 班級
+                    row.Cells[index++].Value = each.SeatNo.HasValue ? each.SeatNo.Value.ToString() : ""; // 座號
+                    row.Cells[index++].Value = each.Name; // 姓名
+                    row.Cells[index++].Value = each.StudentNumber; // 學號
 
-                    row.Cells[ColumnIndex["班級"]].Value = each.Class != null ? each.Class.Name : "";
-                    row.Cells[ColumnIndex["座號"]].Value = each.SeatNo.HasValue ? each.SeatNo.Value.ToString() : "";
-                    row.Cells[ColumnIndex["姓名"]].Value = each.Name;
-                    row.Cells[ColumnIndex["學號"]].Value = each.StudentNumber;
-
-                    row.Cells[ColumnIndex["日期"]].Value = dateValue;
-                    row.Cells[ColumnIndex["星期"]].Value = GetDayOfWeekInChinese(date.DayOfWeek);
-                    _semesterProvider.SetDate(date);
-                    row.Cells[ColumnIndex["學年度"]].Value = _semesterProvider.SchoolYear.ToString();
-                    row.Cells[ColumnIndex["學期"]].Value = _semesterProvider.Semester.ToString();
-                    date = date.AddDays(1);
+                    row.Cells[index++].Value = dateValue; // 日期
+                    row.Cells[index++].Value = GetDayOfWeekInChinese(date.DayOfWeek); // 星期
+                    _semesterProvider.SetDate(date); 
+                    row.Cells[index++].Value = _semesterProvider.SchoolYear.ToString(); // 學年度
+                    row.Cells[index++].Value = _semesterProvider.Semester.ToString(); // 學期
+                    date = date.AddDays(1); 
 
                     dataGridView.Rows.Add(row);
                 }
@@ -420,7 +374,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 DataGridViewRow row = null;
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
-                    if (r.Cells[0].Tag as string == attendanceRecord.RefStudentID && "" + r.Cells[ColumnIndex["日期"]].Value == attendanceRecord.OccurDate.ToShortDateString())
+                    if (r.Cells[0].Tag as string == attendanceRecord.RefStudentID && "" + r.Cells[dataGridView.Columns["colDate"].Index].Value == attendanceRecord.OccurDate.ToShortDateString())
                     {
                         row = r;
                         break;
@@ -434,11 +388,17 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
 
                 row.Cells[0].Tag = attendanceRecord; //把資料儲存於Cell[0]
 
-                row.Cells[ColumnIndex["學年度"]].Value = schoolYear;
-                row.Cells[ColumnIndex["學年度"]].Tag = new SemesterCellInfo(schoolYear);
+                row.Cells[dataGridView.Columns["colSchoolYear"].Index].Value = schoolYear;
+                row.Cells[dataGridView.Columns["colSchoolYear"].Index].Tag = new SemesterCellInfo(schoolYear);
 
-                row.Cells[ColumnIndex["學期"]].Value = semester;
-                row.Cells[ColumnIndex["學期"]].Tag = new SemesterCellInfo(semester);
+                row.Cells[dataGridView.Columns["colSemester"].Index].Value = semester;
+                row.Cells[dataGridView.Columns["colSemester"].Index].Tag = new SemesterCellInfo(semester);
+
+                //row.Cells[ColumnIndex["學年度"]].Value = schoolYear;
+                //row.Cells[ColumnIndex["學年度"]].Tag = new SemesterCellInfo(schoolYear);
+
+                //row.Cells[ColumnIndex["學期"]].Value = semester;
+                //row.Cells[ColumnIndex["學期"]].Tag = new SemesterCellInfo(semester);
 
                 for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                 {
@@ -1081,7 +1041,6 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 RowTag rowTag = row.Tag as RowTag;
                 if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //篩選不顯示的星期
                 {
-
                     //2017/4/28 穎驊更新，因應 高雄小組 [02-04][02] 長假登錄問題 項目，
                     // 日後將不會顯示"非在星期設定內的缺曠資料"，另外此次更新 也將UI左下 "僅顯示有缺曠之資料"Chkbox 設為看不見。
                     row.Visible = false;
