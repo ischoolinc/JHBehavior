@@ -206,7 +206,51 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 PeriodInfo info = new PeriodInfo(element);
                 collection.Items.Add(info);
             }
+            #region 註解原程式邏輯
+            //int ColumnsIndex = dataGridView.Columns.Add("colClassName", "班級");
+            //ColumnIndex.Add("班級", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
 
+            //ColumnsIndex = dataGridView.Columns.Add("colSeatNo", "座號");
+            //ColumnIndex.Add("座號", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colStudentName", "姓名");
+            //ColumnIndex.Add("姓名", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+            //dataGridView.Columns[ColumnsIndex].Frozen = true;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colStudentNumber", "學號");
+            //ColumnIndex.Add("學號", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colDate", "日期");
+            //ColumnIndex.Add("日期", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colWeek", "星期");
+            //ColumnIndex.Add("星期", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colSchoolYear", "學年度");
+            //ColumnIndex.Add("學年度", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = false;
+
+            //ColumnsIndex = dataGridView.Columns.Add("colSemester", "學期");
+            //ColumnIndex.Add("學期", ColumnsIndex);
+            //dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].ReadOnly = false;
+            #endregion
             _startIndex = dataGridView.Columns["colSemester"].Index + 1;
 
             foreach (PeriodInfo info in collection.GetSortedList())
@@ -219,6 +263,16 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 column.ReadOnly = true;
                 column.Tag = info;
             }
+
+            // 配合原程式邏輯補上下列邏輯
+            ColumnIndex.Add("班級", 0);
+            ColumnIndex.Add("座號", 1);
+            ColumnIndex.Add("姓名", 2);
+            ColumnIndex.Add("學號", 3);
+            ColumnIndex.Add("日期", 4);
+            ColumnIndex.Add("星期", 5);
+            ColumnIndex.Add("學年度",6);
+            ColumnIndex.Add("學期",7);
 
             #endregion
         }
@@ -388,17 +442,11 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
 
                 row.Cells[0].Tag = attendanceRecord; //把資料儲存於Cell[0]
 
-                row.Cells[dataGridView.Columns["colSchoolYear"].Index].Value = schoolYear;
-                row.Cells[dataGridView.Columns["colSchoolYear"].Index].Tag = new SemesterCellInfo(schoolYear);
+                row.Cells[ColumnIndex["學年度"]].Value = schoolYear;
+                row.Cells[ColumnIndex["學年度"]].Tag = new SemesterCellInfo(schoolYear);
 
-                row.Cells[dataGridView.Columns["colSemester"].Index].Value = semester;
-                row.Cells[dataGridView.Columns["colSemester"].Index].Tag = new SemesterCellInfo(semester);
-
-                //row.Cells[ColumnIndex["學年度"]].Value = schoolYear;
-                //row.Cells[ColumnIndex["學年度"]].Tag = new SemesterCellInfo(schoolYear);
-
-                //row.Cells[ColumnIndex["學期"]].Value = semester;
-                //row.Cells[ColumnIndex["學期"]].Tag = new SemesterCellInfo(semester);
+                row.Cells[ColumnIndex["學期"]].Value = semester;
+                row.Cells[ColumnIndex["學期"]].Tag = new SemesterCellInfo(semester);
 
                 for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                 {
@@ -498,8 +546,8 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     if (hasContent)
                     {
                         attRecord.RefStudentID = studentID;
-                        attRecord.SchoolYear = int.Parse("" + row.Cells[ColumnIndex["學年度"]].Value);
-                        attRecord.Semester = int.Parse("" + row.Cells[ColumnIndex["學期"]].Value);
+                        attRecord.SchoolYear = int.Parse("" + row.Cells["colSchoolYear"].Value);
+                        attRecord.Semester = int.Parse("" + row.Cells["colSemester"].Value);
                         attRecord.OccurDate = DateTime.Parse(tag.Date.ToShortDateString());
                         InsertHelper.Add(attRecord);
                     }
