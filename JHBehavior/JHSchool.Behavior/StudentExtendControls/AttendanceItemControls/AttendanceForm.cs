@@ -179,16 +179,27 @@ namespace JHSchool.Behavior.StudentExtendControls
                 rb.AutoSize = true;
                 rb.Font = new Font(SmartSchool.Common.FontStyles.GeneralFontFamily, 9.25f);
                 rb.Tag = info;
-                rb.CheckedChanged += delegate(object sender, EventArgs e)
+
+                rb.Click += delegate
                 {
                     if (rb.Checked)
                     {
                         foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
                         {
-                            cell.Value = (rb.Tag as K12.Data.AbsenceMappingInfo).Abbreviation;
+                            cell.Value = ((K12.Data.AbsenceMappingInfo)rb.Tag).Abbreviation;
                         }
                     }
                 };
+                //rb.CheckedChanged += delegate(object sender, EventArgs e)
+                //{
+                //    if (rb.Checked)
+                //    {
+                //        foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
+                //        {
+                //            cell.Value = (rb.Tag as K12.Data.AbsenceMappingInfo).Abbreviation;
+                //        }
+                //    }
+                //};
                 flpAbsence.Controls.Add(rb);
             }
 
