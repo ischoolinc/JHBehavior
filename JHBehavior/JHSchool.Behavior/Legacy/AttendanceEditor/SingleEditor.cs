@@ -33,6 +33,7 @@ namespace JHSchool.Behavior.Legacy
         private ErrorProvider _errorProvider;
         private DateTime _currentStartDate;
         private DateTime _currentEndDate;
+        private DateTime? _occurDate=null;
 
         Dictionary<string, int> ColumnIndex = new Dictionary<string, int>();
 
@@ -55,6 +56,20 @@ namespace JHSchool.Behavior.Legacy
             _student = student;
             _absenceList = new Dictionary<string, AbsenceInfo>();
             _semesterProvider = SemesterProvider.GetInstance();
+            //_startIndex = 4;
+
+        }
+
+        // 學生毛毛蟲缺曠登錄
+        public SingleEditor(StudentRecord student,DateTime occurDate)
+        {
+            InitializeComponent(); //設計工具產生的
+
+            _errorProvider = new ErrorProvider();
+            _student = student;
+            _absenceList = new Dictionary<string, AbsenceInfo>();
+            _semesterProvider = SemesterProvider.GetInstance();
+            this._occurDate = occurDate;
             //_startIndex = 4;
 
         }
@@ -82,42 +97,50 @@ namespace JHSchool.Behavior.Legacy
 
         private void InitializeDateRange()
         {
-            #region 日期定義
-            K12.Data.Configuration.ConfigData DateConfig = K12.Data.School.Configuration["Attendance_BatchEditor"];
-
-            string date = DateConfig["SingleEditor"];
-
-            if (date == "")
+            if (this._occurDate != null)
             {
-                DSXmlHelper helper = new DSXmlHelper("xml");
-                helper.AddElement("StartDate");
-                helper.AddText("StartDate", DateTime.Today.AddDays(-6).ToShortDateString());
-                helper.AddElement("EndDate");
-                helper.AddText("EndDate", DateTime.Today.ToShortDateString());
-                helper.AddElement("Locked");
-                helper.AddText("Locked", "false");
-
-                date = helper.BaseElement.OuterXml;
-                DateConfig["SingleEditor"] = date;
-                DateConfig.Save(); //儲存此預設檔
+                dateTimeInput1.Value =(DateTime) this._occurDate;
+                dateTimeInput2.Value =(DateTime) this._occurDate;
             }
-
-            XmlElement loadXml = DSXmlHelper.LoadXml(date);
-            checkBoxX1.Checked = bool.Parse(loadXml.SelectSingleNode("Locked").InnerText);
-
-            if (checkBoxX1.Checked) //如果是鎖定,就取鎖定日期
+            else
             {
-                dateTimeInput1.Text = loadXml.SelectSingleNode("StartDate").InnerText;
-                dateTimeInput2.Text = loadXml.SelectSingleNode("EndDate").InnerText;
+                #region 日期定義
+                K12.Data.Configuration.ConfigData DateConfig = K12.Data.School.Configuration["Attendance_BatchEditor"];
+
+                string date = DateConfig["SingleEditor"];
+
+                if (date == "")
+                {
+                    DSXmlHelper helper = new DSXmlHelper("xml");
+                    helper.AddElement("StartDate");
+                    helper.AddText("StartDate", DateTime.Today.AddDays(-6).ToShortDateString());
+                    helper.AddElement("EndDate");
+                    helper.AddText("EndDate", DateTime.Today.ToShortDateString());
+                    helper.AddElement("Locked");
+                    helper.AddText("Locked", "false");
+
+                    date = helper.BaseElement.OuterXml;
+                    DateConfig["SingleEditor"] = date;
+                    DateConfig.Save(); //儲存此預設檔
+                }
+
+                XmlElement loadXml = DSXmlHelper.LoadXml(date);
+                checkBoxX1.Checked = bool.Parse(loadXml.SelectSingleNode("Locked").InnerText);
+
+                if (checkBoxX1.Checked) //如果是鎖定,就取鎖定日期
+                {
+                    dateTimeInput1.Text = loadXml.SelectSingleNode("StartDate").InnerText;
+                    dateTimeInput2.Text = loadXml.SelectSingleNode("EndDate").InnerText;
+                }
+                else //如果沒有鎖定,就取當天
+                {
+                    dateTimeInput1.Text = DateTime.Today.AddDays(-6).ToShortDateString();
+                    dateTimeInput2.Text = DateTime.Today.ToShortDateString();
+                }
+                _currentStartDate = dateTimeInput1.Value;
+                _currentEndDate = dateTimeInput2.Value;
+                #endregion
             }
-            else //如果沒有鎖定,就取當天
-            {
-                dateTimeInput1.Text = DateTime.Today.AddDays(-6).ToShortDateString();
-                dateTimeInput2.Text = DateTime.Today.ToShortDateString();
-            }
-            _currentStartDate = dateTimeInput1.Value;
-            _currentEndDate = dateTimeInput2.Value;
-            #endregion
         }
 
         private void SaveDateSetting()

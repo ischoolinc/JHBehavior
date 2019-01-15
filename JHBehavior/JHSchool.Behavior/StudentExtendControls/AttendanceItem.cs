@@ -7,6 +7,7 @@ using FISCA.LogAgent;
 using Framework;
 using Framework.Security;
 using JHSchool.Behavior.Feature;
+using JHSchool.Behavior.Legacy;
 using JHSchool.Data;
 using JHSchool.Editor;
 using FCode = Framework.Security.FeatureCodeAttribute;
@@ -225,8 +226,10 @@ namespace JHSchool.Behavior.StudentExtendControls
             JHAttendanceRecord record = new JHAttendanceRecord();
             record.RefStudentID = this.PrimaryKey;
 
-            AttendanceForm editor = new AttendanceForm(EditorStatus.Insert, record, _periodList, UserPermission);
-            editor.ShowDialog();
+            //AttendanceForm editor = new AttendanceForm(EditorStatus.Insert, record, _periodList, UserPermission);
+            //editor.ShowDialog();
+
+            (new SingleEditor(Student.Instance.SelectedList[0] )).ShowDialog();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -241,9 +244,10 @@ namespace JHSchool.Behavior.StudentExtendControls
                 MsgBox.Show("選擇資料筆數過多，一次只能修改一筆資料");
                 return;
             }
-
-            AttendanceForm editor = new AttendanceForm(EditorStatus.Update, listView.SelectedItems[0].Tag as JHAttendanceRecord, _periodList, UserPermission);
-            editor.ShowDialog();
+            
+            (new SingleEditor(Student.Instance.SelectedList[0],(listView.SelectedItems[0].Tag as JHAttendanceRecord).OccurDate)).ShowDialog();
+            //AttendanceForm editor = new AttendanceForm(EditorStatus.Update, listView.SelectedItems[0].Tag as JHAttendanceRecord, _periodList, UserPermission);
+            //editor.ShowDialog();
         }
         //連點ListView時(因為使用JHSchool.Behavior.Legacy.ListViewEx 所以連點功能失效)
         //private void listView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -312,9 +316,16 @@ namespace JHSchool.Behavior.StudentExtendControls
         {
             if (listView.SelectedItems.Count == 1)
             {
-                AttendanceForm editor = new AttendanceForm(EditorStatus.Update, listView.SelectedItems[0].Tag as JHAttendanceRecord, _periodList, UserPermission);
-                editor.ShowDialog();
+
+                (new SingleEditor(Student.Instance.SelectedList[0], (listView.SelectedItems[0].Tag as JHAttendanceRecord).OccurDate)).ShowDialog();
+                // AttendanceForm editor = new AttendanceForm(EditorStatus.Update, listView.SelectedItems[0].Tag as JHAttendanceRecord, _periodList, UserPermission);
+                // editor.ShowDialog();
             }
+        }
+
+        private void listView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

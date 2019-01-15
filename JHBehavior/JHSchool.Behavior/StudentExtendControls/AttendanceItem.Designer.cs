@@ -28,29 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView = new JHSchool.Behavior.Legacy.ListViewEx();
             this.btnDelete = new DevComponents.DotNetBar.ButtonX();
             this.btnUpdate = new DevComponents.DotNetBar.ButtonX();
             this.btnAdd = new DevComponents.DotNetBar.ButtonX();
             this.btnView = new DevComponents.DotNetBar.ButtonX();
+            this.listView = new JHSchool.Behavior.Legacy.ListViewEx();
             this.SuspendLayout();
-            // 
-            // listView
-            // 
-            // 
-            // 
-            // 
-            this.listView.Border.Class = "ListViewBorder";
-            this.listView.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.listView.FullRowSelect = true;
-            this.listView.HideSelection = false;
-            this.listView.Location = new System.Drawing.Point(13, 8);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(524, 245);
-            this.listView.TabIndex = 2;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.View = System.Windows.Forms.View.Details;
-            this.listView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // btnDelete
             // 
@@ -95,6 +78,24 @@
             this.btnView.TabIndex = 8;
             this.btnView.Text = "檢視";
             this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            // 
+            // listView
+            // 
+            // 
+            // 
+            // 
+            this.listView.Border.Class = "ListViewBorder";
+            this.listView.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.listView.FullRowSelect = true;
+            this.listView.HideSelection = false;
+            this.listView.Location = new System.Drawing.Point(13, 8);
+            this.listView.Name = "listView";
+            this.listView.Size = new System.Drawing.Size(524, 245);
+            this.listView.TabIndex = 2;
+            this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.View = System.Windows.Forms.View.Details;
+            this.listView.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
+            this.listView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // AttendanceItem
             // 
