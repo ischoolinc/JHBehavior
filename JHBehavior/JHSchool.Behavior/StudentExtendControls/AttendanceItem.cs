@@ -12,6 +12,7 @@ using JHSchool.Data;
 using JHSchool.Editor;
 using FCode = Framework.Security.FeatureCodeAttribute;
 
+
 namespace JHSchool.Behavior.StudentExtendControls
 {
     //[FeatureCode("Content0060")]
