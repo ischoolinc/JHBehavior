@@ -423,7 +423,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                 bool LogMode = false;
                 foreach (K12.Data.PeriodMappingInfo each in _periodList)
                 {
-                    if (DicAfterLog[each.Name] != "" && DicBeforeLog[each.Name] != "" && DicAfterLog[each.Name] != DicBeforeLog[each.Name])
+                    if ( (DicAfterLog[each.Name] != DicBeforeLog[each.Name]))
                     {
                         sb.AppendLine("節次「" + each.Name + "」由「" + DicBeforeLog[each.Name] + "」變更為「" + DicAfterLog[each.Name] + "」");
                         LogMode = true;

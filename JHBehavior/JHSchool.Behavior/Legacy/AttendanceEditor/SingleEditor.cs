@@ -26,7 +26,7 @@ namespace JHSchool.Behavior.Legacy
     public partial class SingleEditor : FISCA.Presentation.Controls.BaseForm
     {
         private AbsenceInfo _checkedAbsence;
-        private Dictionary<string, AbsenceInfo> _absenceList;
+        private Dictionary<string, AbsenceInfo> _absenceList;//假別清單
         private StudentRecord _student;
         private ISemester _semesterProvider;
         private int _startIndex;
@@ -203,7 +203,7 @@ namespace JHSchool.Behavior.Legacy
         {
             #region 缺曠類別建立(事件)
             RadioButton rb = sender as RadioButton;
-            if (rb.Checked)
+            if (rb.Checked) 
             {
                 _checkedAbsence = rb.Tag as AbsenceInfo;
                 foreach (DataGridViewCell cell in dataGridView.SelectedCells)
@@ -223,7 +223,7 @@ namespace JHSchool.Behavior.Legacy
             }
             #endregion
         }
-
+        //初始化DataGri
         private void InitializeDataGridViewColumn()
         {
             #region DataGridView的Column建立
@@ -232,12 +232,15 @@ namespace JHSchool.Behavior.Legacy
 
             DSResponse dsrsp = Config.GetPeriodList();
             DSXmlHelper helper = dsrsp.GetContent();
+            //放資夾別和第幾節資料
             PeriodCollection collection = new PeriodCollection();
             foreach (XmlElement element in helper.GetElements("Period"))
             {
+                //取得假別及節數
                 PeriodInfo info = new PeriodInfo(element);
                 collection.Items.Add(info);
             }
+            //動態產生DataGridView 
             int ColumnsIndex = dataGridView.Columns.Add("colDate", "日期");
             ColumnIndex.Add("日期", ColumnsIndex);
             dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -263,7 +266,7 @@ namespace JHSchool.Behavior.Legacy
             dataGridView.Columns[ColumnsIndex].Frozen = true;
 
             _startIndex = ColumnIndex["學期"] + 1;
-
+            //把資料缺曠Detail放入DataGridView
             foreach (PeriodInfo info in collection.GetSortedList())
             {
                 int columnIndex = dataGridView.Columns.Add(info.Name, info.Name);
@@ -320,6 +323,7 @@ namespace JHSchool.Behavior.Legacy
         private void GetAbsense()
         {
             #region 取得缺曠記錄
+            //發送xml request
             DSXmlHelper helper = new DSXmlHelper("Request");
             helper.AddElement("Field");
             helper.AddElement("Field", "All");
@@ -335,7 +339,7 @@ namespace JHSchool.Behavior.Legacy
 
             foreach (XmlElement element in helper.GetElements("Attendance"))
             {
-                // 這裡要做一些事情  例如找到東家塞進去
+                // 這裡要做一些事情  例如找到東西塞進去
                 string occurDate = element.SelectSingleNode("OccurDate").InnerText;
                 string schoolYear = element.SelectSingleNode("SchoolYear").InnerText;
                 string semester = element.SelectSingleNode("Semester").InnerText;
@@ -344,8 +348,10 @@ namespace JHSchool.Behavior.Legacy
 
                 //log 紀錄修改前的資料 日期部分
                 DateTime logDate;
+                //log dic key值為缺曠日期
                 if (DateTime.TryParse(occurDate, out logDate))
                 {
+                    //如果還沒有包含此日期的key就加入
                     if (!beforeData.ContainsKey(logDate.ToShortDateString()))
                         beforeData.Add(logDate.ToShortDateString(), new Dictionary<string, string>());
                 }
@@ -354,6 +360,7 @@ namespace JHSchool.Behavior.Legacy
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
                     DateTime date;
+                    //抓 DataGridView    
                     RowTag rt = r.Tag as RowTag;
 
                     if (!DateTime.TryParse(occurDate, out date)) continue;
@@ -371,7 +378,7 @@ namespace JHSchool.Behavior.Legacy
 
                 row.Cells[ColumnIndex["學期"]].Value = semester;
                 row.Cells[ColumnIndex["學期"]].Tag = new SemesterCellInfo(semester);
-
+                //取回dataGridView
                 for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                 {
                     DataGridViewColumn column = dataGridView.Columns[i];
