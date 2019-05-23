@@ -87,7 +87,6 @@ namespace JHSchool.Behavior.Report.缺曠通知單
 
         private void _BGWAbsenceNotification_DoWork(object sender, DoWorkEventArgs e)
         {
-            string reportName = "缺曠通知單";
 
             object[] args = e.Argument as object[];
 
@@ -103,6 +102,8 @@ namespace JHSchool.Behavior.Report.缺曠通知單
             string condName2 = (string)args[9];
             int condNumber2 = int.Parse((string)args[10]);
             bool printStudentList = (bool)args[11];
+
+            string reportName = "缺曠通知單" + startDate.ToString("yyyy/MM/dd") + "至" + endDate.ToString("yyyy/MM/dd");
 
             #region 快取資料
 
@@ -647,6 +648,7 @@ namespace JHSchool.Behavior.Report.缺曠通知單
                 mapping.Add("學校電話", School.Telephone);
 
                 //學生資料
+                mapping.Add("系統編號", "系統編號{" + studentID + "}");
                 mapping.Add("學生姓名", eachStudentInfo["Name"]);
                 mapping.Add("班級", eachStudentInfo["ClassName"]);
                 mapping.Add("座號", eachStudentInfo["SeatNo"]);
