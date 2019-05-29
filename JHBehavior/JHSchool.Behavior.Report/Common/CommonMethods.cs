@@ -161,7 +161,7 @@ namespace JHSchool.Behavior.Report
                     schoolYear = Convert.ToInt32(School.DefaultSchoolYear);
                     semester = Convert.ToInt32(School.DefaultSemester);
                     MemoryStream memoryStream = new MemoryStream();
-                    doc.Save(memoryStream, Aspose.Words.SaveFormat.Docx);
+                    doc.Save(memoryStream, Aspose.Words.SaveFormat.Doc);
                     ePaperCloud ePaperCloud = new ePaperCloud();
                     ePaperCloud.upload_ePaper(schoolYear, semester, reportName, "", memoryStream, ePaperCloud.ViewerType.Student, ePaperCloud.FormatType.Docx);
 
