@@ -109,7 +109,7 @@ namespace JHSchool.Behavior.Report
                 string reportName = (string)result[0];
                 string path = (string)result[1];
                 Aspose.Words.Document doc = (Aspose.Words.Document)result[2];
-                string path2 = (string)result[3];
+                string path2 = ((string)result[3]).Replace('/', '_');
                 bool PrintStudetnList = (bool)result[4];
                 Aspose.Cells.Workbook wb = (Aspose.Cells.Workbook)result[5];
 
