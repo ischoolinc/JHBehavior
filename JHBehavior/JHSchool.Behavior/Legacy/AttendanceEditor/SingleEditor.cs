@@ -243,8 +243,9 @@ namespace JHSchool.Behavior.Legacy
             //動態產生DataGridView 
             int ColumnsIndex = dataGridView.Columns.Add("colDate", "日期");
             ColumnIndex.Add("日期", ColumnsIndex);
-            dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[ColumnsIndex].ReadOnly = true;
+            dataGridView.Columns[ColumnsIndex].Width = 120;
 
             ColumnsIndex = dataGridView.Columns.Add("colWeek", "星期");
             ColumnIndex.Add("星期", ColumnsIndex);

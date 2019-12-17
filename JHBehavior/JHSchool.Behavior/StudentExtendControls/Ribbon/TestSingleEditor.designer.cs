@@ -440,7 +440,7 @@
             // 
             this.colDate.HeaderText = "日期";
             this.colDate.Name = "colDate";
-            this.colDate.Width = 59;
+            this.colDate.Width = 120;
             // 
             // colWeek
             // 
