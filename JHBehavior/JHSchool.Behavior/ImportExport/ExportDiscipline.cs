@@ -2,6 +2,7 @@
 using JHSchool.Data;
 using SmartSchool.API.PlugIn;
 using System;
+using K12.Data;
 
 namespace JHSchool.Behavior.ImportExport
 {
@@ -16,24 +17,24 @@ namespace JHSchool.Behavior.ImportExport
 
         public override void InitializeExport(SmartSchool.API.PlugIn.Export.ExportWizard wizard)
         {
-            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大功", "小功", "嘉獎", "大過", "小過", "警告", "事由", "是否銷過", "銷過日期", "銷過事由","登錄日期");
+            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大功", "小功", "嘉獎", "大過", "小過", "警告", "事由", "是否銷過", "銷過日期", "銷過事由", "登錄日期", "備註");
 
-            wizard.ExportPackage += delegate(object sender, SmartSchool.API.PlugIn.Export.ExportPackageEventArgs e)
+            wizard.ExportPackage += delegate (object sender, SmartSchool.API.PlugIn.Export.ExportPackageEventArgs e)
             {
                 List<JHStudentRecord> students = JHStudent.SelectByIDs(e.List);
 
                 #region 收集資料(DicMerit)
-                Dictionary<string, List<JHDisciplineRecord>> DicDiscipline = new Dictionary<string, List<JHDisciplineRecord>>();
+                Dictionary<string, List<DisciplineRecord>> DicDiscipline = new Dictionary<string, List<DisciplineRecord>>();
 
-                List<JHDisciplineRecord> ListDiscipline = JHDiscipline.SelectByStudentIDs(e.List);
+                List<DisciplineRecord> ListDiscipline = Discipline.SelectByStudentIDs(e.List);
 
                 //ListDiscipline.Sort(SortDate);
 
-                foreach (JHDisciplineRecord disRecord in ListDiscipline)
+                foreach (DisciplineRecord disRecord in ListDiscipline)
                 {
                     if (!DicDiscipline.ContainsKey(disRecord.RefStudentID))
                     {
-                        DicDiscipline.Add(disRecord.RefStudentID, new List<JHDisciplineRecord>());
+                        DicDiscipline.Add(disRecord.RefStudentID, new List<DisciplineRecord>());
                     }
                     DicDiscipline[disRecord.RefStudentID].Add(disRecord);
                 }
@@ -48,7 +49,7 @@ namespace JHSchool.Behavior.ImportExport
 
                         DicDiscipline[stud.ID].Sort(SortDate);
 
-                        foreach (JHDisciplineRecord JHR in DicDiscipline[stud.ID])
+                        foreach (DisciplineRecord JHR in DicDiscipline[stud.ID])
                         {
                             string OccurdateString = JHR.OccurDate.ToShortDateString();
 
@@ -86,6 +87,7 @@ namespace JHSchool.Behavior.ImportExport
                                         case "銷過日期": row.Add(field, "" + ClearDateString); break;
                                         case "銷過事由": row.Add(field, "" + JHR.ClearReason); break;
                                         case "登錄日期": row.Add(field, "" + RegisterDateString); break;
+                                        case "備註": row.Add(field, "" + JHR.Remark); break;
                                     }
                                 }
                             }
@@ -110,7 +112,7 @@ namespace JHSchool.Behavior.ImportExport
             return xx3.CompareTo(yy3);
         }
 
-        private int SortDate(JHDisciplineRecord x, JHDisciplineRecord y)
+        private int SortDate(DisciplineRecord x, DisciplineRecord y)
         {
             return x.OccurDate.CompareTo(y.OccurDate);
         }

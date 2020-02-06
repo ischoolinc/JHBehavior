@@ -92,7 +92,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
             meritTable.Add("C", "嘉獎");
 
             //初始化
-            string[] columnString = new string[] { "嘉獎", "小功", "大功", "事由" };
+            string[] columnString = new string[] { "嘉獎", "小功", "大功", "事由", "備註" };
             int i = 4;
             foreach (string s in columnString)
             {
@@ -176,6 +176,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
                 string semester = var.Semester.ToString();
                 string occurDate = var.OccurDate.ToShortDateString();
                 string reason = var.Reason;
+                string remark = var.Remark;
                 string disciplineID = var.ID;
                 string sso = schoolYear + "_" + semester + "_" + occurDate + "_" + disciplineID;
 
@@ -197,6 +198,10 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
                 //加入事由
                 if (!studentDisciplineDetail[studentID][sso].ContainsKey("事由"))
                     studentDisciplineDetail[studentID][sso].Add("事由", reason);
+
+                //加入備註
+                if (!studentDisciplineDetail[studentID][sso].ContainsKey("備註"))
+                    studentDisciplineDetail[studentID][sso].Add("備註", remark);
 
                 studentDisciplineStatistics[studentID]["大功"] += var.MeritA.Value;
                 studentDisciplineStatistics[studentID]["小功"] += var.MeritB.Value;
@@ -225,7 +230,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
             int startPage = 1;
             int pageNumber = 1;
 
-            int columnNumber = 8;
+            int columnNumber = 9;
 
             //合併標題列
             ptws.Cells.CreateRange(0, 0, 1, columnNumber).Merge();
@@ -472,7 +477,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
                         #endregion
                     }
                 }
-                else if(studentDisciplineStatistics.ContainsKey(studentInfo.ID) && !AutoSummaryDic.ContainsKey(studentInfo.ID))
+                else if (studentDisciplineStatistics.ContainsKey(studentInfo.ID) && !AutoSummaryDic.ContainsKey(studentInfo.ID))
                 {
                     #region 明細
                     //如果不是第一頁，就在上一頁的資料列下邊加黑線
@@ -600,7 +605,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
                     #endregion
                 }
                 else if (!studentDisciplineStatistics.ContainsKey(studentInfo.ID) && AutoSummaryDic.ContainsKey(studentInfo.ID))
-                {                    
+                {
                     if (AutoSummaryDic[studentInfo.ID].Count == 0)
                         continue;
 
@@ -716,7 +721,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
                         #endregion
                     }
                 }
-               else
+                else
                 { //皆無資料
                     continue;
                 }

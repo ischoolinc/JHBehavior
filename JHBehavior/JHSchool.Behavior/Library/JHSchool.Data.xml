@@ -1186,12 +1186,12 @@
             所屬課程
             </summary>
         </member>
-        <member name="T:JHSchool.Data.JHDisciplineRecord">
+        <member name="T:JHSchool.Data.DisciplineRecord">
             <summary>
             學生獎懲資訊
             </summary>
         </member>
-        <member name="P:JHSchool.Data.JHDisciplineRecord.Student">
+        <member name="P:JHSchool.Data.DisciplineRecord.Student">
             <summary>
             所屬學生
             </summary>
@@ -1758,15 +1758,15 @@
             <summary>
             取得所有學生獎懲記錄物件列表。
             </summary>
-            <returns>List&lt;JHDisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <returns>List&lt;DisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                List&lt;JHDisciplineRecord&gt; records = JHDisciplineRecord.SelectAll();
+                List&lt;DisciplineRecord&gt; records = DisciplineRecord.SelectAll();
                 
-                foreach(JHDisciplineRecord record in records)
+                foreach(DisciplineRecord record in records)
                     System.Console.WriteLine(record.RefStudentID);
                 </code>
             </example>
@@ -1776,15 +1776,15 @@
             根據多筆學生編號取得學生獎懲記錄物件列表。
             </summary>
             <param name="StudentIDs">多筆學生編號</param>
-            <returns>List&lt;JHDisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <returns>List&lt;DisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                List&lt;JHDisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
+                List&lt;DisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
                 
-                foreach(JHDisciplineRecord record in records)
+                foreach(DisciplineRecord record in records)
                     Console.WrlteLine(record.RefStudentID);
                 </code>
             </example>
@@ -1796,15 +1796,15 @@
             <param name="StudentIDs">多筆學生編號</param>
             <param name="StartRegisterDate">登錄開始日期</param>
             <param name="EndRegisterDate">登錄結束日期</param>
-            <returns>List&lt;JHDisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <returns>List&lt;DisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                List&lt;JHDisciplineRecord&gt; records = JHDiscipline.SelectRegisterDate(StudentIDs,StartRegisterDate,EndRegisterDate);
+                List&lt;DisciplineRecord&gt; records = JHDiscipline.SelectRegisterDate(StudentIDs,StartRegisterDate,EndRegisterDate);
                 
-                foreach(JHDisciplineRecord record in records)
+                foreach(DisciplineRecord record in records)
                     Console.WrlteLine(record.RefStudentID);
                 </code>
             </example>
@@ -1816,37 +1816,37 @@
             <param name="StudentIDs">多筆學生編號</param>
             <param name="StartOccurDate">發生開始日期</param>
             <param name="EndOccurDate">發生結束日期</param>
-            <returns>List&lt;JHDisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <returns>List&lt;DisciplineRecord&gt;，代表多筆學生獎懲記錄物件。</returns>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                List&lt;JHDisciplineRecord&gt; records = JHDiscipline.SelectByOccurDate(StudentIDs,StartOccurDate,EndOccurDate);
+                List&lt;DisciplineRecord&gt; records = JHDiscipline.SelectByOccurDate(StudentIDs,StartOccurDate,EndOccurDate);
                 
-                foreach(JHDisciplineRecord record in records)
+                foreach(DisciplineRecord record in records)
                     Console.WrlteLine(record.RefStudentID);
                 </code>
             </example>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Insert(JHSchool.Data.JHDisciplineRecord)">
+        <member name="M:JHSchool.Data.JHDiscipline.Insert(JHSchool.Data.DisciplineRecord)">
             <summary>
             新增單筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecord">學生獎懲記錄物件</param>
             <returns>string，傳回新增物件的系統編號。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                    JHDisciplineRecord newrecord = new JHDisciplineRecord();
+                    DisciplineRecord newrecord = new DisciplineRecord();
                     newrecord.RefStudentID = RefStudentID;
                     newrecord.SchoolYear = SchoolYear;
                     newrecord.Semester = Semester;
                     newrecord.OccurDate = DateTime.Today;
                     strng NewID = JHDiscipline.Insert(newrecord)
-                    JHDisciplineRecord record = JHDiscipline.SelectByID(NewID);
+                    DisciplineRecord record = JHDiscipline.SelectByID(NewID);
                     System.Console.Writeln(record.RefStudentID);
                 </code>
             </example>
@@ -1855,79 +1855,79 @@
             2.新增必填欄位為學生記錄編號（RefStudentID）、學年度（SchoolYear）、學期（Semester）、缺曠日期（OccurDate）。
             </remarks>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Insert(System.Collections.Generic.IEnumerable{JHSchool.Data.JHDisciplineRecord})">
+        <member name="M:JHSchool.Data.JHDiscipline.Insert(System.Collections.Generic.IEnumerable{JHSchool.Data.DisciplineRecord})">
             <summary>
             新增多筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecords">多筆學生獎懲記錄物件</param> 
             <returns>List&lt;string&gt;，傳回新增物件的系統編號列表。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                    JHDisciplineRecord record = new JHDisciplineRecord();
+                    DisciplineRecord record = new DisciplineRecord();
                     newrecord.RefStudentID = RefStudentID;
                     newrecord.SchoolYear = SchoolYear;
                     newrecord.Semester = Semester;
                     newrecord.OccurDate = DateTime.Today;
                     
-                    List&lt;JHDisciplineRecord&gt; records = new List&lt;JHDisciplineRecord&gt;();
+                    List&lt;DisciplineRecord&gt; records = new List&lt;DisciplineRecord&gt;();
                     records.Add(record);
                     List&lt;string&gt; NewID = JHDiscipline.Insert(records)
                 </code>
             </example>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Update(JHSchool.Data.JHDisciplineRecord)">
+        <member name="M:JHSchool.Data.JHDiscipline.Update(JHSchool.Data.DisciplineRecord)">
             <summary>
             更新單筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecord">學生獎懲記錄物件</param> 
             <returns>int，傳回成功更新的筆數。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                JHDisciplineRecord record = JHDiscipline.SelectByStudentIDs(StudentIDs)[0];
+                DisciplineRecord record = JHDiscipline.SelectByStudentIDs(StudentIDs)[0];
                 record.OccurDate = DateTime.Today;
                 int UpdateCount = JHDiscipline.Update(record);
                 </code>
             </example>
             <remarks>傳回值為成功更新的筆數。</remarks>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Update(System.Collections.Generic.IEnumerable{JHSchool.Data.JHDisciplineRecord})">
+        <member name="M:JHSchool.Data.JHDiscipline.Update(System.Collections.Generic.IEnumerable{JHSchool.Data.DisciplineRecord})">
             <summary>
             更新多筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecords">多筆學生獎懲記錄物件</param> 
             <returns>int，傳回成功更新的筆數。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                JHDisciplineRecord record = JHDiscipline.SelectByStudentIDs(StudentIDs)[0];
+                DisciplineRecord record = JHDiscipline.SelectByStudentIDs(StudentIDs)[0];
                 record.OccurDate = DateTime.Today;
-                List&lt;JHDisciplineRecord&gt; records = new List&lt;JHDisciplineRecord&gt;();
+                List&lt;DisciplineRecord&gt; records = new List&lt;DisciplineRecord&gt;();
                 records.Add(record);
                 int UpdateCount = JHDiscipline.Update(records);
                 </code>
             </example>
             <remarks>傳回值為成功更新的筆數。</remarks>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Delete(JHSchool.Data.JHDisciplineRecord)">
+        <member name="M:JHSchool.Data.JHDiscipline.Delete(JHSchool.Data.DisciplineRecord)">
             <summary>
             刪除單筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecord">學生獎懲記錄物件</param>
             <returns>int，傳回成功刪除的筆數。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                  List&lt;JHDisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
+                  List&lt;DisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
                   int DeleteCount = JHDiscipline.Delete(records[0]);
                 </code>
             </example>
@@ -1948,18 +1948,18 @@
             </example>
             <remarks>傳回值為成功刪除的筆數。</remarks>
         </member>
-        <member name="M:JHSchool.Data.JHDiscipline.Delete(System.Collections.Generic.IEnumerable{JHSchool.Data.JHDisciplineRecord})">
+        <member name="M:JHSchool.Data.JHDiscipline.Delete(System.Collections.Generic.IEnumerable{JHSchool.Data.DisciplineRecord})">
             <summary>
             刪除多筆學生獎懲記錄
             </summary>
             <param name="DisciplineRecords">多筆學生獎懲記錄物件</param>
             <returns>int，傳回成功刪除的筆數。</returns>
-            <seealso cref="T:JHSchool.Data.JHDisciplineRecord"/>
+            <seealso cref="T:JHSchool.Data.DisciplineRecord"/>
             <exception cref="T:System.Exception">
             </exception>
             <example>
                 <code>
-                  List&lt;JHDisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
+                  List&lt;DisciplineRecord&gt; records = JHDiscipline.SelectByStudentIDs(StudentIDs);
                   int DeleteCount = JHDiscipline.Delete(records);
                 </code>
             </example>

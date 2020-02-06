@@ -18,8 +18,11 @@ namespace JHSchool.Behavior.Report
         private bool _defaultTemplate;
         private DateRangeMode _mode = DateRangeMode.Month;
         private bool _printStudentList;
+        private bool _printRemark; //是否列印備註
 
-        public DisciplineNotificationConfigForm(bool defaultTemplate, DateRangeMode mode, byte[] buffer, string name, string address, string condName, string condNumber, bool printStudentList)
+        public DisciplineNotificationConfigForm(bool defaultTemplate, DateRangeMode mode, 
+            byte[] buffer, string name, string address, string condName, string condNumber, 
+            bool printStudentList, bool printRemark)
         {
             InitializeComponent();
             #region 如果系統的Renderer是Office2007Renderer，同化_ClassTeacherView,_CategoryView的顏色
@@ -32,6 +35,7 @@ namespace JHSchool.Behavior.Report
             _defaultTemplate = defaultTemplate;
             _mode = mode;
             _printStudentList = printStudentList;
+            _printRemark = printRemark;
 
             if (buffer != null)
                 _buffer = buffer;
@@ -41,7 +45,8 @@ namespace JHSchool.Behavior.Report
             else
                 radioButton2.Checked = true;
 
-            checkBoxX2.Checked = printStudentList;
+            cbPrintStudentList.Checked = printStudentList;
+            cbPrintRemark.Checked = printRemark;
 
             switch (mode)
             {
@@ -119,7 +124,7 @@ namespace JHSchool.Behavior.Report
 
         private void checkBoxX2_CheckedChanged(object sender, EventArgs e)
         {
-            _printStudentList = checkBoxX2.Checked;
+            _printStudentList = cbPrintStudentList.Checked;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -223,9 +228,13 @@ namespace JHSchool.Behavior.Report
             XmlElement receive = config.OwnerDocument.CreateElement("Receive");
             XmlElement conditions = config.OwnerDocument.CreateElement("Conditions");
             XmlElement PrintStudentList = config.OwnerDocument.CreateElement("PrintStudentList");
+            XmlElement PrintRemark = config.OwnerDocument.CreateElement("PrintRemark");
 
             PrintStudentList.SetAttribute("Checked", _printStudentList.ToString());
             config.ReplaceChild(PrintStudentList, config.SelectSingleNode("PrintStudentList"));
+
+            PrintRemark.SetAttribute("Checked", _printRemark.ToString());
+            config.ReplaceChild(PrintRemark, config.SelectSingleNode("PrintRemark"));
 
             if (_isUpload)
             {
@@ -308,6 +317,11 @@ namespace JHSchool.Behavior.Report
             {
                 numericUpDown1.Enabled = true;
             }
+        }
+
+        private void cbPrintRemark_CheckedChanged(object sender, EventArgs e)
+        {
+            _printRemark = cbPrintRemark.Checked;
         }
     }
 }

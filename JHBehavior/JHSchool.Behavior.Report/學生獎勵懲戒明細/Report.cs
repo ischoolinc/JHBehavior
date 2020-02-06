@@ -105,11 +105,11 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
             string[] columnString;
             if (form.checkBoxX2Bool) //使用者已勾選"排除懲戒已銷過資料"
             {
-                columnString = new string[] { "嘉獎", "小功", "大功", "警告", "小過", "大過", "事由" };
+                columnString = new string[] { "嘉獎", "小功", "大功", "警告", "小過", "大過", "事由", "備註" };
             }
             else
             {
-                columnString = new string[] { "嘉獎", "小功", "大功", "警告", "小過", "大過", "銷過", "銷過日期", "事由" };
+                columnString = new string[] { "嘉獎", "小功", "大功", "警告", "小過", "大過", "銷過", "銷過日期", "事由", "備註" };
             }
             int i = 4;
             foreach (string s in columnString)
@@ -199,6 +199,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                 string semester = var.Semester.ToString();
                 string occurDate = var.OccurDate.ToShortDateString();
                 string reason = var.Reason;
+                string remark = var.Remark;
                 string disciplineID = var.ID;
                 string sso = schoolYear + "_" + semester + "_" + occurDate + "_" + disciplineID;
 
@@ -223,6 +224,10 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                 //加入事由
                 if (!studentDisciplineDetail[studentID][sso].ContainsKey("事由"))
                     studentDisciplineDetail[studentID][sso].Add("事由", reason);
+
+                //加入備註
+                if (!studentDisciplineDetail[studentID][sso].ContainsKey("備註"))
+                    studentDisciplineDetail[studentID][sso].Add("備註", remark);
 
                 if (var.MeritFlag == "1")
                 {
@@ -282,11 +287,11 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
             int startPage = 1;
             int pageNumber = 1;
 
-            int columnNumber = 13;
+            int columnNumber = 14;
 
             if (form.checkBoxX2Bool) //使用者已勾選"排除懲戒已銷過資料"
             {
-                columnNumber = 11;
+                columnNumber = 12;
             }
 
             //合併標題列

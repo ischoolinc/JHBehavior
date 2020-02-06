@@ -170,6 +170,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                 string disciplineID = var.GetAttribute("ID");
                 string occurDateID = occurDate.ToShortDateString() + "_" + disciplineID;
                 string reason = var.SelectSingleNode("Reason").InnerText;
+                string remark = var.SelectSingleNode("Remark").InnerText;
                 string classID = studentClassDict[studentID];
 
                 //string registerDate = var.SelectSingleNode("RegisterDate").InnerText;
@@ -186,6 +187,10 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                 //加入事由
                 if (!allDisciplineDetail[classID][studentID][occurDateID].ContainsKey("事由"))
                     allDisciplineDetail[classID][studentID][occurDateID].Add("事由", reason);
+
+                //加入備註 2020/1/8
+                if (!allDisciplineDetail[classID][studentID][occurDateID].ContainsKey("備註"))
+                    allDisciplineDetail[classID][studentID][occurDateID].Add("備註", remark);
 
                 //if (!allDisciplineDetail[classID][studentID][occurDateID].ContainsKey("登錄日期"))
                 //    allDisciplineDetail[classID][studentID][occurDateID].Add("登錄日期", registerDate);
@@ -275,6 +280,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
             columnTable.Add("銷過日期", colIndex++);
             columnTable.Add("銷過事由", colIndex++);
             columnTable.Add("事由", colIndex++);
+            columnTable.Add("備註", colIndex++);
             //columnTable.Add("登錄日期", colIndex++);
             endIndex = colIndex;
 

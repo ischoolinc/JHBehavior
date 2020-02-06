@@ -61,7 +61,8 @@ namespace JHSchool.Behavior.Report
             this.comboItem10 = new DevComponents.Editors.ComboItem();
             this.comboItem11 = new DevComponents.Editors.ComboItem();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.checkBoxX2 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.cbPrintStudentList = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.cbPrintRemark = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupPanel2.SuspendLayout();
@@ -139,7 +140,7 @@ namespace JHSchool.Behavior.Report
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(281, 196);
+            this.buttonX1.Location = new System.Drawing.Point(281, 226);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(64, 23);
             this.buttonX1.TabIndex = 4;
@@ -151,7 +152,7 @@ namespace JHSchool.Behavior.Report
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.Location = new System.Drawing.Point(354, 196);
+            this.buttonX2.Location = new System.Drawing.Point(354, 226);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(64, 23);
             this.buttonX2.TabIndex = 6;
@@ -528,34 +529,53 @@ namespace JHSchool.Behavior.Report
             this.labelX3.TabIndex = 19;
             this.labelX3.Text = ">=";
             // 
-            // checkBoxX2
+            // cbPrintStudentList
             // 
-            this.checkBoxX2.AutoSize = true;
-            this.checkBoxX2.BackColor = System.Drawing.Color.Transparent;
+            this.cbPrintStudentList.AutoSize = true;
+            this.cbPrintStudentList.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
-            this.checkBoxX2.BackgroundStyle.Class = "";
-            this.checkBoxX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX2.Location = new System.Drawing.Point(10, 198);
-            this.checkBoxX2.Name = "checkBoxX2";
-            this.checkBoxX2.Size = new System.Drawing.Size(147, 21);
-            this.checkBoxX2.TabIndex = 22;
-            this.checkBoxX2.Text = "另存學生清單(Excel)";
-            this.checkBoxX2.CheckedChanged += new System.EventHandler(this.checkBoxX2_CheckedChanged);
+            this.cbPrintStudentList.BackgroundStyle.Class = "";
+            this.cbPrintStudentList.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.cbPrintStudentList.Location = new System.Drawing.Point(18, 228);
+            this.cbPrintStudentList.Name = "cbPrintStudentList";
+            this.cbPrintStudentList.Size = new System.Drawing.Size(147, 21);
+            this.cbPrintStudentList.TabIndex = 22;
+            this.cbPrintStudentList.Text = "另存學生清單(Excel)";
+            this.cbPrintStudentList.CheckedChanged += new System.EventHandler(this.checkBoxX2_CheckedChanged);
+            // 
+            // cbPrintRemark
+            // 
+            this.cbPrintRemark.AutoSize = true;
+            this.cbPrintRemark.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.cbPrintRemark.BackgroundStyle.Class = "";
+            this.cbPrintRemark.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.cbPrintRemark.Location = new System.Drawing.Point(18, 201);
+            this.cbPrintRemark.Name = "cbPrintRemark";
+            this.cbPrintRemark.Size = new System.Drawing.Size(80, 21);
+            this.cbPrintRemark.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cbPrintRemark.TabIndex = 23;
+            this.cbPrintRemark.Text = "列印備註";
+            this.cbPrintRemark.CheckedChanged += new System.EventHandler(this.cbPrintRemark_CheckedChanged);
             // 
             // DemeritConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 229);
-            this.Controls.Add(this.checkBoxX2);
+            this.ClientSize = new System.Drawing.Size(429, 261);
+            this.Controls.Add(this.cbPrintRemark);
+            this.Controls.Add(this.cbPrintStudentList);
             this.Controls.Add(this.groupPanel4);
             this.Controls.Add(this.groupPanel3);
             this.Controls.Add(this.groupPanel2);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonX1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DemeritConfigForm";
@@ -608,6 +628,7 @@ namespace JHSchool.Behavior.Report
         private DevComponents.Editors.ComboItem comboItem10;
         private DevComponents.Editors.ComboItem comboItem11;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX2;
+        private DevComponents.DotNetBar.Controls.CheckBoxX cbPrintStudentList;
+        private DevComponents.DotNetBar.Controls.CheckBoxX cbPrintRemark;
     }
 }

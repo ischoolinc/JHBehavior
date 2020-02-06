@@ -39,7 +39,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
             else
                 throw new NotImplementedException();
 
-            SelectedStudents = SortClassIndex.JHSchool_StudentRecord(SelectedStudents); 
+            SelectedStudents = SortClassIndex.JHSchool_StudentRecord(SelectedStudents);
             #endregion
         }
 
@@ -52,7 +52,10 @@ namespace JHSchool.Behavior.Report.懲戒通知單
             {
                 FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化懲戒通知單...");
 
-                object[] args = new object[] { form.StartDate, form.EndDate, form.PrintHasRecordOnly, form.Template, form.ReceiveName, form.ReceiveAddress, form.ConditionName, form.ConditionNumber, form.radioButton1.Checked, form.PrintStudentList };
+                object[] args = new object[] { form.StartDate, form.EndDate, form.PrintHasRecordOnly,
+                    form.Template, form.ReceiveName, form.ReceiveAddress, form.ConditionName,
+                    form.ConditionNumber, form.radioButton1.Checked, form.PrintStudentList,
+                    form.PrintRemark };
 
                 _BGWDisciplineNotification = new BackgroundWorker();
                 _BGWDisciplineNotification.DoWork += new DoWorkEventHandler(_BGWDisciplineNotification_DoWork);
@@ -144,7 +147,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
             }
 
 
-            return SumNum1 + SumNum2 + SumNum3; 
+            return SumNum1 + SumNum2 + SumNum3;
             #endregion
         }
 
@@ -168,6 +171,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
             int condNumber = int.Parse((string)args[7]);
             bool IsInsertDate = (bool)args[8];
             bool printStudentList = (bool)args[9];
+            bool printRemark = (bool)args[10];
 
             ChengeDemerit(condName, condNumber);
 
@@ -184,7 +188,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
 
             MDFilter filter = new MDFilter();
             if (flag == 0)
-                filter.SetCondition(MDMapping[condName], condNumber); 
+                filter.SetCondition(MDMapping[condName], condNumber);
 
             #endregion
 
@@ -252,7 +256,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
 
                 if (!allStudentID.Contains(aStudentID))
                     allStudentID.Add(aStudentID);
-            } 
+            }
             #endregion
 
             #region 取得獎懲資料 日期區間
@@ -287,6 +291,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 DateTime occurDate = DateTime.Parse(var.SelectSingleNode("OccurDate").InnerText);
                 string occurMonthDay = occurDate.Month + "/" + occurDate.Day;
                 string reason = var.SelectSingleNode("Reason").InnerText;
+                string remark = var.SelectSingleNode("Remark").InnerText;
 
                 if (!studentDisciplineDetail.ContainsKey(studentID))
                     studentDisciplineDetail.Add(studentID, new List<string>());
@@ -368,10 +373,16 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                         }
                     }
 
+                    if (printRemark)
+                    {
+                        if (!string.IsNullOrEmpty(remark))
+                            detailString.Append(" (" + remark + ")");
+                    }
+
                     if (!cleared)
                         studentDisciplineDetail[studentID].Add(detailString.ToString());
                 }
-            } 
+            }
             #endregion
 
             #region 取得獎懲資料 學期累計
@@ -440,7 +451,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                         }
                     }
                 }
-            } 
+            }
             #endregion
 
             #region 取得學生通訊地址資料
@@ -536,7 +547,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 studentInfo[studentID].Add("CustodianName", var.SelectSingleNode("CustodianName").InnerText);
                 studentInfo[studentID].Add("FatherName", var.SelectSingleNode("FatherName").InnerText);
                 studentInfo[studentID].Add("MotherName", var.SelectSingleNode("MotherName").InnerText);
-            } 
+            }
             #endregion
 
             #region 產生報表
@@ -779,7 +790,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 builder.EndTable();
 
                 e.Text = string.Empty;
-            } 
+            }
             #endregion
         }
 
@@ -835,7 +846,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 }
 
                 return filtered;
-            } 
+            }
             #endregion
         }
     }

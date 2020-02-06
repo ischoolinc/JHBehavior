@@ -15,9 +15,9 @@ namespace JHSchool.Behavior.ImportExport
 
         public override void InitializeExport(SmartSchool.API.PlugIn.Export.ExportWizard wizard)
         {
-            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大功", "小功", "嘉獎", "事由","登錄日期");
+            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大功", "小功", "嘉獎", "事由", "登錄日期", "備註");
 
-            wizard.ExportPackage += delegate(object sender, SmartSchool.API.PlugIn.Export.ExportPackageEventArgs e)
+            wizard.ExportPackage += delegate (object sender, SmartSchool.API.PlugIn.Export.ExportPackageEventArgs e)
             {
                 List<JHStudentRecord> students = JHStudent.SelectByIDs(e.List);
 
@@ -72,6 +72,7 @@ namespace JHSchool.Behavior.ImportExport
                                         case "嘉獎": row.Add(field, "" + JHR.MeritC.ToString()); break;
                                         case "事由": row.Add(field, "" + JHR.Reason); break;
                                         case "登錄日期": row.Add(field, "" + RegisterDateString); break;
+                                        case "備註": row.Add(field, "" + JHR.Remark); break;
                                     }
                                 }
                             }

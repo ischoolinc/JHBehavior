@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using JHSchool.Data;
+using K12.Data;
 using SmartSchool.API.PlugIn;
 
 namespace JHSchool.Behavior.ImportExport
@@ -20,7 +21,7 @@ namespace JHSchool.Behavior.ImportExport
         public override void InitializeImport(SmartSchool.API.PlugIn.Import.ImportWizard wizard)
         {
             Dictionary<string, JHMoralScoreRecord> CacheMoralScore = new Dictionary<string, JHMoralScoreRecord>();
-            List<JHDisciplineRecord> DiscipleRecords = new List<JHDisciplineRecord>();
+            List<DisciplineRecord> DiscipleRecords = new List<DisciplineRecord>();
 
             wizard.RequiredFields.AddRange("學年度","學期");
             wizard.ImportableFields.AddRange("學年度", "學期", "大功", "小功", "嘉獎", "大過", "小過", "警告");

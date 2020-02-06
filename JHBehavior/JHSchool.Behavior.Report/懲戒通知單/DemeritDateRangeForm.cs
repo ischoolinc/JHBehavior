@@ -52,6 +52,13 @@ namespace JHSchool.Behavior.Report
             get { return _PrintStudentList; }
         }
 
+        //是否列印備註
+        private bool _PrintRemark = false;
+        public bool PrintRemark
+        {
+            get { return _PrintRemark; }
+        }
+
         public DemeritDateRangeForm()
         {
             InitializeComponent();
@@ -77,6 +84,7 @@ namespace JHSchool.Behavior.Report
                 XmlElement receive = (XmlElement)config.SelectSingleNode("Receive");
                 XmlElement conditions = (XmlElement)config.SelectSingleNode("Conditions");
                 XmlElement PrintStudentList = (XmlElement)config.SelectSingleNode("PrintStudentList");
+                XmlElement PrintRemark = (XmlElement)config.SelectSingleNode("PrintRemark");
 
                 if (customize != null)
                 {
@@ -96,6 +104,25 @@ namespace JHSchool.Behavior.Report
                 else
                 {
                     XmlElement newPrintStudentList = config.OwnerDocument.CreateElement("PrintStudentList");
+                    newPrintStudentList.SetAttribute("Checked", "False");
+                    config.AppendChild(newPrintStudentList);
+                    cd.SetXml("XmlData", config);
+                }
+
+                //列印備註
+                if (PrintRemark != null)
+                {
+                    if (PrintRemark.HasAttribute("Checked"))
+                    {
+                        if (PrintRemark.GetAttribute("Checked") != "")
+                        {
+                            _PrintRemark = bool.Parse(PrintRemark.GetAttribute("Checked"));
+                        }
+                    }
+                }
+                else
+                {
+                    XmlElement newPrintStudentList = config.OwnerDocument.CreateElement("PrintRemark");
                     newPrintStudentList.SetAttribute("Checked", "False");
                     config.AppendChild(newPrintStudentList);
                     cd.SetXml("XmlData", config);
@@ -167,6 +194,7 @@ namespace JHSchool.Behavior.Report
                 XmlElement receive = config.OwnerDocument.CreateElement("Receive");
                 XmlElement conditions = config.OwnerDocument.CreateElement("Conditions");
                 XmlElement printStudentList = config.OwnerDocument.CreateElement("PrintStudentList");
+                XmlElement printRemark = config.OwnerDocument.CreateElement("PrintRemark");
 
                 dateRangeMode.InnerText = ((int)_mode).ToString();
                 receive.SetAttribute("Name", "");
@@ -174,19 +202,22 @@ namespace JHSchool.Behavior.Report
                 conditions.SetAttribute("ConditionName", "");
                 conditions.SetAttribute("ConditionNumber", "1");
                 printStudentList.SetAttribute("Checked", "false");
+                printRemark.SetAttribute("Checked", "false"); //2019/1/21 - 備註欄位
 
                 config.AppendChild(customize);
                 config.AppendChild(dateRangeMode);
                 config.AppendChild(receive);
                 config.AppendChild(conditions);
                 config.AppendChild(printStudentList);
+                config.AppendChild(printRemark);
 
                 cd.SetXml("XmlData", config);
                 //CurrentUser.Instance.Preference["懲戒通知單"] = config;
 
                 _useDefaultTemplate = true;
                 _printHasRecordOnly = true;
-
+                _PrintStudentList = false;
+                _PrintRemark = false;
                 #endregion
             }
 
@@ -201,7 +232,8 @@ namespace JHSchool.Behavior.Report
         {
             //傳入True是因為不影響程式結構
             DemeritConfigForm configForm = new DemeritConfigForm(
-                _useDefaultTemplate, _mode, _buffer, _receiveName, _receiveAddress, _conditionName, _conditionNumber, _PrintStudentList);
+                _useDefaultTemplate, _mode, _buffer, _receiveName, _receiveAddress, _conditionName,
+                _conditionNumber, _PrintStudentList, _PrintRemark);
 
             if (configForm.ShowDialog() == DialogResult.OK)
             {

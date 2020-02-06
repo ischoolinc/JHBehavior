@@ -16,7 +16,7 @@ namespace JHSchool.Behavior.ImportExport
 
         public override void InitializeExport(SmartSchool.API.PlugIn.Export.ExportWizard wizard)
         {
-            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大過", "小過", "警告", "事由","是否銷過","銷過日期","銷過事由","登錄日期");
+            wizard.ExportableFields.AddRange("學年度", "學期", "日期", "大過", "小過", "警告", "事由","是否銷過","銷過日期","銷過事由","登錄日期","備註");
 
             wizard.ExportPackage += delegate(object sender, SmartSchool.API.PlugIn.Export.ExportPackageEventArgs e)
             {
@@ -82,6 +82,7 @@ namespace JHSchool.Behavior.ImportExport
                                         case "銷過日期": row.Add(field, "" + ClearDateString); break;
                                         case "銷過事由": row.Add(field, "" + JHR.ClearReason); break;
                                         case "登錄日期": row.Add(field, "" + RegisterDateString); break;
+                                        case "備註": row.Add(field, "" + JHR.Remark); break;
                                     }
                                 }
                             }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FISCA.Presentation.Controls;
-using JHSchool.Data;
 using SmartSchool.API.PlugIn;
 using System.Text;
+using K12.Data;
 
 namespace JHSchool.Behavior.ImportExport
 {
@@ -19,7 +19,7 @@ namespace JHSchool.Behavior.ImportExport
 
         public override void InitializeImport(SmartSchool.API.PlugIn.Import.ImportWizard wizard)
         {
-            Dictionary<string, JHDisciplineRecord> CacheDiscipline = new Dictionary<string, JHDisciplineRecord>();
+            Dictionary<string, DisciplineRecord> CacheDiscipline = new Dictionary<string, DisciplineRecord>();
 
             VirtualRadioButton chose1 = new VirtualRadioButton("比對事由變更獎懲次數", false);
             VirtualRadioButton chose2 = new VirtualRadioButton("比對獎懲次數變更事由", false);
@@ -39,7 +39,7 @@ namespace JHSchool.Behavior.ImportExport
                     wizard.RequiredFields.AddRange("學年度", "學期", "日期", "大功", "小功", "嘉獎", "大過", "小過", "警告");
                 }
             };
-            wizard.ImportableFields.AddRange("學年度", "學期", "日期", "地點", "大功", "小功", "嘉獎", "大過", "小過", "警告", "事由", "是否銷過", "銷過日期", "銷過事由", "登錄日期");
+            wizard.ImportableFields.AddRange("學年度", "學期", "日期", "地點", "大功", "小功", "嘉獎", "大過", "小過", "警告", "事由", "是否銷過", "銷過日期", "銷過事由", "登錄日期", "備註");
             wizard.Options.AddRange(chose1, chose2);
             chose1.Checked = true;
             wizard.PackageLimit = 1000;
@@ -49,7 +49,7 @@ namespace JHSchool.Behavior.ImportExport
 
             wizard.ValidateStart += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
             {
-                foreach (JHDisciplineRecord record in JHDiscipline.SelectByStudentIDs(e.List))
+                foreach (DisciplineRecord record in Discipline.SelectByStudentIDs(e.List))
                     if (!CacheDiscipline.ContainsKey(record.ID))
                         CacheDiscipline.Add(record.ID, record);
 
@@ -103,7 +103,7 @@ namespace JHSchool.Behavior.ImportExport
                     #region 以事由為Key更新
                     string reason = e.Data["事由"];
                     int match = 0;
-                    foreach (JHDisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == e.Data.ID))
+                    foreach (DisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == e.Data.ID))
                     {
                         if (rewardInfo.SchoolYear == schoolYear && rewardInfo.Semester == semester && rewardInfo.OccurDate == occurdate && rewardInfo.Reason == reason)
                             match++;
@@ -170,7 +170,7 @@ namespace JHSchool.Behavior.ImportExport
                     }
                     int match = 0;
                     #region 檢查重複
-                    foreach (JHDisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == e.Data.ID))
+                    foreach (DisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == e.Data.ID))
                     {
                         int MeritA = rewardInfo.MeritA.HasValue ? rewardInfo.MeritA.Value : 0;
                         int MeritB = rewardInfo.MeritB.HasValue ? rewardInfo.MeritB.Value : 0;
@@ -445,8 +445,8 @@ namespace JHSchool.Behavior.ImportExport
             {
                 bool hasUpdate = false, hasInsert = false;
 
-                List<JHDisciplineRecord> updateDisciplines = new List<JHDisciplineRecord>();
-                List<JHDisciplineRecord> insertDisciplines = new List<JHDisciplineRecord>();
+                List<DisciplineRecord> updateDisciplines = new List<DisciplineRecord>();
+                List<DisciplineRecord> insertDisciplines = new List<DisciplineRecord>();
 
                 //2014/3/6日新增Log記錄
                 StringBuilder Log_sb = new StringBuilder();
@@ -509,9 +509,11 @@ namespace JHSchool.Behavior.ImportExport
                         //else 
                         //    registerdate = DateTime.Now;                        
 
-                        string reason = row["事由"];
+                        string reason = row.ContainsKey("事由") ? row["事由"] : "";
+                        string remark = row.ContainsKey("備註") ? row["備註"] : "";
+
                         bool match = false;
-                        foreach (JHDisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == row.ID))
+                        foreach (DisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == row.ID))
                         {
                             if (rewardInfo.SchoolYear == schoolYear && rewardInfo.Semester == semester && rewardInfo.OccurDate == occurdate && rewardInfo.Reason.Equals(reason))
                             {
@@ -534,7 +536,7 @@ namespace JHSchool.Behavior.ImportExport
                                     rewardInfo.ClearReason;
 
                                 #endregion
-                                JHDisciplineRecord record = new JHDisciplineRecord();
+                                DisciplineRecord record = new DisciplineRecord();
 
                                 isAward = awardA + awardB + awardC > 0;
 
@@ -561,6 +563,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.OccurDate = occurdate;
                                 record.RegisterDate = registerdate;
                                 record.Reason = reason;
+                                record.Remark = remark;
                                 record.ID = rewardInfo.ID;
 
                                 updateDisciplines.Add(record);
@@ -572,7 +575,7 @@ namespace JHSchool.Behavior.ImportExport
                         if (!match)
                         {
 
-                            JHDisciplineRecord record = new JHDisciplineRecord();
+                            DisciplineRecord record = new DisciplineRecord();
 
                             isAward = awardA + awardB + awardC > 0;
                             if (isAward)
@@ -597,6 +600,7 @@ namespace JHSchool.Behavior.ImportExport
                             record.Semester = semester;
                             record.OccurDate = occurdate;
                             record.Reason = reason;
+                            record.Remark = remark;
                             record.RegisterDate = registerdate;
 
                             insertDisciplines.Add(record);
@@ -621,6 +625,7 @@ namespace JHSchool.Behavior.ImportExport
                         string clearreason = "";
                         //bool ultimateAdmonition = false;
                         string reason = row.ContainsKey("事由") ? row["事由"] : "";
+                        string remark = row.ContainsKey("備註") ? row["備註"] : "";
 
                         if (row.ContainsKey("大功"))
                             awardA = (row["大功"] == "") ? 0 : int.Parse(row["大功"]);
@@ -646,7 +651,7 @@ namespace JHSchool.Behavior.ImportExport
                             row["銷過事由"] : "";
 
                         bool match = false;
-                        foreach (JHDisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == row.ID))
+                        foreach (DisciplineRecord rewardInfo in CacheDiscipline.Values.Where(x => x.RefStudentID == row.ID))
                         {
                             int MeritA = rewardInfo.MeritA.HasValue ? rewardInfo.MeritA.Value : 0;
                             int MeritB = rewardInfo.MeritB.HasValue ? rewardInfo.MeritB.Value : 0;
@@ -669,7 +674,7 @@ namespace JHSchool.Behavior.ImportExport
                                 match = true;
                                 #region 其他項目
                                 reason = e.ImportFields.Contains("事由") ? row["事由"] : rewardInfo.Reason;
-
+                                remark = e.ImportFields.Contains("備註") ? row["備註"] : rewardInfo.Remark;
                                 cleared = e.ImportFields.Contains("是否銷過") ? row["是否銷過"] : string.Empty;
 
                                 if (e.ImportFields.Contains("銷過日期"))
@@ -687,7 +692,7 @@ namespace JHSchool.Behavior.ImportExport
                                     rewardInfo.ClearReason;
                                 #endregion
 
-                                JHDisciplineRecord record = new JHDisciplineRecord();
+                                DisciplineRecord record = new DisciplineRecord();
 
                                 isAward = awardA + awardB + awardC > 0;
                                 if (isAward)
@@ -713,6 +718,7 @@ namespace JHSchool.Behavior.ImportExport
                                 record.OccurDate = occurdate;
                                 record.RegisterDate = registerdate;
                                 record.Reason = reason;
+                                record.Remark = remark;
                                 record.ID = rewardInfo.ID;
 
                                 updateDisciplines.Add(record);
@@ -723,7 +729,7 @@ namespace JHSchool.Behavior.ImportExport
                         }
                         if (!match)
                         {
-                            JHDisciplineRecord record = new JHDisciplineRecord();
+                            DisciplineRecord record = new DisciplineRecord();
 
                             isAward = awardA + awardB + awardC > 0;
                             if (isAward)
@@ -749,7 +755,7 @@ namespace JHSchool.Behavior.ImportExport
                             record.OccurDate = occurdate;
                             record.RegisterDate = registerdate;
                             record.Reason = reason;
-
+                            record.Remark = remark;
                             insertDisciplines.Add(record);
 
                             hasInsert = true;
@@ -760,10 +766,10 @@ namespace JHSchool.Behavior.ImportExport
 
                 if (hasInsert)
                 {
-                    JHDiscipline.Insert(insertDisciplines);
+                    Discipline.Insert(insertDisciplines);
                     Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(insertDisciplines);
                     Log_sb.AppendLine("新增" + "「" + updateDisciplines.Count + "」筆資料");
-                    foreach (JHDisciplineRecord record in insertDisciplines)
+                    foreach (DisciplineRecord record in insertDisciplines)
                     {
                         if (StudentDic.ContainsKey(record.RefStudentID))
                             Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
@@ -772,10 +778,10 @@ namespace JHSchool.Behavior.ImportExport
 
                 if (hasUpdate)
                 {
-                    JHDiscipline.Update(updateDisciplines);
+                    Discipline.Update(updateDisciplines);
                     Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(updateDisciplines);
                     Log_sb.AppendLine("更新" + "「" + updateDisciplines.Count + "」筆資料");
-                    foreach (JHDisciplineRecord record in updateDisciplines)
+                    foreach (DisciplineRecord record in updateDisciplines)
                     {
                         if (StudentDic.ContainsKey(record.RefStudentID))
                             Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
@@ -787,7 +793,7 @@ namespace JHSchool.Behavior.ImportExport
                 }
             };
         }
-        private string GetLogContext(JHDisciplineRecord record, K12.Data.StudentRecord studentRecord)
+        private string GetLogContext(DisciplineRecord record, K12.Data.StudentRecord studentRecord)
         {
             StringBuilder sb = new StringBuilder();
             if (record.MeritFlag == "1")
@@ -795,18 +801,18 @@ namespace JHSchool.Behavior.ImportExport
             else if (record.MeritFlag == "0")
                 sb.AppendLine("懲戒：");
             sb.Append("班級「" + studentRecord.Name + "」座號「" + studentRecord.Name + "」姓名「" + studentRecord.Name + "」");
-            sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」事由「" + record.Reason + "」");
+            sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」事由「" + record.Reason + "」備註「" + record.Remark + "」");
             return sb.ToString();
         }
 
         /// <summary>
         /// 取得學生清單
         /// </summary>
-        private Dictionary<string, K12.Data.StudentRecord> GetStudent(List<JHDisciplineRecord> updateDisciplines)
+        private Dictionary<string, K12.Data.StudentRecord> GetStudent(List<DisciplineRecord> updateDisciplines)
         {
             Dictionary<string, K12.Data.StudentRecord> StudentDic = new Dictionary<string, K12.Data.StudentRecord>();
             List<string> StudentIDList = new List<string>();
-            foreach (JHDisciplineRecord dis in updateDisciplines)
+            foreach (DisciplineRecord dis in updateDisciplines)
             {
                 if (!StudentIDList.Contains(dis.RefStudentID))
                     StudentIDList.Add(dis.RefStudentID);

@@ -59,8 +59,8 @@ namespace JHBehavior.銷過通知單
             #region 國中
 
             RibbonBarItem JHClassReports = K12.Presentation.NLDPanels.Class.RibbonBarItems["資料統計"];
-            JHClassReports["報表"]["學務相關報表"]["銷過通知單"].Enable = Permissions.班級銷過通知單權限;
-            JHClassReports["報表"]["學務相關報表"]["銷過通知單"].Click += delegate
+            JHClassReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = false;
+            JHClassReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Click += delegate
             {
                 if (K12.Presentation.NLDPanels.Class.SelectedSource.Count > 0)
                 {
@@ -73,8 +73,8 @@ namespace JHBehavior.銷過通知單
             };
 
             RibbonBarItem JHStudentReports = K12.Presentation.NLDPanels.Student.RibbonBarItems["資料統計"];
-            JHStudentReports["報表"]["學務相關報表"]["銷過通知單"].Enable = Permissions.學生銷過通知單權限;
-            JHStudentReports["報表"]["學務相關報表"]["銷過通知單"].Click += delegate
+            JHStudentReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = false;
+            JHStudentReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Click += delegate
             {
                 if (K12.Presentation.NLDPanels.Student.SelectedSource.Count > 0)
                 {
@@ -85,6 +85,34 @@ namespace JHBehavior.銷過通知單
                     MsgBox.Show("產生學生報表,請選擇學生!!");
                 }
             };
+
+            //學生選擇
+            K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate
+            {
+                if (K12.Presentation.NLDPanels.Student.SelectedSource.Count <= 0)
+                {
+                    JHStudentReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = false;
+                }
+                else
+                {
+                    JHStudentReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = Permissions.學生銷過通知單權限;
+                }
+            };
+
+            //班級選擇
+            K12.Presentation.NLDPanels.Class.SelectedSourceChanged += delegate
+            {
+                if (K12.Presentation.NLDPanels.Class.SelectedSource.Count <= 0)
+                {
+                    JHClassReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = false;
+                }
+                else
+                {
+                    JHClassReports["報表"]["學務相關報表"]["通知單"]["銷過通知單"].Enable = Permissions.班級銷過通知單權限;
+                }
+            };
+
+
 
             Framework.Security.Catalog ribbon2 = Framework.Security.RoleAclSource.Instance["學生"]["報表"];
             ribbon2.Add(new Framework.Security.RibbonFeature(Permissions.學生銷過通知單, "銷過通知單"));

@@ -59,7 +59,10 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
             {
                 FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化獎懲通知單...");
 
-                object[] args = new object[] { form.StartDate, form.EndDate, form.PrintHasRecordOnly, form.Template, form.ReceiveName, form.ReceiveAddress, form.ConditionName, form.ConditionNumber, form.radioButton1.Checked, form.PrintStudentList };
+                object[] args = new object[] { form.StartDate, form.EndDate, form.PrintHasRecordOnly,
+                    form.Template, form.ReceiveName, form.ReceiveAddress,
+                    form.ConditionName, form.ConditionNumber, form.radioButton1.Checked,
+                    form.PrintStudentList , form.PrintRemark };
 
                 _BGWDisciplineNotification = new BackgroundWorker();
                 _BGWDisciplineNotification.DoWork += new DoWorkEventHandler(_BGWDisciplineNotification_DoWork);
@@ -240,6 +243,7 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
             int condNumber = int.Parse((string)args[7]);
             bool IsInsertDate = (bool)args[8];
             bool printStudentList = (bool)args[9];
+            bool printRemark = (bool)args[10];
 
             ChengeDemerit(condName, condNumber);
 
@@ -359,7 +363,7 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
                 DateTime occurDate = DateTime.Parse(var.SelectSingleNode("OccurDate").InnerText);
                 string occurMonthDay = occurDate.Month + "/" + occurDate.Day;
                 string reason = var.SelectSingleNode("Reason").InnerText;
-
+                string remark = var.SelectSingleNode("Remark").InnerText;
                 if (!studentDisciplineDetail.ContainsKey(studentID))
                     studentDisciplineDetail.Add(studentID, new List<string>());
 
@@ -399,6 +403,12 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
                             detailString.Append(merit + times + "次");
                             comma = true;
                         }
+                    }
+
+                    if (printRemark)
+                    {
+                        if (!string.IsNullOrEmpty(remark))
+                            detailString.Append(" (" + remark + ")");
                     }
 
                     studentDisciplineDetail[studentID].Add(detailString.ToString());
@@ -448,6 +458,12 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
                                 comma = true;
                             }
                         }
+                    }
+
+                    if (printRemark)
+                    {
+                        if (!string.IsNullOrEmpty(remark))
+                            detailString.Append(" (" + remark + ")");
                     }
 
                     if (!cleared)

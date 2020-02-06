@@ -25,9 +25,9 @@ namespace JHSchool.Behavior.Report
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級點名表"].Enable = Permissions.班級點名表權限 && Class.Instance.SelectedKeys.Count > 0;
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級點名表(自定樣板)"].Enable = Permissions.班級點名表_自定樣板_權限 && Class.Instance.SelectedKeys.Count > 0;
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級通訊錄"].Enable = Permissions.班級通訊錄權限 && Class.Instance.SelectedKeys.Count > 0;
-                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = Permissions.班級缺曠通知單權限 && Class.Instance.SelectedKeys.Count > 0;
-                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Enable = Permissions.班級懲戒通知單權限 && Class.Instance.SelectedKeys.Count > 0;
-                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎勵懲戒通知單"].Enable = Permissions.獎勵懲戒通知單權限 && Class.Instance.SelectedKeys.Count > 0;
+                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Enable = Permissions.班級缺曠通知單權限 && Class.Instance.SelectedKeys.Count > 0;
+                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Enable = Permissions.班級懲戒通知單權限 && Class.Instance.SelectedKeys.Count > 0;
+                    Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Enable = Permissions.獎勵懲戒通知單權限 && Class.Instance.SelectedKeys.Count > 0;
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級學生缺曠統計"].Enable = Permissions.班級學生缺曠統計權限 && Class.Instance.SelectedKeys.Count > 0;
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級學生獎懲統計"].Enable = Permissions.班級學生獎懲統計權限 && Class.Instance.SelectedKeys.Count > 0;
                     Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級獎懲記錄明細"].Enable = Permissions.班級獎懲記錄明細權限 && Class.Instance.SelectedKeys.Count > 0;
@@ -48,9 +48,9 @@ namespace JHSchool.Behavior.Report
                 else
                 {
                     //20130227 - new
-                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Enable = Permissions.學生懲戒通知單權限 && Student.Instance.SelectedKeys.Count > 0;
-                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = Permissions.學生缺曠通知單權限 && Student.Instance.SelectedKeys.Count > 0;
-                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎懲通知單"].Enable = Permissions.學生獎懲通知單權限 && Student.Instance.SelectedKeys.Count > 0;
+                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Enable = Permissions.學生懲戒通知單權限 && Student.Instance.SelectedKeys.Count > 0;
+                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Enable = Permissions.學生缺曠通知單權限 && Student.Instance.SelectedKeys.Count > 0;
+                    Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Enable = Permissions.學生獎懲通知單權限 && Student.Instance.SelectedKeys.Count > 0;
                     Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生獎勵懲戒明細"].Enable = Permissions.學生獎勵懲戒明細權限 && Student.Instance.SelectedKeys.Count > 0;
                     Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生獎勵明細"].Enable = Permissions.學生獎勵明細權限 && Student.Instance.SelectedKeys.Count > 0;
                     Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生缺曠明細"].Enable = Permissions.學生缺曠明細權限 && Student.Instance.SelectedKeys.Count > 0;
@@ -79,19 +79,19 @@ namespace JHSchool.Behavior.Report
             };
 
             //Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = Permissions.班級缺曠通知單權限;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Click += delegate
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Click += delegate
             {
                 new 缺曠通知單.Report("class").Print();
             };
 
             //Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Enable = Permissions.班級懲戒通知單權限;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Click += delegate
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Click += delegate
             {
                 new 懲戒通知單.Report("class").Print();
             };
 
             //Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎勵懲戒通知單"].Enable = Permissions.獎勵懲戒通知單權限;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎勵懲戒通知單"].Click += delegate
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Click += delegate
             {
                 new 獎勵懲戒通知單.Report("class").Print();
             };
@@ -143,12 +143,12 @@ namespace JHSchool.Behavior.Report
 
             #region 學生
             //Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = Permissions.學生缺曠通知單權限;
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Click += delegate
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Click += delegate
             {
                 new 缺曠通知單.Report("student").Print();
             };
 
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Click += delegate
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Click += delegate
             {
                 new 懲戒通知單.Report("student").Print();
             };
@@ -161,7 +161,7 @@ namespace JHSchool.Behavior.Report
             //};
 
             //Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎懲通知單"].Enable = Permissions.學生獎懲通知單權限;
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎懲通知單"].Click += delegate
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Click += delegate
             {
                 new 獎勵懲戒通知單.Report("student").Print();
             };
@@ -220,9 +220,9 @@ namespace JHSchool.Behavior.Report
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級點名表"].Enable = false;
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級點名表(自定樣板)"].Enable = false;
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級通訊錄"].Enable = false;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = false;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Enable = false;
-            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎勵懲戒通知單"].Enable = false;
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Enable = false;
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Enable = false;
+            Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Enable = false;
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級學生缺曠統計"].Enable = false;
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級學生獎懲統計"].Enable = false;
             Class.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["班級獎懲記錄明細"].Enable = false;
@@ -234,9 +234,9 @@ namespace JHSchool.Behavior.Report
 
         private static void StudentFalse()
         {
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["懲戒通知單"].Enable = false;
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["缺曠通知單"].Enable = false;
-            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["獎懲通知單"].Enable = false;
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["懲戒通知單"].Enable = false;
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["缺曠通知單"].Enable = false;
+            Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["通知單"]["獎懲通知單"].Enable = false;
             Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生獎勵懲戒明細"].Enable = false;
             Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生獎勵明細"].Enable = false;
             Student.Instance.RibbonBarItems["資料統計"]["報表"]["學務相關報表"]["學生缺曠明細"].Enable = false;
