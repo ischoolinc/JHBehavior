@@ -39,7 +39,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
 
             if (form.ShowDialog() == DialogResult.OK)
             {
-                FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化學生獎勵記錄明細...");
+                FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化學生獎勵明細...");
 
                 //object[] args = new object[] { form.SchoolYear, form.Semester };
 
@@ -56,7 +56,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
 
         void _BGWDisciplineDetail_DoWork(object sender, DoWorkEventArgs e)
         {
-            string reportName = "學生獎勵記錄明細";
+            string reportName = "學生獎勵明細";
 
             #region 快取相關資料
 

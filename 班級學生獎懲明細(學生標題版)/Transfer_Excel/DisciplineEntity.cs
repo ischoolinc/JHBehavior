@@ -15,6 +15,9 @@ namespace Transfer_Excel
         public String DisciplineID { get; set; }
         public DateTime OccurDate { get; set; }
         public String Reason { get; set; }
+
+        public String Remark { get; set; }
+
         public String RegisterDate { get; set; }
         public String MeritFlag { get; set; }
         public String ACount { get; set; }
@@ -34,6 +37,7 @@ namespace Transfer_Excel
             DisciplineID = elm.GetAttribute("ID");
             
             Reason = elm.SelectSingleNode("Reason").InnerText;
+            Remark = elm.SelectSingleNode("Remark").InnerText;
             RegisterDate = elm.SelectSingleNode("RegisterDate").InnerText;
             MeritFlag = elm.SelectSingleNode("MeritFlag").InnerText;
 

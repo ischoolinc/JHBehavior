@@ -12,7 +12,7 @@ namespace JHSchool.Behavior.ImportExport
         public ExportDiscipline()
         {
             this.Image = null;
-            this.Text = "匯出獎勵懲戒記錄";
+            this.Text = "匯出獎懲紀錄";
         }
 
         public override void InitializeExport(SmartSchool.API.PlugIn.Export.ExportWizard wizard)

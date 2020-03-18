@@ -140,37 +140,6 @@ namespace JHSchool.Behavior
 
             #endregion
 
-            #region 在班級上增加RibbonBar
-
-            //RibbonBarItem classSpecialItem = Class.Instance.RibbonBarItems["學務"];
-
-            //classSpecialItem["特殊學生表現"].Size = RibbonBarButton.MenuButtonSize.Medium;
-            //classSpecialItem["特殊學生表現"].Image = JHSchool.Behavior.ClassExtendControls.Resources.查詢特殊學生;
-            //classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
-            //classSpecialItem["特殊學生表現"].Click += delegate
-            //{
-            //    SpecialForm SpecialFormNew = new SpecialForm();
-            //    SpecialFormNew.ShowDialog();
-            //};
-
-            //classSpecialItem["聯絡資訊管理"].Size = RibbonBarButton.MenuButtonSize.Medium;
-            //classSpecialItem["聯絡資訊管理"].Image = Properties.Resources.home_write_64;
-            //classSpecialItem["聯絡資訊管理"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHBehavior.Class.Ribbon0210"].Executable);
-            //classSpecialItem["聯絡資訊管理"].Click += delegate
-            //{
-            //    AddressEditForm address = new AddressEditForm();
-            //    address.ShowDialog();
-            //};
-
-            //當選擇班級後,重新檢查一次
-            //Class.Instance.SelectedListChanged += delegate
-            //{
-            //    classSpecialItem["特殊學生表現"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHSchool.Class.Ribbon0060"].Executable);
-            //    //classSpecialItem["聯絡資訊管理"].Enable = (Class.Instance.SelectedList.Count > 0 && User.Acl["JHBehavior.Class.Ribbon0210"].Executable);
-            //};
-
-            #endregion
-
             #region 在學務作業上增加RibbonBar
 
             RibbonBarItem rbItem1 = StuAdmin.Instance.RibbonBarItems["基本設定"];
@@ -255,22 +224,6 @@ namespace JHSchool.Behavior
 
             #endregion
 
-            #region 在教務作業上增加RibbonBar
-
-
-
-
-
-
-            //EduAdmin 教務作業 
-
-
-
-
-
-
-            #endregion
-
             #region 匯出/匯入
 
             //匯出
@@ -302,8 +255,8 @@ namespace JHSchool.Behavior
                 wizard.ShowDialog();
             };
 
-            rbItemExport["學務相關匯出"]["匯出獎勵懲戒記錄"].Enable = User.Acl["JHSchool.Student.Ribbon0156"].Executable;
-            rbItemExport["學務相關匯出"]["匯出獎勵懲戒記錄"].Click += delegate
+            rbItemExport["學務相關匯出"]["匯出獎懲記錄"].Enable = User.Acl["JHSchool.Student.Ribbon0156"].Executable;
+            rbItemExport["學務相關匯出"]["匯出獎懲記錄"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Export.Exporter exporter = new JHSchool.Behavior.ImportExport.ExportDiscipline();
                 JHSchool.Behavior.ImportExport.ExportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ExportStudentV2(exporter.Text, exporter.Image);
@@ -322,8 +275,8 @@ namespace JHSchool.Behavior
             };
 
             //暫時註解
-            rbItemExport["學務相關匯出"]["匯出獎勵懲戒統計"].Enable = User.Acl["JHSchool.Student.Ribbon0160"].Executable;
-            rbItemExport["學務相關匯出"]["匯出獎勵懲戒統計"].Click += delegate
+            rbItemExport["學務相關匯出"]["匯出獎懲統計"].Enable = User.Acl["JHSchool.Student.Ribbon0160"].Executable;
+            rbItemExport["學務相關匯出"]["匯出獎懲統計"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Export.Exporter exporter = new JHSchool.Behavior.ImportExport.ExportDisciplineStatistics();
                 JHSchool.Behavior.ImportExport.ExportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ExportStudentV2(exporter.Text, exporter.Image);
@@ -342,8 +295,8 @@ namespace JHSchool.Behavior
                 wizard.ShowDialog();
             };
 
-            rbItemImport["學務相關匯入"]["匯入獎勵懲戒記錄"].Enable = User.Acl["JHSchool.Student.Ribbon0157"].Executable;
-            rbItemImport["學務相關匯入"]["匯入獎勵懲戒記錄"].Click += delegate
+            rbItemImport["學務相關匯入"]["匯入獎懲記錄"].Enable = User.Acl["JHSchool.Student.Ribbon0157"].Executable;
+            rbItemImport["學務相關匯入"]["匯入獎懲記錄"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Import.Importer importer = new JHSchool.Behavior.ImportExport.ImportDiscipline();
                 JHSchool.Behavior.ImportExport.ImportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ImportStudentV2(importer.Text, importer.Image);
@@ -360,16 +313,16 @@ namespace JHSchool.Behavior
                 wizard.ShowDialog();
             };
 
-            rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Enable = User.Acl["JHSchool.Student.Ribbon0161"].Executable;
+            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Enable = User.Acl["JHSchool.Student.Ribbon0161"].Executable;
 
             // 2017/4/28 穎驊更新，因應高雄小組會議 [02-05][01] 非明細獎懲紀錄問題 項目， 局端決議 將各校 匯入獎勵懲戒統計 拿掉，避免使用者誤使用
             // 在此將其改為不可以見。
             // 另外由於局端要求，希望在test.kh.edu.tw 能暫時保留此選項，供它們 2017/9 教育訓練說明用，另外做了一個專門掛給test.kh.edu.tw的模組，
             // 會將此功能開啟
 
-            rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Visible = false;
+            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Visible = false;
 
-            rbItemImport["學務相關匯入"]["匯入獎勵懲戒統計"].Click += delegate
+            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Click += delegate
             {
                 SmartSchool.API.PlugIn.Import.Importer importer = new JHSchool.Behavior.ImportExport.ImportDisciplineStatistics();
                 JHSchool.Behavior.ImportExport.ImportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ImportStudentV2(importer.Text, importer.Image);
@@ -386,13 +339,13 @@ namespace JHSchool.Behavior
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0150", "匯出缺曠記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0152", "匯出獎勵記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0154", "匯出懲戒記錄"));
-            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0156", "匯出獎勵懲戒記錄"));
+            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0156", "匯出獎懲記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0158", "匯出缺曠統計"));
-            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0160", "匯出獎勵懲戒統計"));
+            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0160", "匯出獎懲統計"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0151", "匯入缺曠記錄"));
-            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0157", "匯入獎勵懲戒記錄"));
+            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0157", "匯入獎懲記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0159", "匯入缺曠統計"));
-            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0161", "匯入獎勵懲戒統計"));
+            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0161", "匯入獎懲統計"));
 
             Catalog detail = RoleAclSource.Instance["學生"]["資料項目"];
             detail.Add(new DetailItemFeature(typeof(AttendanceItem)));

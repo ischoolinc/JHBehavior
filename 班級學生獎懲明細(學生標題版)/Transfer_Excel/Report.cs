@@ -27,7 +27,7 @@ namespace Transfer_Excel
             DisciplineDetailForm form = new DisciplineDetailForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
-                FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化班級學生獎懲明細...");
+                FISCA.Presentation.MotherForm.SetStatusBarMessage("正在初始化 班級學生獎懲明細(學生標題版)");
 
                 //開始日期,結束日期,列印尺寸,日期類型(發生日期or登錄日期)
                 object[] args = new object[] { form.StartDate, form.EndDate, form.PaperSize, form.radioButton1.Checked, form.SetupDic };
@@ -52,7 +52,7 @@ namespace Transfer_Excel
         /// <param name="e"></param>
         void _BGWClassStudentDisciplineDetail_DoWork(object sender, DoWorkEventArgs e)
         {
-            string reportName = "班級獎懲記錄明細";
+            string reportName = "班級學生獎懲明細(學生標題版)";
 
             object[] args = e.Argument as object[];
 
@@ -214,6 +214,8 @@ namespace Transfer_Excel
             columnTable.Add("銷過日期", colIndex++);
             columnTable.Add("銷過事由", colIndex++);
             columnTable.Add("事由", colIndex++);
+            columnTable.Add("備註", colIndex++); //2020/2/18 - 新增
+
             //columnTable.Add("登錄日期", colIndex++);
             endIndex = colIndex;
 
@@ -297,7 +299,7 @@ namespace Transfer_Excel
                 list.AddRange(classDisciplines.Keys);
                 list.Sort(new SeatNoComparer(studentInfoDict));
 
-                string[] fields = new string[] { "座號", "姓名", "日期", "大功", "小功", "嘉獎", "大過", "小過", "警告", "銷過", "銷過日期", "銷過事由", "事由" };
+                string[] fields = new string[] { "座號", "姓名", "日期", "大功", "小功", "嘉獎", "大過", "小過", "警告", "銷過", "銷過日期", "銷過事由", "事由" ,"備註"};
 
                 rowIndex += 1;  //獎懲紀錄從第二列開始列印
                 //對於每一位學生
@@ -346,6 +348,7 @@ namespace Transfer_Excel
                             ws.Cells[rowIndex, 11].PutValue(de.ClearReason);
                         }
                         ws.Cells[rowIndex, 12].PutValue(de.Reason);
+                        ws.Cells[rowIndex, 13].PutValue(de.Remark);
                         rowIndex += 1;
 
                         currentProgress += 1;
@@ -380,7 +383,7 @@ namespace Transfer_Excel
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xls");
             e.Result = new object[] { reportName, path, wb };
         }
         #endregion

@@ -14,7 +14,7 @@ namespace JHSchool.Behavior.ImportExport
         public ImportDiscipline()
         {
             this.Image = null;
-            this.Text = "匯入獎勵懲戒記錄";
+            this.Text = "匯入獎懲記錄";
         }
 
         public override void InitializeImport(SmartSchool.API.PlugIn.Import.ImportWizard wizard)
@@ -47,7 +47,7 @@ namespace JHSchool.Behavior.ImportExport
             int insertRecords = 0;
             int updataRecords = 0;
 
-            wizard.ValidateStart += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
+            wizard.ValidateStart += delegate (object sender, SmartSchool.API.PlugIn.Import.ValidateStartEventArgs e)
             {
                 foreach (DisciplineRecord record in Discipline.SelectByStudentIDs(e.List))
                     if (!CacheDiscipline.ContainsKey(record.ID))
@@ -56,13 +56,13 @@ namespace JHSchool.Behavior.ImportExport
                 allPass = true;
             };
 
-            wizard.ValidateRow += delegate(object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
+            wizard.ValidateRow += delegate (object sender, SmartSchool.API.PlugIn.Import.ValidateRowEventArgs e)
             {
                 #region 驗證資料
                 bool pass = true;
                 int schoolYear, semester;
                 DateTime occurdate;
-               
+
                 bool isInsert = false;
                 bool isUpdata = false;
                 #region 驗共同必填欄位
@@ -86,12 +86,12 @@ namespace JHSchool.Behavior.ImportExport
                 // 能夠如此大膽設條件，建立在兩個前提之下:1. 我們的正常資料不會有西元1911年前的資料 2.我們的資料也不會有民國1911後的資料
                 // 如果能等到民國1911年 還要再來處理這個Bug，那我也覺得心滿意足了哈哈
 
-                if (!DateTime.TryParse(e.Data["日期"], out occurdate) || occurdate.Year<1911)
-                {                    
+                if (!DateTime.TryParse(e.Data["日期"], out occurdate) || occurdate.Year < 1911)
+                {
                     e.ErrorFields.Add("日期", "輸入格式為 西元年//月//日");
                     pass = false;
                 }
-         
+
                 #endregion
                 if (!pass)
                 {
@@ -313,7 +313,7 @@ namespace JHSchool.Behavior.ImportExport
                                 break;
                             }
                             break;
-                        #endregion
+                            #endregion
                     }
                 }
 
@@ -441,7 +441,7 @@ namespace JHSchool.Behavior.ImportExport
                 updataRecords = 0;
             };
             wizard.ImportComplete += (sender, e) => MessageBox.Show("匯入完成!");
-            wizard.ImportPackage += delegate(object sender, SmartSchool.API.PlugIn.Import.ImportPackageEventArgs e)
+            wizard.ImportPackage += delegate (object sender, SmartSchool.API.PlugIn.Import.ImportPackageEventArgs e)
             {
                 bool hasUpdate = false, hasInsert = false;
 
@@ -452,12 +452,12 @@ namespace JHSchool.Behavior.ImportExport
                 StringBuilder Log_sb = new StringBuilder();
                 if (chose1.Checked)
                 {
-                    Log_sb.AppendLine("以事由更新獎懲記錄：");
+                    Log_sb.AppendLine("「以事由為鍵值匯入」");
                     Log_sb.AppendLine("");
                 }
                 if (chose2.Checked)
                 {
-                    Log_sb.AppendLine("以次數更新獎懲記錄：");
+                    Log_sb.AppendLine("「以支數為鍵值匯入」");
                     Log_sb.AppendLine("");
                 }
 
@@ -768,24 +768,26 @@ namespace JHSchool.Behavior.ImportExport
                 {
                     Discipline.Insert(insertDisciplines);
                     Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(insertDisciplines);
-                    Log_sb.AppendLine("新增" + "「" + updateDisciplines.Count + "」筆資料");
+
                     foreach (DisciplineRecord record in insertDisciplines)
                     {
                         if (StudentDic.ContainsKey(record.RefStudentID))
                             Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
                     }
+                    Log_sb.AppendLine("新增" + "「" + insertDisciplines.Count + "」筆資料");
                 }
 
                 if (hasUpdate)
                 {
                     Discipline.Update(updateDisciplines);
                     Dictionary<string, K12.Data.StudentRecord> StudentDic = GetStudent(updateDisciplines);
-                    Log_sb.AppendLine("更新" + "「" + updateDisciplines.Count + "」筆資料");
+
                     foreach (DisciplineRecord record in updateDisciplines)
                     {
                         if (StudentDic.ContainsKey(record.RefStudentID))
                             Log_sb.AppendLine(GetLogContext(record, StudentDic[record.RefStudentID]));
                     }
+                    Log_sb.AppendLine("更新" + "「" + updateDisciplines.Count + "」筆資料");
                 }
                 if (hasUpdate || hasInsert)
                 {
@@ -797,11 +799,23 @@ namespace JHSchool.Behavior.ImportExport
         {
             StringBuilder sb = new StringBuilder();
             if (record.MeritFlag == "1")
+            {
                 sb.AppendLine("獎勵：");
+                sb.AppendLine("班級「" + (studentRecord.Class != null ? studentRecord.Class.Name : "") + "」座號「" + (studentRecord.SeatNo.HasValue ? "" + studentRecord.SeatNo.Value : "") + "」姓名「" + studentRecord.Name + "」");
+                sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」");
+                sb.AppendLine("大功「" + record.MeritA + "」小功「" + record.MeritB + "」嘉獎「" + record.MeritC + "」");
+            }
             else if (record.MeritFlag == "0")
+            {
                 sb.AppendLine("懲戒：");
-            sb.Append("班級「" + studentRecord.Name + "」座號「" + studentRecord.Name + "」姓名「" + studentRecord.Name + "」");
-            sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」事由「" + record.Reason + "」備註「" + record.Remark + "」");
+                sb.AppendLine("班級「" + (studentRecord.Class != null ? studentRecord.Class.Name : "") + "」座號「" + (studentRecord.SeatNo.HasValue ? "" + studentRecord.SeatNo.Value : "") + "」姓名「" + studentRecord.Name + "」");
+                sb.AppendLine("日期「" + record.OccurDate.ToShortDateString() + "」");
+                sb.AppendLine("大過「" + record.DemeritA + "」小過「" + record.DemeritB + "」警告「" + record.DemeritC + "」");
+            }
+
+            sb.AppendLine("事由「" + record.Reason + "」");
+            sb.AppendLine("備註「" + record.Remark + "」");
+            sb.AppendLine("");
             return sb.ToString();
         }
 
