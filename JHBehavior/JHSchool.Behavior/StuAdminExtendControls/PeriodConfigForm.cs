@@ -36,6 +36,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
         private void PeriodConfigForm_Load(object sender, EventArgs e)
         {
+
             //資料更動檢查
             DataListener = new ChangeListener();
             DataListener.Add(new DataGridViewSource(dataGridView));
@@ -325,6 +326,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         /// </summary>
         private void dataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == 2)
+            {
+                dataGridView.ImeMode = ImeMode.OnHalf;
+                dataGridView.ImeMode = ImeMode.Off;
+            }
+
             if (dataGridView.SelectedCells.Count == 1)
                 dataGridView.BeginEdit(true);
         }
@@ -430,7 +437,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             for (int x = 1; x <= wb.Worksheets[0].Cells.MaxDataRow; x++) //每一Row
             {
                 string name = ws.Cells[x, headers["節次名稱"]].StringValue;
- 
+
                 if (string.IsNullOrEmpty(name.Trim())) //沒有缺曠名稱則跳過
                     continue;
 
@@ -442,7 +449,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 {
                     NameSb.AppendLine("節次名稱重覆:" + name);
                 }
-                
+
             }
             if (!string.IsNullOrEmpty(NameSb.ToString()))
             {

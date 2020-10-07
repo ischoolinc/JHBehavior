@@ -28,6 +28,10 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MoralityMapping
         {
             InitializeComponent();
             InitialList();
+
+            List<string> cols = new List<string>() { "µû»y¥N½X" };
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, cols);
+
         }
 
         private void InitialList()

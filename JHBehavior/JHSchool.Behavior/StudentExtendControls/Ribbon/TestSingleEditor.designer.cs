@@ -416,36 +416,42 @@
             // 
             this.colClassName.HeaderText = "班級";
             this.colClassName.Name = "colClassName";
+            this.colClassName.ReadOnly = true;
             this.colClassName.Width = 59;
             // 
             // colSeatNo
             // 
             this.colSeatNo.HeaderText = "座號";
             this.colSeatNo.Name = "colSeatNo";
+            this.colSeatNo.ReadOnly = true;
             this.colSeatNo.Width = 59;
             // 
             // colStudentName
             // 
             this.colStudentName.HeaderText = "姓名";
             this.colStudentName.Name = "colStudentName";
+            this.colStudentName.ReadOnly = true;
             this.colStudentName.Width = 59;
             // 
             // colStudentNumber
             // 
             this.colStudentNumber.HeaderText = "學號";
             this.colStudentNumber.Name = "colStudentNumber";
+            this.colStudentNumber.ReadOnly = true;
             this.colStudentNumber.Width = 59;
             // 
             // colDate
             // 
             this.colDate.HeaderText = "日期";
             this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
             this.colDate.Width = 120;
             // 
             // colWeek
             // 
             this.colWeek.HeaderText = "星期";
             this.colWeek.Name = "colWeek";
+            this.colWeek.ReadOnly = true;
             this.colWeek.Width = 59;
             // 
             // colSchoolYear

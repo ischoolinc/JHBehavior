@@ -45,6 +45,10 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         //3. 若無設定值，就設定為今天。
         private void PeriodInSchool_Load(object sender, EventArgs e)
         {
+            List<string> cols = new List<string>() { "年級", "上課天數" };
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dgv, cols);
+
+
             schoolyear.Text = School.DefaultSchoolYear + "學年度第" + School.DefaultSemester + "學期";
 
             //取得之前設定設定

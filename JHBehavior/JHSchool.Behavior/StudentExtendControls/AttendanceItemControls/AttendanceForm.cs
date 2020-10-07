@@ -87,6 +87,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             #endregion
 
             #region 初始化節次表
+
             foreach (K12.Data.PeriodMappingInfo info in periodList)
             {
                 //Log使用
@@ -126,6 +127,8 @@ namespace JHSchool.Behavior.StudentExtendControls
                 //pc.TextBox.MouseDoubleClick += new MouseEventHandler(TextBox_MouseDoubleClick);
                 //flpPeriod.Controls.Add(pc);
             }
+
+
             DataGridViewRow row = new DataGridViewRow();
             row.CreateCells(dataGridViewX1);
             dataGridViewX1.Rows.Add(row);
@@ -208,7 +211,7 @@ namespace JHSchool.Behavior.StudentExtendControls
             fouse.Checked = true;
 
             #endregion
-
+            List<string> plist = new List<string>();
             #region 初始化節次表
             foreach (K12.Data.PeriodMappingInfo info in periodList)
             {
@@ -219,6 +222,7 @@ namespace JHSchool.Behavior.StudentExtendControls
                 DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
                 column.Width = 40;
                 column.HeaderText = info.Name;
+                plist.Add(info.Name);
                 column.Tag = info;
                 dataGridViewX1.Columns.Add(column);
 
@@ -243,6 +247,9 @@ namespace JHSchool.Behavior.StudentExtendControls
                 //pc.TextBox.MouseDoubleClick += new MouseEventHandler(TextBox_MouseDoubleClick);
                 //flpPeriod.Controls.Add(pc);
             }
+
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, plist);
+
             DataGridViewRow row = new DataGridViewRow();
             row.CreateCells(dataGridViewX1);
             dataGridViewX1.Rows.Add(row);

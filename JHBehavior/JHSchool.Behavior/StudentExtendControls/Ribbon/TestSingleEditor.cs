@@ -53,10 +53,14 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
         {
             InitializeComponent(); //設計工具產生的
 
+            List<string> cols = new List<string>() { "學年度", "學期" };
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridView, cols);
+
+
             _errorProvider = new ErrorProvider();
             _studentList = studentList;
             _absenceList = new Dictionary<string, AbsenceInfo>();
-            _semesterProvider = SemesterProvider.GetInstance(); 
+            _semesterProvider = SemesterProvider.GetInstance();
         }
 
         private void SingleEditor_Load(object sender, EventArgs e)
@@ -253,8 +257,13 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             #endregion
             _startIndex = dataGridView.Columns["colSemester"].Index + 1;
 
+            List<string> cols = new List<string>() { "學年度", "學期" };
+
             foreach (PeriodInfo info in collection.GetSortedList())
             {
+
+                cols.Add(info.Name);
+
                 int columnIndex = dataGridView.Columns.Add(info.Name, info.Name);
                 ColumnIndex.Add(info.Name, columnIndex); //節次
                 DataGridViewColumn column = dataGridView.Columns[columnIndex];
@@ -264,6 +273,8 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 column.Tag = info;
             }
 
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridView, cols);
+
             // 配合原程式邏輯補上下列邏輯
             ColumnIndex.Add("班級", 0);
             ColumnIndex.Add("座號", 1);
@@ -271,8 +282,8 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             ColumnIndex.Add("學號", 3);
             ColumnIndex.Add("日期", 4);
             ColumnIndex.Add("星期", 5);
-            ColumnIndex.Add("學年度",6);
-            ColumnIndex.Add("學期",7);
+            ColumnIndex.Add("學年度", 6);
+            ColumnIndex.Add("學期", 7);
 
             #endregion
         }
@@ -356,10 +367,10 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
 
                     row.Cells[index++].Value = dateValue; // 日期
                     row.Cells[index++].Value = GetDayOfWeekInChinese(date.DayOfWeek); // 星期
-                    _semesterProvider.SetDate(date); 
+                    _semesterProvider.SetDate(date);
                     row.Cells[index++].Value = _semesterProvider.SchoolYear.ToString(); // 學年度
                     row.Cells[index++].Value = _semesterProvider.Semester.ToString(); // 學期
-                    date = date.AddDays(1); 
+                    date = date.AddDays(1);
 
                     dataGridView.Rows.Add(row);
                 }
@@ -367,7 +378,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             #endregion
         }
 
-        private void SetDataGridViewColor(DataGridViewRow row,bool ColorMode)
+        private void SetDataGridViewColor(DataGridViewRow row, bool ColorMode)
         {
             foreach (DataGridViewCell cell in row.Cells)
             {
@@ -399,7 +410,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
 
             foreach (JHAttendanceRecord each in JHAttendance.SelectByDate(dateTimeInput1.Value, dateTimeInput2.Value))
             {
-                if(_studentList.Contains(each.RefStudentID))
+                if (_studentList.Contains(each.RefStudentID))
                 {
                     attendList.Add(each);
                 }
@@ -474,7 +485,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                         }
                     }
                 }
-            } 
+            }
             #endregion
         }
 
@@ -706,7 +717,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     FISCA.Presentation.Controls.MsgBox.Show("缺曠紀錄刪除失敗 : " + ex.Message, "刪除失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-            //    //log 寫入被刪除的資料的log
+                //    //log 寫入被刪除的資料的log
                 foreach (string each in LOG.Keys)
                 {
                     StringBuilder desc = new StringBuilder("");
@@ -849,7 +860,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 }
             }
 
-            return DOW; 
+            return DOW;
             #endregion
         }
 
@@ -872,7 +883,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     return "六";
                 default:
                     return "日";
-            } 
+            }
             #endregion
         }
 
@@ -888,7 +899,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             else
                 this.Close();
         }
-        
+
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             #region CellDoubleClick
@@ -910,7 +921,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 cell.Value = string.Empty;
                 acInfo.SetValue(AbsenceInfo.Empty);
             }
-            cell.Tag = acInfo; 
+            cell.Tag = acInfo;
             #endregion
         }
 
@@ -955,7 +966,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 {
                     cell.ErrorText = string.Empty;
                 }
-            } 
+            }
             #endregion
         }
 
@@ -999,10 +1010,10 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     }
                     cell.Tag = acInfo;
                 }
-            } 
+            }
             #endregion
         }
-                    
+
         private void dateTimeInput1_Validated(object sender, EventArgs e)
         {
             #region dateTimeInput1資料變更事件
@@ -1018,7 +1029,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             }
             _currentStartDate = dateTimeInput1.Value;
             dataGridView.Rows.Clear();
-            LoadAbsense(); 
+            LoadAbsense();
             #endregion
         }
 
@@ -1038,9 +1049,9 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             }
             _currentEndDate = dateTimeInput2.Value;
             dataGridView.Rows.Clear();
-            LoadAbsense();  
-            #endregion  
-        } 
+            LoadAbsense();
+            #endregion
+        }
 
         private bool IsDirty()
         {
@@ -1062,7 +1073,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                     }
                 }
             }
-            return false; 
+            return false;
             #endregion
         }
 
@@ -1115,7 +1126,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
                 }
             }
 
-            dataGridView.ResumeLayout(); 
+            dataGridView.ResumeLayout();
         }
 
         private void btnDay_Click(object sender, EventArgs e)
@@ -1125,7 +1136,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
             if (Sday.ShowDialog() == DialogResult.Yes)
             {
                 LoadAbsense();
-            } 
+            }
             #endregion
         }
 
@@ -1185,7 +1196,7 @@ namespace JHSchool.Behavior.StudentExtendControls.Ribbon
         {
             get { return _key; }
             set { _key = value; }
-        } 
+        }
 
         #endregion
     }

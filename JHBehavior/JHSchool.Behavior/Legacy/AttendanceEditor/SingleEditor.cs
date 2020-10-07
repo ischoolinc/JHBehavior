@@ -267,9 +267,14 @@ namespace JHSchool.Behavior.Legacy
             dataGridView.Columns[ColumnsIndex].Frozen = true;
 
             _startIndex = ColumnIndex["學期"] + 1;
+
+            List<string> cols = new List<string>() { "學年度", "學期" };
+
             //把資料缺曠Detail放入DataGridView
             foreach (PeriodInfo info in collection.GetSortedList())
             {
+                cols.Add(info.Name);
+
                 int columnIndex = dataGridView.Columns.Add(info.Name, info.Name);
                 DataGridViewColumn column = dataGridView.Columns[columnIndex];
                 column.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -277,6 +282,9 @@ namespace JHSchool.Behavior.Legacy
                 column.ReadOnly = true;
                 column.Tag = info;
             }
+
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridView, cols);
+
             #endregion
         }
 

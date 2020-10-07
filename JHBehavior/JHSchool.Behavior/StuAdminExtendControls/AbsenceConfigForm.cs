@@ -47,6 +47,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         /// </summary>
         private void AbsenceConfigForm_Load(object sender, EventArgs e)
         {
+
             //資料更動檢查
             DataListener = new ChangeListener();
             DataListener.Add(new DataGridViewSource(dataGridView));
@@ -378,6 +379,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         /// </summary>
         private void dataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == 2)
+            {
+                dataGridView.ImeMode = ImeMode.OnHalf;
+                dataGridView.ImeMode = ImeMode.Off;
+            }
+
             if (dataGridView.SelectedCells.Count == 1)
                 dataGridView.BeginEdit(true);
         }

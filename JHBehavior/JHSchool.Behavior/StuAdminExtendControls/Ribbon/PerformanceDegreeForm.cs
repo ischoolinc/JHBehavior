@@ -32,8 +32,10 @@ namespace JHSchool.Behavior.StuAdminExtendControls.Ribbon
             //日常行為表現,表現程度
             InitializeComponent();
 
+            List<string> cols = new List<string>() { "代碼" };
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dgvDailyBehaviorMapping, cols);
+            
             ConfigData cd = School.Configuration["DLBehaviorConfig"];
-
             if (cd.Contains("DailyBehavior"))
             {
                 XmlElement dailyBehavior = XmlHelper.LoadXml(cd["DailyBehavior"]);
