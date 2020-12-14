@@ -16,6 +16,7 @@ using Framework;
 using FISCA.LogAgent;
 using FISCA.DSAUtil;
 using System.Xml;
+using Campus.Windows;
 
 namespace JHSchool.Behavior.StudentExtendControls
 {
@@ -191,19 +192,23 @@ namespace JHSchool.Behavior.StudentExtendControls
             int sortEnd = dgvAttendance.Columns.Add("統計類型", "統計類型");            
             dgvAttendance.Columns[sortEnd].SortMode = DataGridViewColumnSortMode.NotSortable;
 
+            List<string> cols1 = new List<string>();
+
             foreach (string periodType in _periodTypes)
             {
                 foreach (string each in _absenceTypes)
                 {
                     string columnName = periodType + each;
 
+                    cols1.Add(columnName);
                     AttendanceIndex.Add(columnName, dgvAttendance.Columns.Add(columnName, columnName));
                     dgvAttendance.Columns[columnName].Width = 80;
                     dgvAttendance.Columns[columnName].Tag = periodType + ":" + each;
                     dgvAttendance.Columns[columnName].SortMode = DataGridViewColumnSortMode.NotSortable;
                     AttendanceCount.Add(columnName, 0);
                 }
-            } 
+            }
+            DataGridViewImeDecorator dec1 = new DataGridViewImeDecorator(this.dgvAttendance, cols1);
             #endregion
         }
 
