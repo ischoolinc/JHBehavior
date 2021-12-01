@@ -103,7 +103,7 @@ namespace JHSchool.Behavior.Report.缺曠通知單
             int condNumber2 = int.Parse((string)args[10]);
             bool printStudentList = (bool)args[11];
 
-            string reportName = "缺曠通知單" + startDate.ToString("yyyy/MM/dd") + "至" + endDate.ToString("yyyy/MM/dd");
+            string reportName = "缺曠通知單(" + startDate.ToString("yyyy-MM-dd") + "至" + endDate.ToString("yyyy-MM-dd") + ")";
 
             #region 快取資料
 
@@ -781,7 +781,9 @@ namespace JHSchool.Behavior.Report.缺曠通知單
                 Directory.CreateDirectory(path);
             path = Path.Combine(path, reportName + ".doc");
             path2 = Path.Combine(path2, reportName + "(學生清單).xls");
-            e.Result = new object[] { reportName, path, doc, path2, printStudentList, wb };
+
+            string message = "【電子報表通知】您好 本期「{0}」已產生,可於電子報表中檢視「資料期間：{1} 至 {2}」";
+            e.Result = new object[] { reportName, path, doc, path2, printStudentList, wb , string.Format(message, "缺曠通知單", startDate.ToShortDateString(), endDate.ToShortDateString()) };
         }
 
         private void AbsenceNotification_MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)

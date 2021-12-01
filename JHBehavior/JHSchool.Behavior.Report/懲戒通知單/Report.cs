@@ -157,8 +157,6 @@ namespace JHSchool.Behavior.Report.懲戒通知單
 
             GetReduceList(); //獎懲對照表
 
-            string reportName = "懲戒通知單";
-
             object[] args = e.Argument as object[];
 
             DateTime startDate = (DateTime)args[0];
@@ -172,6 +170,9 @@ namespace JHSchool.Behavior.Report.懲戒通知單
             bool IsInsertDate = (bool)args[8];
             bool printStudentList = (bool)args[9];
             bool printRemark = (bool)args[10];
+
+            string reportName = "懲戒通知單(" + startDate.ToString("yyyy-MM-dd") + "至" + endDate.ToString("yyyy-MM-dd") + ")";
+
 
             ChengeDemerit(condName, condNumber);
 
@@ -565,17 +566,17 @@ namespace JHSchool.Behavior.Report.懲戒通知單
 
             totalStudentNumber = studentDiscipline.Count;
 
-            foreach (string student in studentDiscipline.Keys)
+            foreach (string studentID in studentDiscipline.Keys)
             {
                 if (printHasRecordOnly)
                 {
-                    if (studentDisciplineDetail[student].Count == 0)
+                    if (studentDisciplineDetail[studentID].Count == 0)
                         continue;
                 }
 
                 #region 過濾不需要列印的學生
 
-                if (StudMeritSum[student] < MaxDemerit)
+                if (StudMeritSum[studentID] < MaxDemerit)
                     continue;
 
                 //if (flag < 2)
@@ -610,9 +611,10 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 //合併列印的資料
                 Dictionary<string, object> mapping = new Dictionary<string, object>();
 
-                Dictionary<string, string> eachStudentInfo = studentInfo[student];
+                Dictionary<string, string> eachStudentInfo = studentInfo[studentID];
 
                 //學生資料
+                mapping.Add("系統編號", "系統編號{" + studentID + "}");
                 mapping.Add("學生姓名", eachStudentInfo["Name"]);
                 mapping.Add("班級", eachStudentInfo["ClassName"]);
                 mapping.Add("座號", eachStudentInfo["SeatNo"]);
@@ -642,7 +644,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 mapping.Add("學年度", School.DefaultSchoolYear);
                 mapping.Add("學期", School.DefaultSemester);
 
-                Dictionary<string, int> eachStudentDiscipline = studentDiscipline[student];
+                Dictionary<string, int> eachStudentDiscipline = studentDiscipline[studentID];
 
                 //學生獎懲累計資料
                 int count;
@@ -660,7 +662,7 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 mapping.Add("本期累計警告", eachStudentDiscipline.TryGetValue("Range警告", out count) ? "" + count : "0");
 
                 //懲戒明細
-                object[] objectValues = new object[] { studentDisciplineDetail[student] };
+                object[] objectValues = new object[] { studentDisciplineDetail[studentID] };
                 mapping.Add("懲戒明細", objectValues);
 
                 string[] keys = new string[mapping.Count];
@@ -739,7 +741,10 @@ namespace JHSchool.Behavior.Report.懲戒通知單
                 Directory.CreateDirectory(path);
             path = Path.Combine(path, reportName + ".doc");
             path2 = Path.Combine(path2, reportName + "(學生清單).xls");
-            e.Result = new object[] { reportName, path, doc, path2, printStudentList, wb };
+
+            string message = "【電子報表通知】您好 本期「{0}」已產生,可於電子報表中檢視「資料期間：{1} 至 {2}」";
+            e.Result = new object[] { reportName, path, doc, path2, printStudentList, wb, string.Format(message, "懲戒通知單", startDate.ToShortDateString(), endDate.ToShortDateString()) };
+            //【電子報表通知】您好 本期「{0}」已產生,可於電子報表中檢視「資料期間：{1} 至 {2}」
         }
 
         private void DisciplineNotification_MailMerge_MergeField(object sender, Aspose.Words.Reporting.MergeFieldEventArgs e)

@@ -112,6 +112,7 @@ namespace JHSchool.Behavior.Report
                 string path2 = ((string)result[3]).Replace('/', '_');
                 bool PrintStudetnList = (bool)result[4];
                 Aspose.Cells.Workbook wb = (Aspose.Cells.Workbook)result[5];
+                string Message = "" + result[6];
 
                 if (File.Exists(path))
                 {
@@ -149,7 +150,7 @@ namespace JHSchool.Behavior.Report
                     MemoryStream memoryStream = new MemoryStream();
                     doc.Save(memoryStream, Aspose.Words.SaveFormat.Doc);
                     ePaperCloud ePaperCloud = new ePaperCloud();
-                    ePaperCloud.upload_ePaper(schoolYear, semester, reportName, "", memoryStream, ePaperCloud.ViewerType.Student, ePaperCloud.FormatType.Docx);
+                    ePaperCloud.upload_ePaper(schoolYear, semester, reportName, "", memoryStream, ePaperCloud.ViewerType.Student, ePaperCloud.FormatType.Docx, Message);
 
                     wb.Save(path2);
                     FISCA.Presentation.MotherForm.SetStatusBarMessage(reportName + "產生完成");
@@ -163,7 +164,7 @@ namespace JHSchool.Behavior.Report
                     MemoryStream memoryStream = new MemoryStream();
                     doc.Save(memoryStream, Aspose.Words.SaveFormat.Doc);
                     ePaperCloud ePaperCloud = new ePaperCloud();
-                    ePaperCloud.upload_ePaper(schoolYear, semester, reportName, "", memoryStream, ePaperCloud.ViewerType.Student, ePaperCloud.FormatType.Docx);
+                    ePaperCloud.upload_ePaper(schoolYear, semester, reportName, "", memoryStream, ePaperCloud.ViewerType.Student, ePaperCloud.FormatType.Docx, Message);
 
                     FISCA.Presentation.MotherForm.SetStatusBarMessage(reportName + "產生完成");
                 }
