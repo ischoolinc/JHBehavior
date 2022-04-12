@@ -48,6 +48,9 @@ namespace K12.Behavior.Address
 
             labelX2.Text = "學生待處理：" + K12.Presentation.NLDPanels.Student.TempSource.Count() + "人";
             #endregion
+
+            DataGridViewImeDecorator dec = new DataGridViewImeDecorator(this.dataGridViewX1);
+
         }
 
         #region BackgroundWorker
