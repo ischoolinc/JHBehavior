@@ -162,7 +162,8 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
             {
                 IsOrRemoveData(DisciplineList);
             }
-
+            if (form.checkBoxX3Bool)
+                RemoveAwardData(DisciplineList);
             //if (DisciplineList.Count == 0)
             //{
             //    MsgBox.Show("未取得獎勵懲戒資料");
@@ -318,6 +319,8 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
             {
                 #region selectedStudents
                 string TitleName1 = School.ChineseName + " 個人獎勵懲戒明細";
+                if (form.checkBoxX3Bool)
+                    TitleName1 = School.ChineseName + " 個人懲戒明細";
                 string TitleName2 = "班級：" + ((studentInfo.Class == null ? "　　　" : studentInfo.Class.Name) + "　　座號：" + ((studentInfo.SeatNo == null) ? "　" : studentInfo.SeatNo.ToString()) + "　　姓名：" + studentInfo.Name + "　　學號：" + studentInfo.StudentNumber);
 
                 //回報進度
@@ -433,8 +436,10 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                             text.Append(type + "：" + disciplineStatistics[type]);
                         }
                     }
-
-                    ws.Cells[dataIndex, 0].PutValue("上列之獎勵懲戒明細加總為：" + text.ToString());
+                    if (form.checkBoxX3Bool)
+                        ws.Cells[dataIndex, 0].PutValue("上列之懲戒明細加總為：" + text.ToString());
+                    else
+                        ws.Cells[dataIndex, 0].PutValue("上列之獎勵懲戒明細加總為：" + text.ToString());
                     dataIndex++;
 
                     #endregion
@@ -869,6 +874,30 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                 {
                     Remove.Add(each);
                 }
+            }
+
+            foreach (DisciplineRecord each in Remove)
+            {
+                if (_disList.Contains(each))
+                    _disList.Remove(each);
+            }
+
+            return _disList;
+        }
+
+        /// <summary>
+        /// 排除獎勵紀錄(只列印懲戒)
+        /// </summary>
+        /// <param name="disList"></param>
+        /// <returns></returns>
+        private List<DisciplineRecord> RemoveAwardData(List<DisciplineRecord> disList)
+        {
+            List<DisciplineRecord> _disList = disList;
+            List<DisciplineRecord> Remove = new List<DisciplineRecord>();
+            foreach (DisciplineRecord each in _disList)
+            {
+                if (each.MeritFlag != "0") //獎勵紀錄
+                    Remove.Add(each);
             }
 
             foreach (DisciplineRecord each in Remove)
