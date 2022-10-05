@@ -47,6 +47,7 @@ namespace JHSchool.Behavior.Report
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.checkBoxX2 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.checkBoxX3 = new DevComponents.DotNetBar.Controls.CheckBoxX();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
             this.SuspendLayout();
@@ -97,10 +98,11 @@ namespace JHSchool.Behavior.Report
             // buttonX2
             // 
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX2.AutoSize = true;
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.Location = new System.Drawing.Point(189, 265);
+            this.buttonX2.Location = new System.Drawing.Point(189, 282);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(75, 25);
             this.buttonX2.TabIndex = 19;
@@ -322,10 +324,11 @@ namespace JHSchool.Behavior.Report
             // buttonX1
             // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX1.AutoSize = true;
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(111, 265);
+            this.buttonX1.Location = new System.Drawing.Point(111, 282);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(71, 25);
             this.buttonX1.TabIndex = 2;
@@ -380,11 +383,28 @@ namespace JHSchool.Behavior.Report
             this.checkBoxX2.TabIndex = 21;
             this.checkBoxX2.Text = "排除已銷過資料";
             // 
+            // checkBoxX3
+            // 
+            this.checkBoxX3.AutoSize = true;
+            this.checkBoxX3.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.checkBoxX3.BackgroundStyle.Class = "";
+            this.checkBoxX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.checkBoxX3.Location = new System.Drawing.Point(17, 253);
+            this.checkBoxX3.Name = "checkBoxX3";
+            this.checkBoxX3.Size = new System.Drawing.Size(121, 21);
+            this.checkBoxX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.checkBoxX3.TabIndex = 22;
+            this.checkBoxX3.Text = "只列印懲戒紀錄";
+            // 
             // SelectMeritDemeritForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(276, 302);
+            this.ClientSize = new System.Drawing.Size(276, 319);
+            this.Controls.Add(this.checkBoxX3);
             this.Controls.Add(this.checkBoxX2);
             this.Controls.Add(this.labelX5);
             this.Controls.Add(this.buttonX2);
@@ -433,6 +453,6 @@ namespace JHSchool.Behavior.Report
         private DevComponents.DotNetBar.ButtonX buttonX2;
         private DevComponents.DotNetBar.LabelX labelX5;
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX2;
-
+        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX3;
     }
 }

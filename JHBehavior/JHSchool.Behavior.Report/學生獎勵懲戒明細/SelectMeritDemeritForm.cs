@@ -111,6 +111,17 @@ namespace JHSchool.Behavior.Report
             }
         }
 
+        /// <summary>
+        /// 是否排除已銷過資料
+        /// </summary>
+        public bool checkBoxX3Bool
+        {
+            get
+            {
+                return checkBoxX3.Checked;
+            }
+        }
+
         #endregion
 
         #region 日期的值 StartDay,EndDay

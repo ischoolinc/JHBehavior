@@ -42,6 +42,7 @@
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ischool_Junior with FISCA\FiscaRuntime\components\DevComponents.DotNetBar2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="FISCA">
       <HintPath>..\..\..\ischool_Junior with FISCA\FiscaRuntime\kernel\FISCA.dll</HintPath>
@@ -109,6 +110,13 @@
     <None Include="Resources\home_write_64.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Library\Campus.Windows.dll" />
+    <Content Include="Library\FISCA.dll" />
+    <Content Include="Library\FISCA.LogAgent.dll" />
+    <Content Include="Library\FISCA.Permission.dll" />
+    <Content Include="Library\FISCA.Presentation.dll" />
+    <Content Include="Library\K12.Data.dll" />
+    <Content Include="Library\K12.Presentation.dll" />
     <Content Include="聯絡資訊管理_國中.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
