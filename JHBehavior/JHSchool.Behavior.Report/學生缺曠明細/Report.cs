@@ -272,7 +272,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
             foreach (JHStudentRecord studentInfo in selectedStudents)
             {
                 #region selectedStudents
-                string TitleName1 = School.ChineseName + " 個人缺曠明細";
+                string TitleName1 = School.ChineseName + "\n個人缺曠明細";
                 string time_2013 = "";
                 if (form.SelectDayOrSchoolYear)
                 {

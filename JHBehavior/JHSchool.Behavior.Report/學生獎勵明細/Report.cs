@@ -255,7 +255,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
             foreach (JHStudentRecord studentInfo in selectedStudents)
             {
                 #region selectedStudents
-                string TitleName1 = School.ChineseName + " 個人獎勵明細";
+                string TitleName1 = School.ChineseName + "\n個人獎勵明細";
                 string TitleName2 = "班級：" + ((studentInfo.Class == null ? "　　　" : studentInfo.Class.Name) + "　　座號：" + ((studentInfo.SeatNo == null) ? "　" : studentInfo.SeatNo.ToString()) + "　　姓名：" + studentInfo.Name + "　　學號：" + studentInfo.StudentNumber);
 
                 //回報進度
