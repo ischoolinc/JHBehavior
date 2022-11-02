@@ -393,17 +393,20 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
             if (size == 0)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
-                ws.PageSetup.Zoom = 90;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             else if (size == 1)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
-                ws.PageSetup.Zoom = 65;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             else if (size == 2)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperB4;
-                ws.PageSetup.Zoom = 80;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             #endregion
 
