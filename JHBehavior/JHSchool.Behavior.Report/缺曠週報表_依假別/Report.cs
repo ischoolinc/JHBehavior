@@ -328,8 +328,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                 int typeEndIndex = colIndex;
 
                 Range typeRange = prototype.Worksheets[0].Cells.CreateRange(titleRow, typeStartIndex, titleRow + 2, typeEndIndex - typeStartIndex);
-                typeRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
-                typeRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Medium, Color.Black);
 
                 prototype.Worksheets[0].Cells.CreateRange(titleRow + 1, typeStartIndex, 1, typeEndIndex - typeStartIndex).Merge();
                 prototype.Worksheets[0].Cells[titleRow + 1, typeStartIndex].PutValue(type);
@@ -463,14 +461,12 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                 {
                     List<StudentRecord> classStudent = classStudentList[classInfo.ID];
 
-                    //如果不是第一頁，就在上一頁的資料列下邊加黑線
-                    if (index != 0)
-                        ws.Cells.CreateRange(index - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
-
                     //複製 Header
                     ws.Cells.CreateRange(index, 5, false).Copy(prototypeHeader);
 
                     //填寫基本資料
+                    ws.Cells[index, 0].PutValue(School.DefaultSchoolYear + " 學年度 " + School.DefaultSemester + " 學期 " + School.ChineseName + " 缺曠週報表");
+
 
                     string TeacherName = "";
                     if (classInfo.Teacher != null)
@@ -496,7 +492,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                         if (studentCount % 5 == 0 && studentCount != 0)
                         {
                             Range eachFiveRow = ws.Cells.CreateRange(dataIndex, 0, 1, dayStartIndex);
-                            eachFiveRow.SetOutlineBorder(BorderType.TopBorder, CellBorderType.Double, Color.Black);
                         }
 
                         //填寫學生缺曠資料
@@ -556,23 +551,12 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                         _BGWAbsenceWeekListByAbsence.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
                     }
 
-                    //資料列上邊各加上黑線
-                    ws.Cells.CreateRange(index + 4, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
-
                     index = dataIndex;
 
 
                     //設定分頁
                     ws.HPageBreaks.Add(index, dayStartIndex);
                 }
-            }
-
-
-
-            //最後一頁的資料列下邊加上黑線
-            if (dataIndex != 0)
-            {
-                ws.Cells.CreateRange(dataIndex - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
             }
 
             #endregion

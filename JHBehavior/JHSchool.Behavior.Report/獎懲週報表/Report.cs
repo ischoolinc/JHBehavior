@@ -273,7 +273,6 @@ namespace JHSchool.Behavior.Report.獎懲週報表
             Workbook template = new Workbook();
 
             template.Open(new MemoryStream(ProjectResource.獎懲週報表), FileFormatType.Excel2003);
-            template.Worksheets[0].Cells.CreateRange(2, 3, 3, 1).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
 
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 3, true);
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(3, 1, true);
@@ -312,9 +311,6 @@ namespace JHSchool.Behavior.Report.獎懲週報表
             prototype.Worksheets[0].Cells.CreateRange(titleRow + 1, colIndex - meritTable.Keys.Count, 1, meritTable.Keys.Count).Merge();
             prototype.Worksheets[0].Cells[titleRow + 1, colIndex - meritTable.Keys.Count].PutValue("獎勵");
 
-            //設定獎懲分類的欄位外框
-            prototype.Worksheets[0].Cells.CreateRange(titleRow + 1, colIndex - meritTable.Keys.Count, 3, meritTable.Keys.Count).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
-
             //產生懲戒部分的欄位
             foreach (string var in demeritTable.Keys)
             {
@@ -326,9 +322,6 @@ namespace JHSchool.Behavior.Report.獎懲週報表
             }
             prototype.Worksheets[0].Cells.CreateRange(titleRow + 1, colIndex - demeritTable.Keys.Count, 1, demeritTable.Keys.Count).Merge();
             prototype.Worksheets[0].Cells[titleRow + 1, colIndex - demeritTable.Keys.Count].PutValue("懲戒");
-
-            //設定獎懲分類的欄位外框
-            prototype.Worksheets[0].Cells.CreateRange(titleRow + 1, colIndex - demeritTable.Keys.Count, 3, demeritTable.Keys.Count).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
 
             dayEndIndex = colIndex;
             dayColumnNumber = dayEndIndex - dayStartIndex;
@@ -444,25 +437,21 @@ namespace JHSchool.Behavior.Report.獎懲週報表
                 {
                     List<StudentRecord> classStudent = classStudentList[classInfo.ID];
 
-                    //如果不是第一頁，就在上一頁的資料列下邊加黑線
-                    if (index != 0)
-                        ws.Cells.CreateRange(index - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
-
                     //複製 Header
                     ws.Cells.CreateRange(index, 5, false).Copy(prototypeHeader);
 
                     //填寫基本資料
                     ws.Cells[index, 0].PutValue(School.DefaultSchoolYear + " 學年度 " + School.DefaultSemester + " 學期 " + School.ChineseName + " 獎懲週報表");
 
-                    string tname = classInfo.Teacher == null ? "" : classInfo.Teacher.Name;
+                    string TeacherName = classInfo.Teacher == null ? "" : classInfo.Teacher.Name;
 
                     if (CheckWeek) //new,True就是取得至星期日內
                     {
-                        ws.Cells[index + 1, 0].PutValue("班級名稱： " + classInfo.Name + "　　班導師： " + tname + " 老師　　獎懲統計區間： " + startDate.ToShortDateString() + " ~ " + endDate.ToShortDateString());
+                        ws.Cells[index + 1, 0].PutValue("班級名稱： " + classInfo.Name + "　　班導師： " + TeacherName + " 老師　　獎懲統計區間： " + startDate.ToShortDateString() + " ~ " + endDate.ToShortDateString());
                     }
                     else
                     {
-                        ws.Cells[index + 1, 0].PutValue("班級名稱： " + classInfo.Name + "　　班導師： " + tname + " 老師　　獎懲統計區間： " + startDate.ToShortDateString() + " ~ " + endDate.AddDays(-2).ToShortDateString());
+                        ws.Cells[index + 1, 0].PutValue("班級名稱： " + classInfo.Name + "　　班導師： " + TeacherName + " 老師　　獎懲統計區間： " + startDate.ToShortDateString() + " ~ " + endDate.AddDays(-2).ToShortDateString());
                     }
                     dataIndex = index + 5;
 
@@ -537,23 +526,11 @@ namespace JHSchool.Behavior.Report.獎懲週報表
                         _BGWDisciplineWeekList.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
                     }
 
-                    //資料列上邊加上黑線
-                    ws.Cells.CreateRange(index + 4, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
-
-                    //表格最右邊加上黑線
-                    ws.Cells.CreateRange(index + 2, dayStartIndex - 1, studentCount + 3, 1).SetOutlineBorder(BorderType.RightBorder, CellBorderType.Medium, Color.Black);
-
                     index = dataIndex;
 
                     //設定分頁
                     ws.HPageBreaks.Add(index, dayStartIndex);
                 }
-            }
-
-            //最後一頁的資料列下邊加上黑線
-            if (dataIndex != 0)
-            {
-                ws.Cells.CreateRange(dataIndex - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
             }
 
             #endregion

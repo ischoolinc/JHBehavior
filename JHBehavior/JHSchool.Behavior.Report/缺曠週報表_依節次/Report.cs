@@ -183,16 +183,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
             foreach (ClassRecord aClass in selectedClass)
             {
                 List<StudentRecord> classStudent = aClass.Students.GetInSchoolStudents(); //取得在校生
-
-                //List<StudentRecord> classStudent = new List<StudentRecord>(); //取得一般生
-                //foreach (StudentRecord each in aClass.Students)
-                //{
-                //    if (each.Status == "一般")
-                //    {
-                //        classStudent.Add(each);
-                //    }
-                //}
-
                 classStudent.Sort(new Comparison<StudentRecord>(CommonMethods.ClassSeatNoComparer));
 
                 foreach (StudentRecord aStudent in classStudent)
@@ -377,7 +367,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
             template.Open(new MemoryStream(ProjectResource.缺曠週報表_依節次), FileFormatType.Excel2003);
 
             template.Worksheets[0].Cells.DeleteRow(3);
-            template.Worksheets[0].Cells.CreateRange(2, 3, 2, 1).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
 
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 3, true);
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(3, 1, true);
@@ -425,9 +414,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
             prototype.Worksheets[0].Cells[titleRow, dayStartIndex].PutValue(firstDate.ToShortDateString() + " (" + CommonMethods.GetChineseDayOfWeek(firstDate) + ")");
             columnTable.Add(firstDate.ToShortDateString(), dayStartIndex);
 
-            //設定每一日期的欄位外框
-            prototype.Worksheets[0].Cells.CreateRange(titleRow, dayStartIndex, 3, dayColumnNumber).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
-
             for (int i = 1; i < dayNumber; i++)
             {
                 firstDate = firstDate.AddDays(1);
@@ -453,9 +439,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                 colIndex++;
                 _BGWAbsenceWeekListByPeriod.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
             }
-
-            prototype.Worksheets[0].Cells.CreateRange(titleRow, dayStartIndex, 3, AbsenceList.Count).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
-
+            
             prototype.Worksheets[0].Cells.CreateRange(titleRow, dayStartIndex, 1, AbsenceList.Count).Merge();
             Range weekCountRange = prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, AbsenceList.Count, true);
             prototype.Worksheets[0].Cells.CreateRange(dayStartIndex + AbsenceList.Count, AbsenceList.Count, true).Copy(weekCountRange);
@@ -465,9 +449,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
             columnTable.Add("本週合計", dayStartIndex);
 
             dayStartIndex += AbsenceList.Count;
-
-            prototype.Worksheets[0].Cells.CreateRange(titleRow, dayStartIndex, 3, AbsenceList.Count).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Medium, Color.Black);
-
+            
             prototype.Worksheets[0].Cells[titleRow, dayStartIndex].PutValue("本學期累計");
             columnTable.Add("本學期累計", dayStartIndex);
 
@@ -553,10 +535,6 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                 if (list.Contains(classInfo.ID))
                 {
                     List<StudentRecord> classStudent = classStudentList[classInfo.ID];
-
-                    //如果不是第一頁，就在上一頁的資料列下邊加黑線
-                    if (index != 0)
-                        ws.Cells.CreateRange(index - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
 
                     //複製 Header
                     ws.Cells.CreateRange(index, 4, false).Copy(prototypeHeader);
@@ -648,23 +626,11 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依節次
                         _BGWAbsenceWeekListByPeriod.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
                     }
 
-                    //資料列上邊加上黑線
-                    ws.Cells.CreateRange(index + 3, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
-
-                    //表格最右邊加上黑線
-                    ws.Cells.CreateRange(index + 2, dayStartIndex - 1, studentCount + 2, 1).SetOutlineBorder(BorderType.RightBorder, CellBorderType.Medium, Color.Black);
-
                     index = dataIndex;
 
                     //設定分頁
                     ws.HPageBreaks.Add(index, dayStartIndex);
                 }
-            }
-
-            //最後一頁的資料列下邊加上黑線
-            if (dataIndex != 0)
-            {
-                ws.Cells.CreateRange(dataIndex - 1, 0, 1, dayStartIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
             }
 
             #endregion
