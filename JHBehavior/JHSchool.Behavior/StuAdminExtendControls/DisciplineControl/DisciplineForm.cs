@@ -380,13 +380,13 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "另存新檔";
-            sfd.FileName = "獎懲事由代碼表.xls";
-            sfd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+            sfd.FileName = "獎懲事由代碼表.xlsx";
+            sfd.Filter = "Excel檔案 (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    wb.Save(sfd.FileName, FileFormatType.Excel2003);
+                    wb.Save(sfd.FileName);
                     FISCA.Presentation.Controls.MsgBox.Show("匯出完成。");
                 }
                 catch
@@ -408,7 +408,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "選擇要匯入的獎懲事由代碼表";
-            ofd.Filter = "Excel檔案 (*.xls)|*.xls";
+            ofd.Filter = "Excel檔案 (*.xlsx)|*.xlsx";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try

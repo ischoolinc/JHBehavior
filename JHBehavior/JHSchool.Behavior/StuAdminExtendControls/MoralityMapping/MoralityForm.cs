@@ -161,7 +161,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MoralityMapping
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "選擇要匯入的導師評語代碼表";
-            ofd.Filter = "Excel檔案 (*.xls)|*.xls";
+            ofd.Filter = "Excel檔案 (*.xlsx)|*.xlsx";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -289,13 +289,13 @@ namespace JHSchool.Behavior.StuAdminExtendControls.MoralityMapping
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "另存新檔";
-            sfd.FileName = "導師評語代碼表.xls";
-            sfd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+            sfd.FileName = "導師評語代碼表.xlsx";
+            sfd.Filter = "Excel檔案 (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    wb.Save(sfd.FileName, FileFormatType.Excel2003);
+                    wb.Save(sfd.FileName);
                     FISCA.Presentation.Controls.MsgBox.Show("匯出成功。");
                     ApplicationLog.Log("學務系統.導師評語代碼表", "匯出導師評語代碼", "「導師評語代碼表」已被匯出。");
                 }

@@ -425,7 +425,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "選擇要匯入的缺曠類別設定值";
-            ofd.Filter = "Excel檔案 (*.xls)|*.xls";
+            ofd.Filter = "Excel檔案 (*.xlsx)|*.xlsx";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try

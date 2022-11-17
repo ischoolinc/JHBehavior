@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JHSchool.Behavior</RootNamespace>
     <AssemblyName>JHSchool.Behavior</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -59,9 +59,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
+    <Reference Include="Aspose.Cells_201402, Version=7.7.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Library\Aspose.Cells.dll</HintPath>
+      <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
@@ -193,6 +193,7 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -210,28 +211,6 @@
     <Compile Include="BL\AutoSummary.cs" />
     <Compile Include="BL\AutoSummaryRecord.cs" />
     <Compile Include="BL\SchoolYearSemester.cs" />
-    <Compile Include="ClassExtendControls\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\AttendanceScClick.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.Designer.cs">
-      <DependentUpon>BalanceConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\DemeritScClick.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\MeritScClick.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\NoAbsenceScClick.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\PrintObj.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.Designer.cs">
-      <DependentUpon>SpecialForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Demerit.cs" />
     <Compile Include="DemeritRecord.cs" />
     <Compile Include="Editor\AttendanceRecordEditor.cs" />
@@ -400,37 +379,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.designer.cs">
-      <DependentUpon>AttendanceStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.designer.cs">
-      <DependentUpon>DemeritStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.designer.cs">
-      <DependentUpon>DeXingStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\IDeXingExport.cs" />
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.designer.cs">
-      <DependentUpon>MeritStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.designer.cs">
-      <DependentUpon>NoAbsenceStatistic.cs</DependentUpon>
-    </Compile>
     <Compile Include="StuAdminExtendControls\Ribbon\DailyLifeInputControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -527,19 +475,6 @@
     <Compile Include="tool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ClassExtendControls\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\BalanceConfigForm.resx">
-      <DependentUpon>BalanceConfigForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\PerformanceStudentsSpecial\SpecialForm.resx">
-      <DependentUpon>SpecialForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ImportExport\ExportStudentV2.resx">
       <DependentUpon>ExportStudentV2.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -617,26 +552,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\AttendanceStatistic.resx">
-      <DependentUpon>AttendanceStatistic.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DemeritStatistic.resx">
-      <DependentUpon>DemeritStatistic.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\DeXingStatistic.resx">
-      <DependentUpon>DeXingStatistic.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\MeritStatistic.resx">
-      <DependentUpon>MeritStatistic.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClassExtendControls\Ribbon\x_SpecialStudentControl\NoAbsenceStatistic.resx">
-      <DependentUpon>NoAbsenceStatistic.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="StuAdminExtendControls\Ribbon\DailyLifeInputControl.resx">
       <DependentUpon>DailyLifeInputControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -691,8 +606,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Library\Aspose.Cells.dll" />
-    <Content Include="Library\Aspose.Cells.xml" />
+    <Content Include="Library\Aspose.Cells_201402.dll" />
+    <Content Include="Library\Aspose.Cells_201402.xml" />
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\Aspose.Words.xml" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
@@ -759,7 +674,6 @@
     <None Include="Resources\achievement_64.png" />
     <None Include="Resources\laws_ok_64.png" />
     <None Include="Resources\loading5.gif" />
-    <Content Include="ClassExtendControls\Resources\查詢特殊學生.png" />
     <None Include="Resources\attach_write_64.png" />
     <None Include="Resources\preview_64.png" />
     <None Include="Resources\star_write_64.png" />

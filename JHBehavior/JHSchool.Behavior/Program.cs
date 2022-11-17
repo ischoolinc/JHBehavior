@@ -11,7 +11,6 @@ using JHSchool.Behavior.StuAdminExtendControls.Ribbon;
 using JHSchool.Behavior.StudentExtendControls;
 using JHSchool.Behavior.StudentExtendControls.Ribbon;
 using JHSchool.Data;
-using JHSchool.Behavior.ClassExtendControls.Ribbon;
 
 namespace JHSchool.Behavior
 {

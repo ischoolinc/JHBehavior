@@ -142,7 +142,7 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.FileName = "匯出缺曠類別管理";
-            this.saveFileDialog1.Filter = "Excel (*.xls)|*.xls";
+            this.saveFileDialog1.Filter = "Excel (*.xlsx)|*.xlsx";
             // 
             // AbsenceConfigForm
             // 

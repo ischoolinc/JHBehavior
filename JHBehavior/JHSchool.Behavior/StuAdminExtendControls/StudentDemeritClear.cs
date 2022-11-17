@@ -58,9 +58,10 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             sheet2.Name = "銷過記錄清單";
 
             Cell titleCell = sheet2.Cells["A1"];
-            titleCell.Style.Borders.SetColor(Color.Black);
+            titleCell = tool.SetBordersColor(titleCell, Color.Black);
+            titleCell = tool.SetHorizontalAlignment(titleCell, TextAlignmentType.Center);
+
             titleCell.PutValue(School.ChineseName + "　銷過記錄清單");
-            titleCell.Style.HorizontalAlignment = TextAlignmentType.Center;
             sheet2.Cells.Merge(0, 0, 1, 15);
 
             FormatCell(sheet2.Cells["A2"], "班級");
@@ -148,7 +149,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             //如果目錄不存在則建立。
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-            path = Path.Combine(path, ConvertToValidName("銷過記錄清單") + ".xls");
+            path = Path.Combine(path, ConvertToValidName("銷過記錄清單") + ".xlsx");
             try
             {
                 book.Save(path);
@@ -158,7 +159,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 try
                 {
                     FileInfo file = new FileInfo(path);
-                    string nameTempalte = file.FullName.Replace(file.Extension, "") + "{0}.xls";
+                    string nameTempalte = file.FullName.Replace(file.Extension, "") + "{0}.xlsx";
                     int count = 1;
                     string fileName = string.Format(nameTempalte, count);
                     while (File.Exists(fileName))
@@ -206,10 +207,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         private void FormatCell(Cell cell, string value)
         {
             cell.PutValue(value);
-            cell.Style.Borders.SetStyle(CellBorderType.Hair);
-            cell.Style.Borders.SetColor(Color.Black);
-            cell.Style.Borders.DiagonalStyle = CellBorderType.None;
-            cell.Style.HorizontalAlignment = TextAlignmentType.Center;
+
+            cell = tool.SetBordersColor(cell, Color.Black);
+            cell = tool.SetBorderType(cell, CellBorderType.Hair);
+            cell = tool.SetDiagonalStyle(cell, CellBorderType.None);
+            cell = tool.SetHorizontalAlignment(cell, TextAlignmentType.Center);
+
         }
 
         private void buttonX2_Click(object sender, EventArgs e)
