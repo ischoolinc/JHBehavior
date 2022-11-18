@@ -274,14 +274,15 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
             if (form.checkBoxX2Bool) //使用者已勾選"排除懲戒已銷過資料"
             {
-                template.Open(new MemoryStream(ProjectResource.學生獎懲記錄明細_2), FileFormatType.Excel2003);
+                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細_2),new LoadOptions(LoadFormat.Excel97To2003));
             }
             else
             {
-                template.Open(new MemoryStream(ProjectResource.學生獎懲記錄明細), FileFormatType.Excel2003);
+                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細), new LoadOptions(LoadFormat.Excel97To2003));
             }
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
 
             Worksheet ptws = prototype.Worksheets[0];
 
@@ -308,6 +309,8 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
+
             Worksheet ws = wb.Worksheets[0];
 
             int index = 0;
@@ -335,7 +338,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         ws.Cells.CreateRange(index - 1, 0, 1, columnNumber).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                    tool.CopyStyle(ws.Cells.CreateRange(index, 4, false), ptHeader);
 
                     dataIndex = index + 4;
                     int recordCount = 0;
@@ -368,7 +371,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         string[] ssoSplit = sso.Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(ptEachRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), ptEachRow);
 
                         //填寫學生獎懲資料
                         ws.Cells[dataIndex, 0].PutValue(ssoSplit[0]);
@@ -403,9 +406,10 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         {
                             CountRows = 0;
                             //分頁
-                            ws.HPageBreaks.Add(dataIndex, columnNumber);
+                            ws.HorizontalPageBreaks.Add(dataIndex, columnNumber);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 4, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 4, false), ptHeader);
+
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
@@ -418,12 +422,14 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
                     #region 插入獎懲統計資訊
                     Range disciplineStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber);
-                    disciplineStatisticsRange.Copy(ptEachRow);
+                    tool.CopyStyle(disciplineStatisticsRange, ptEachRow);
+
                     disciplineStatisticsRange.Merge();
                     disciplineStatisticsRange.RowHeight = 14.0;
-                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
 
                     StringBuilder text = new StringBuilder("");
                     Dictionary<string, int> disciplineStatistics = studentDisciplineStatistics[studentInfo.ID];
@@ -481,14 +487,17 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
                             //獎懲統計資訊
                             disciplineStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber);
-                            disciplineStatisticsRange.Copy(ptEachRow);
+                            tool.CopyStyle(disciplineStatisticsRange, ptEachRow);
+
                             disciplineStatisticsRange.Merge();
                             //disciplineStatisticsRange.SetOutlineBorder(BorderType.TopBorder, CellBorderType.Double, Color.Black);
                             disciplineStatisticsRange.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
                             //disciplineStatisticsRange.RowHeight = 14.0;
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                             ws.Cells[dataIndex, 0].PutValue("獎勵懲戒非明細(僅轉入生與特殊狀況之學生會以非明細記錄)：");
 
                             foreach (AutoSummaryRecord auto in AutoSummaryDic[studentInfo.ID])
@@ -530,15 +539,17 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                                 }
 
                                 //獎懲統計內容
-                                ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).Copy(ptEachRow);
+                                tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber), ptEachRow);
+
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).RowHeight = 14.0;
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).Merge();
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).SetOutlineBorder(BorderType.TopBorder, CellBorderType.None, Color.Transparent);
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
-                                ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.Font.Size = 10;
-                                ws.Cells[dataIndex, 0].Style.ShrinkToFit = true;
+                                
+                                tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+                                tool.SetShrinkToFit(ws.Cells[dataIndex, 0], true);
 
                                 ws.Cells[dataIndex, 0].PutValue(text.ToString());
                             }
@@ -558,7 +569,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         ws.Cells.CreateRange(index - 1, 0, 1, columnNumber).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                    tool.CopyStyle(ws.Cells.CreateRange(index, 4, false), ptHeader);
 
                     dataIndex = index + 4;
                     int recordCount = 0;
@@ -591,7 +602,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         string[] ssoSplit = sso.Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(ptEachRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), ptEachRow);
 
                         //填寫學生獎懲資料
                         ws.Cells[dataIndex, 0].PutValue(ssoSplit[0]);
@@ -626,9 +637,11 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                         {
                             CountRows = 0;
                             //分頁
-                            ws.HPageBreaks.Add(dataIndex, columnNumber);
+                            ws.HorizontalPageBreaks.Add(dataIndex, columnNumber);
+
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 4, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 4, false), ptHeader);
+
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
@@ -641,12 +654,15 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
                     #region 插入獎懲統計資訊
                     Range disciplineStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber);
-                    disciplineStatisticsRange.Copy(ptEachRow);
+                    tool.CopyStyle(disciplineStatisticsRange, ptEachRow);
+
                     disciplineStatisticsRange.Merge();
                     disciplineStatisticsRange.RowHeight = 14.0;
-                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
 
                     StringBuilder text = new StringBuilder("");
                     Dictionary<string, int> disciplineStatistics = studentDisciplineStatistics[studentInfo.ID];
@@ -706,7 +722,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                                 ws.Cells.CreateRange(index - 1, 0, 1, columnNumber).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                             //複製 Header
-                            ws.Cells.CreateRange(index, 4, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(index, 4, false), ptHeader);
 
                             dataIndex = index + 4;
 
@@ -716,12 +732,15 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
                             #region 插入獎懲統計資訊
                             Range disciplineStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber);
-                            disciplineStatisticsRange.Copy(ptEachRow);
+                            tool.CopyStyle(disciplineStatisticsRange, ptEachRow);
+
                             disciplineStatisticsRange.Merge();
                             disciplineStatisticsRange.RowHeight = 14.0;
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
 
                             ws.Cells[dataIndex, 0].PutValue("(無明細資料)");
                             dataIndex++;
@@ -729,14 +748,17 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                             #endregion
 
                             disciplineStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber);
-                            disciplineStatisticsRange.Copy(ptEachRow);
+                            tool.CopyStyle(disciplineStatisticsRange, ptEachRow);
+
                             disciplineStatisticsRange.Merge();
                             //disciplineStatisticsRange.SetOutlineBorder(BorderType.TopBorder, CellBorderType.Double, Color.Black);
                             disciplineStatisticsRange.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
                             //disciplineStatisticsRange.RowHeight = 14.0;
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                             ws.Cells[dataIndex, 0].PutValue("獎勵懲戒非明細(僅轉入生與特殊狀況之學生會以非明細記錄)：");
 
                             foreach (AutoSummaryRecord auto in AutoSummaryDic[studentInfo.ID])
@@ -778,15 +800,17 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                                 }
 
                                 //獎懲統計內容
-                                ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).Copy(ptEachRow);
+                                tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber), ptEachRow);
+
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).RowHeight = 14.0;
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).Merge();
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).SetOutlineBorder(BorderType.TopBorder, CellBorderType.None, Color.Transparent);
                                 ws.Cells.CreateRange(dataIndex, 0, 1, columnNumber).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
-                                ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.Font.Size = 10;
-                                ws.Cells[dataIndex, 0].Style.ShrinkToFit = true;
+                                
+                                tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+                                tool.SetShrinkToFit(ws.Cells[dataIndex, 0], true);
 
                                 ws.Cells[dataIndex, 0].PutValue(text.ToString());
                             }
@@ -810,7 +834,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
                 {
                     try
                     {
-                        ws.HPageBreaks.Add(index, columnNumber);
+                        ws.HorizontalPageBreaks.Add(index, columnNumber);
                         pageNumber++;
                     }
                     catch
@@ -845,7 +869,7 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
 

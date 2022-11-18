@@ -158,27 +158,27 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
             #region 產生範本
             int column;
-            Workbook template = new Workbook();
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.班級學生缺曠明細));
             if (style == "中文版")
             {
                 column = 3;
-                template.Open(new MemoryStream(ProjectResource.班級學生缺曠明細), FileFormatType.Excel2003);
+                template = new Workbook(new MemoryStream(ProjectResource.班級學生缺曠明細));
             }
             else
             {
                 column = 4;
-                template.Open(new MemoryStream(ProjectResource.班級學生缺曠明細_英文), FileFormatType.Excel2003);
+                template = new Workbook(new MemoryStream(ProjectResource.班級學生缺曠明細_英文));
             }
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, column, true);
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(column, 1, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
 
-            prototype.Worksheets[0].Cells.CreateRange(0, column, true).Copy(tempStudent);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, column, true), tempStudent);
 
             int colIndex = column;
-
             int startIndex = colIndex;
             int endIndex;
             int columnNumber;
@@ -190,7 +190,8 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             foreach (string period in periodList)
             {
                 Range each = prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true);
-                each.Copy(tempEachColumn);
+                tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true), tempEachColumn);
+
                 if (period.Length > 2 && style == "中文版")
                 {
                     double width = 4.5;
@@ -222,6 +223,8 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
+
             Worksheet ws = wb.Worksheets[0];
 
 
@@ -229,17 +232,20 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             if (size == 0)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
-                ws.PageSetup.Zoom = 145;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             else if (size == 1)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
-                ws.PageSetup.Zoom = 100;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             else if (size == 2)
             {
                 ws.PageSetup.PaperSize = PaperSizeType.PaperB4;
-                ws.PageSetup.Zoom = 125;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 0;
             }
             #endregion
 
@@ -278,7 +284,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                     ws.Cells.CreateRange(index - 1, 0, 1, endIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                 //複製 Header
-                wb.Worksheets[0].Cells.CreateRange(index, 2, false).Copy(prototypeHeader);
+                tool.CopyStyle(wb.Worksheets[0].Cells.CreateRange(index, 2, false), prototypeHeader);
 
                 dataIndex = index + 2;
 
@@ -305,9 +311,10 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                 ws.Cells[index, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                 pageCount++;
                 ws.Cells[index, splitLineIndex].PutValue(TitleName2);
-                ws.Cells[index, splitLineIndex].Style.Font.Size = 10;
-                ws.Cells[index, splitLineIndex].Style.HorizontalAlignment = TextAlignmentType.Left;
-                ws.Cells[index, splitLineIndex].Style.VerticalAlignment = TextAlignmentType.Bottom;
+                
+                tool.SetHorizontalAlignment(ws.Cells[index, splitLineIndex], TextAlignmentType.Left);
+                tool.SetVerticalAlignment(ws.Cells[index, splitLineIndex], TextAlignmentType.Bottom);
+                tool.SetFontSize(ws.Cells[index, splitLineIndex], 10);
 
                 List<string> list = new List<string>(classAbsenceDetail.Keys);
                 list.Sort(new SeatNoComparer(studentInfoDict));
@@ -332,7 +339,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                             continue;
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(prototypeRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), prototypeRow);
 
                         ws.Cells[dataIndex, 0].PutValue(studentInfoDict[studentID].SeatNo);
                         ws.Cells[dataIndex, 1].PutValue(studentInfoDict[studentID].Name);
@@ -368,16 +375,17 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                         {
                             CountRows = 0;
                             //分頁
-                            ws.HPageBreaks.Add(dataIndex, endIndex);
+                            ws.HorizontalPageBreaks.Add(dataIndex, endIndex);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 2, false).Copy(prototypeHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 2, false), prototypeHeader);
 
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++;
                             ws.Cells[dataIndex, splitLineIndex].PutValue(TitleName2);
-                            ws.Cells[dataIndex, splitLineIndex].Style.Font.Size = 10;
-                            ws.Cells[dataIndex, splitLineIndex].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, splitLineIndex].Style.VerticalAlignment = TextAlignmentType.Bottom;
+                            
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, splitLineIndex], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, splitLineIndex], TextAlignmentType.Bottom);
+                            tool.SetFontSize(ws.Cells[dataIndex, splitLineIndex], 10);
 
                             dataIndex += 2;
                         }
@@ -394,7 +402,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
                 index = dataIndex;
 
                 //設定分頁
-                ws.HPageBreaks.Add(index, endIndex);
+                ws.HorizontalPageBreaks.Add(index, endIndex);
             }
 
             if (dataIndex > 0)
@@ -410,7 +418,7 @@ namespace JHSchool.Behavior.Report.班級學生缺曠明細
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
         #endregion

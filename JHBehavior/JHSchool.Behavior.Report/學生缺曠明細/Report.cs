@@ -217,13 +217,14 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
             #region 產生範本
 
-            Workbook template = new Workbook();
-            template.Open(new MemoryStream(ProjectResource.學生缺曠明細), FileFormatType.Excel2003);
-
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.學生缺曠明細));
+            
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(4, 1, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
+
             Worksheet ptws = prototype.Worksheets[0];
             int startPage = 1;
             int pageNumber = 1;
@@ -236,7 +237,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
             //產生每一個節次的欄位
             foreach (string periodName in periodList.Keys)
             {
-                ptws.Cells.CreateRange(colIndex, 1, true).Copy(tempEachColumn);
+                tool.CopyStyle(ptws.Cells.CreateRange(colIndex, 1, true), tempEachColumn);
                 ptws.Cells[4, colIndex].PutValue(periodName);
                 columnTable.Add(periodName, colIndex);
                 colIndex++;
@@ -262,6 +263,8 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
+
             Worksheet ws = wb.Worksheets[0];
 
             int index = 0;
@@ -305,7 +308,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
+                    tool.CopyStyle(ws.Cells.CreateRange(index, 5, false), ptHeader);
 
                     dataIndex = index + 5;
                     int recordCount = 0;
@@ -338,7 +341,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         string[] ssoSplit = sso.Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(ptEachRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), ptEachRow);
 
                         //填寫學生缺曠資料
                         ws.Cells[dataIndex, 0].PutValue(ssoSplit[0]);
@@ -359,9 +362,9 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         {
                             CountRows = 0;
                             //分頁
-                            ws.HPageBreaks.Add(dataIndex, endPeriodIndex);
+                            ws.HorizontalPageBreaks.Add(dataIndex, endPeriodIndex);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 5, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 5, false), ptHeader);
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
@@ -383,12 +386,16 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                     absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                     //Row的高度
                     absenceStatisticsRange.RowHeight = 14.0;
-                    //文字垂直置中
-                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                    //文字水平置中
-                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                    //字型大小
-                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+                    
+                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
+                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
+
                     //文字內容
                     ws.Cells[dataIndex, 0].PutValue("上列之缺曠明細加總為：");
                     dataIndex++;
@@ -406,12 +413,14 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
                         ws.Cells.CreateRange(dataIndex, 0, 1, 1).Merge();
                         ws.Cells.CreateRange(dataIndex, 1, 1, endPeriodIndex - 1).Merge();
-                        ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                        ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
+                        
+                        tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                        tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                        tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                         ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex).RowHeight = 14.0;
                         //左
                         ws.Cells.CreateRange(dataIndex, 0, 1, 1).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
-                        ws.Cells[dataIndex, 0].Style.Font.Size = 10;
                         ws.Cells[dataIndex, 0].PutValue(periodType);
 
                         StringBuilder text = new StringBuilder("");
@@ -425,9 +434,10 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                 text.Append(type + "：" + byType[type]);
                             }
                         }
+                        
+                        tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+                        tool.SetShrinkToFit(ws.Cells[dataIndex, 0], true);
 
-                        ws.Cells[dataIndex, 1].Style.Font.Size = 10;
-                        ws.Cells[dataIndex, 1].Style.ShrinkToFit = true;
                         ws.Cells[dataIndex, 1].PutValue(text.ToString());
                         ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
 
@@ -466,9 +476,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                             absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                             absenceStatisticsRange.RowHeight = 14.0;
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                             ws.Cells[dataIndex, 0].PutValue("缺曠非明細(僅轉入生與特殊狀況之學生會以非明細記錄)：");
 
                             Dictionary<string, Dictionary<string, List<AbsenceCountRecord>>> AbsenceDic = new Dictionary<string, Dictionary<string, List<AbsenceCountRecord>>>();
@@ -502,9 +514,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                 absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                                 absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                                 absenceStatisticsRange.RowHeight = 14.0;
-                                ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+                                
+                                tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                 ws.Cells[dataIndex, 0].PutValue(list);
 
                                 //一般
@@ -518,9 +532,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                                     absenceStatisticsRange.RowHeight = 14.0;
-                                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                     ws.Cells[dataIndex, 0].PutValue(list1); //一般
 
                                     StringBuilder text = new StringBuilder();
@@ -531,9 +547,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
                                     absenceStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex);
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
-                                    ws.Cells[dataIndex, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 1].Style.VerticalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 1].Style.Font.Size = 10;
+                                    
+                                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                     ws.Cells[dataIndex, 1].PutValue(text.ToString()); //統計
                                 }
                             }
@@ -556,7 +574,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
+                    tool.CopyStyle(ws.Cells.CreateRange(index, 5, false), ptHeader);
 
                     dataIndex = index + 5;
                     int recordCount = 0;
@@ -589,7 +607,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         string[] ssoSplit = sso.Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(ptEachRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), ptEachRow);
 
                         //填寫學生缺曠資料
                         ws.Cells[dataIndex, 0].PutValue(ssoSplit[0]);
@@ -610,9 +628,10 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                         {
                             CountRows = 0;
                             //分頁
-                            ws.HPageBreaks.Add(dataIndex, endPeriodIndex);
+                            ws.HorizontalPageBreaks.Add(dataIndex, endPeriodIndex);
                             //複製 Header
-                            ws.Cells.CreateRange(dataIndex, 5, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 5, false), ptHeader);
+
                             //填寫基本資料
                             ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
                             pageCount++; //下一頁使用
@@ -635,12 +654,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                     absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                     //Row的高度
                     absenceStatisticsRange.RowHeight = 14.0;
-                    //文字垂直置中
-                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                    //文字水平置中
-                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                    //字型大小
-                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+                    
                     //文字內容
                     ws.Cells[dataIndex, 0].PutValue("上列之缺曠明細加總為：");
                     dataIndex++;
@@ -658,12 +676,14 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
                         ws.Cells.CreateRange(dataIndex, 0, 1, 1).Merge();
                         ws.Cells.CreateRange(dataIndex, 1, 1, endPeriodIndex - 1).Merge();
-                        ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                        ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
+
+                        tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                        tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                        tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                         ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex).RowHeight = 14.0;
                         //左
                         ws.Cells.CreateRange(dataIndex, 0, 1, 1).SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
-                        ws.Cells[dataIndex, 0].Style.Font.Size = 10;
                         ws.Cells[dataIndex, 0].PutValue(periodType);
 
                         StringBuilder text = new StringBuilder("");
@@ -678,8 +698,12 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             }
                         }
 
-                        ws.Cells[dataIndex, 1].Style.Font.Size = 10;
-                        ws.Cells[dataIndex, 1].Style.ShrinkToFit = true;
+                        tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                        tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+
+                        tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+                        tool.SetShrinkToFit(ws.Cells[dataIndex, 0], true);
+
                         ws.Cells[dataIndex, 1].PutValue(text.ToString());
                         ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
 
@@ -718,7 +742,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                 ws.Cells.CreateRange(index - 1, 0, 1, endPeriodIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                             //複製 Header
-                            ws.Cells.CreateRange(index, 5, false).Copy(ptHeader);
+                            tool.CopyStyle(ws.Cells.CreateRange(index, 5, false), ptHeader);
 
                             dataIndex = index + 5;
 
@@ -737,12 +761,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                             //Row的高度
                             absenceStatisticsRange.RowHeight = 14.0;
-                            //文字垂直置中
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            //文字水平置中
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            //字型大小
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+                            
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                             //文字內容
                             ws.Cells[dataIndex, 0].PutValue("(無明細資料)");
                             dataIndex++;
@@ -754,9 +777,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                             absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                             absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                             absenceStatisticsRange.RowHeight = 14.0;
-                            ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                            ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                            tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                            tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                             ws.Cells[dataIndex, 0].PutValue("缺曠非明細(僅轉入生與特殊狀況之學生會以非明細記錄)：");
 
                             Dictionary<string, Dictionary<string, List<AbsenceCountRecord>>> AbsenceDic = new Dictionary<string, Dictionary<string, List<AbsenceCountRecord>>>();
@@ -790,9 +815,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                 absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                                 absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
                                 absenceStatisticsRange.RowHeight = 14.0;
-                                ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+                                
+                                tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                 ws.Cells[dataIndex, 0].PutValue(list);
 
                                 //一般
@@ -806,9 +833,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.BottomBorder, CellBorderType.None, Color.Transparent);
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
                                     absenceStatisticsRange.RowHeight = 14.0;
-                                    ws.Cells[dataIndex, 0].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 0].Style.VerticalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 0].Style.Font.Size = 10;
+
+                                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                     ws.Cells[dataIndex, 0].PutValue(list1); //一般
 
                                     StringBuilder text = new StringBuilder();
@@ -819,9 +848,11 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
 
                                     absenceStatisticsRange = ws.Cells.CreateRange(dataIndex, 0, 1, endPeriodIndex);
                                     absenceStatisticsRange.SetOutlineBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
-                                    ws.Cells[dataIndex, 1].Style.HorizontalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 1].Style.VerticalAlignment = TextAlignmentType.Left;
-                                    ws.Cells[dataIndex, 1].Style.Font.Size = 10;
+                                    
+                                    tool.SetHorizontalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetVerticalAlignment(ws.Cells[dataIndex, 0], TextAlignmentType.Left);
+                                    tool.SetFontSize(ws.Cells[dataIndex, 0], 10);
+
                                     ws.Cells[dataIndex, 1].PutValue(text.ToString()); //統計
                                 }
                             }
@@ -846,7 +877,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                 {
                     try
                     {
-                        ws.HPageBreaks.Add(index, endPeriodIndex);
+                        ws.HorizontalPageBreaks.Add(index, endPeriodIndex);
                         pageNumber++;
                     }
                     catch
@@ -858,6 +889,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
                     ws.Name = startPage + " ~ " + (pageNumber + startPage - 1);
                     ws = wb.Worksheets[wb.Worksheets.Add()];
                     ws.Copy(prototype.Worksheets[0]);
+
                     startPage += pageNumber;
                     pageNumber = 1;
                     index = 0;
@@ -879,7 +911,7 @@ namespace JHSchool.Behavior.Report.學生缺曠明細
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
 

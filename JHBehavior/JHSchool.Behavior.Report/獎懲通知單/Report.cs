@@ -850,7 +850,7 @@ namespace JHSchool.Behavior.Report.獎勵懲戒通知單
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             path = Path.Combine(path, reportName + ".doc");
-            path2 = Path.Combine(path2, reportName + "(學生清單).xls");
+            path2 = Path.Combine(path2, reportName + "(學生清單).xlsx");
 
             string message = "【電子報表通知】您好 本期「{0}」已產生,可於電子報表中檢視「資料期間：{1} 至 {2}」";
             e.Result = new object[] { reportName, path, doc, path2, printStudentList, wb , string.Format(message, "獎懲通知單", startDate.ToShortDateString(), endDate.ToShortDateString()) };

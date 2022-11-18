@@ -268,17 +268,17 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
 
             #region 動態產生範本
 
-            Workbook template = new Workbook();
-
-            template.Open(new MemoryStream(ProjectResource.缺曠週報表_依假別), FileFormatType.Excel2003);
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.缺曠週報表_依假別), new LoadOptions(LoadFormat.Excel97To2003));
 
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 3, true);
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(3, 1, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
 
-            prototype.Worksheets[0].Cells.CreateRange(0, 3, true).Copy(tempStudent);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 3, true), tempStudent);
+
 
             int titleRow = 2;
 
@@ -312,11 +312,12 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                 foreach (string var in config[type])
                 {
                     string SaveVar = type + "_" + var;
-                    prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true).Copy(tempEachColumn);
+                    tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true), tempEachColumn);
+
                     prototype.Worksheets[0].Cells[titleRow + 2, colIndex].PutValue(var);
                     columnTable.Add(SaveVar, colIndex - 3);
 
-                    if(!perList.Contains(SaveVar))
+                    if (!perList.Contains(SaveVar))
                     {
                         perList.Add(type + "_" + var);
                     }
@@ -350,20 +351,23 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                 firstDate = firstDate.AddDays(1);
 
                 dayStartIndex += dayColumnNumber;
-                prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true).Copy(dayRange);
+                tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true), dayRange);
+
                 prototype.Worksheets[0].Cells[titleRow, dayStartIndex].PutValue(firstDate.ToShortDateString() + " (" + CommonMethods.GetChineseDayOfWeek(firstDate) + ")");
                 columnTable.Add(firstDate.ToShortDateString(), dayStartIndex);
                 _BGWAbsenceWeekListByAbsence.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
             }
 
             dayStartIndex += dayColumnNumber;
-            prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true).Copy(dayRange);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true), dayRange);
+
             prototype.Worksheets[0].Cells[titleRow, dayStartIndex].PutValue("本週合計");
             columnTable.Add("本週合計", dayStartIndex);
             _BGWAbsenceWeekListByAbsence.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
 
             dayStartIndex += dayColumnNumber;
-            prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true).Copy(dayRange);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(dayStartIndex, dayColumnNumber, true), dayRange);
+
             prototype.Worksheets[0].Cells[titleRow, dayStartIndex].PutValue("本學期累計");
             columnTable.Add("本學期累計", dayStartIndex);
             _BGWAbsenceWeekListByAbsence.ReportProgress((int)(((double)current++ * 100.0) / (double)all));
@@ -385,6 +389,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
             Worksheet ws = wb.Worksheets[0];
 
             #region 判斷紙張大小
@@ -462,7 +467,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                     List<StudentRecord> classStudent = classStudentList[classInfo.ID];
 
                     //複製 Header
-                    ws.Cells.CreateRange(index, 5, false).Copy(prototypeHeader);
+                    tool.CopyStyle(ws.Cells.CreateRange(index, 5, false), prototypeHeader);
 
                     //填寫基本資料
                     ws.Cells[index, 0].PutValue(School.DefaultSchoolYear + " 學年度 " + School.DefaultSemester + " 學期 " + School.ChineseName + " 缺曠週報表");
@@ -488,7 +493,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
                     while (studentCount < classStudent.Count)
                     {
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(prototypeRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), prototypeRow);
                         if (studentCount % 5 == 0 && studentCount != 0)
                         {
                             Range eachFiveRow = ws.Cells.CreateRange(dataIndex, 0, 1, dayStartIndex);
@@ -555,7 +560,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
 
 
                     //設定分頁
-                    ws.HPageBreaks.Add(index, dayStartIndex);
+                    ws.HorizontalPageBreaks.Add(index, dayStartIndex);
                 }
             }
 
@@ -564,7 +569,7 @@ namespace JHSchool.Behavior.Report.缺曠週報表_依假別
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
         #endregion

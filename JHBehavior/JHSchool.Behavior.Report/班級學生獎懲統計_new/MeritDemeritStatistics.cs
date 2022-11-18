@@ -85,8 +85,8 @@ namespace JHSchool.Behavior.Report.班級學生獎懲統計
         {
             InfoClass obj = e.Result as InfoClass;
 
+            wb = new Workbook(new MemoryStream(ProjectResource.班級學生獎懲統計),new LoadOptions(LoadFormat.Excel97To2003));
 
-            wb.Open(new MemoryStream(ProjectResource.班級學生獎懲統計));
             ColumnIndex = 0;
             ColumnIndexDic.Clear();
             SetColumnName1("班級");
@@ -224,13 +224,13 @@ namespace JHSchool.Behavior.Report.班級學生獎懲統計
 
             SaveFileDialog sd = new System.Windows.Forms.SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = "班級學生獎懲統計.xls";
-            sd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+            sd.FileName = "班級學生獎懲統計.xlsx";
+            sd.Filter = "Excel檔案 (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    wb.Save(sd.FileName, FileFormatType.Excel2003);
+                    wb.Save(sd.FileName);
                     System.Diagnostics.Process.Start(sd.FileName);
 
                 }

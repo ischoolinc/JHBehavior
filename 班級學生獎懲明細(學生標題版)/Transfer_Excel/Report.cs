@@ -190,15 +190,14 @@ namespace Transfer_Excel
 
             #region 產生範本
 
-            Workbook template = new Workbook();
-            template.Open(new MemoryStream(Transfer_Excel.Properties.Resources.Sample), FileFormatType.Excel2003);
+            Workbook template = new Workbook(new MemoryStream(Properties.Resources.Sample),new LoadOptions(LoadFormat.Excel97To2003));
 
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 12, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
-
-            prototype.Worksheets[0].Cells.CreateRange(0, 12, true).Copy(tempStudent);
+            prototype.CopyTheme(template);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 12, true), tempStudent);
 
             int colIndex = 3;
             int endIndex = colIndex;
@@ -230,6 +229,7 @@ namespace Transfer_Excel
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
 
             int currentProgress = 0; //目前列印進度
             //對於每一個班級
@@ -245,22 +245,26 @@ namespace Transfer_Excel
                 int sheetindex = wb.Worksheets.AddCopy("Sheet1");
                 Worksheet ws = wb.Worksheets[sheetindex];
                 ws.Name = classInfo.Name + "班";
-                ws.Move(0);
+                //ws.Move(0);
+
                 #region 判斷紙張大小
                 if (size == 0)
                 {
-                    ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
-                    ws.PageSetup.Zoom = 100;
+                    ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 else if (size == 1)
-                {                    
-                    ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
-                    ws.PageSetup.Zoom = 140;
+                {
+                    ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 else if (size == 2)
                 {
                     ws.PageSetup.PaperSize = PaperSizeType.PaperB4;
-                    ws.PageSetup.Zoom = 122;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 #endregion
 
@@ -290,7 +294,8 @@ namespace Transfer_Excel
                     isFirstPage = !isFirstPage;
 
                 //複製 Header
-                ws.Cells.CreateRange(rowIndex, 2, false).Copy(prototypeHeader);
+                tool.CopyStyle(ws.Cells.CreateRange(rowIndex, 2, false), prototypeHeader);
+
                 ws.Cells[rowIndex, 0].PutValue(TitleName1);
                 ws.Cells[rowIndex, 10].PutValue(TitleName2);
 
@@ -306,7 +311,8 @@ namespace Transfer_Excel
                 foreach (String studID in list)
                 {
                     //下一位學生，應列印欄位名稱
-                    ws.Cells.CreateRange(rowIndex, 1, false).Copy(prototypeRow);
+                    tool.CopyStyle(ws.Cells.CreateRange(rowIndex, 1, false), prototypeRow);
+
                     int i = 0;
                     foreach (String field in fields)
                     {
@@ -319,8 +325,8 @@ namespace Transfer_Excel
                     List<DisciplineEntity> studDisciplines = classDisciplines[studID];
                     foreach (DisciplineEntity de in studDisciplines)
                     {
+                        tool.CopyStyle(ws.Cells.CreateRange(rowIndex, 1, false), prototypeRow);
 
-                        ws.Cells.CreateRange(rowIndex, 1, false).Copy(prototypeRow);
                         StudentRecord studInfo = studentInfoDict[de.StudentID];
                         ws.Cells[rowIndex, 0].PutValue(studInfo.SeatNo);
                         ws.Cells[rowIndex, 1].PutValue(studInfo.Name);

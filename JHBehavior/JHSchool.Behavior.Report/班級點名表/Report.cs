@@ -109,17 +109,22 @@ namespace JHSchool.Behavior.Report.班級點名表
 
             #region 產生範本
 
-            Workbook template = new Workbook();
-            template.Open(new MemoryStream(ProjectResource.班級點名表), FileFormatType.Excel2003);
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.班級點名表),new LoadOptions(LoadFormat.Excel97To2003));
+            Style style = template.Worksheets[0].Cells.GetCellStyle(3, 0);
+            style.SetBorder(BorderType.LeftBorder, CellBorderType.Thin, Color.Black);
+            style.SetBorder(BorderType.RightBorder, CellBorderType.Thin, Color.Black);
 
+            //報表頁首
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 4, true);
+            //報表的一行
             Range tempEachColumn = template.Worksheets[0].Cells.CreateRange(4, 1, true);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
 
-            prototype.Worksheets[0].Cells.CreateRange(0, 4, true).Copy(tempStudent);
-
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 4, true), tempStudent);
+            
             int titleRow = 2;
             int colIndex = 4;
 
@@ -130,7 +135,8 @@ namespace JHSchool.Behavior.Report.班級點名表
             //根據使用者定義的節次動態產生欄位
             foreach (string period in userDefinedPeriodList)
             {
-                prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true).Copy(tempEachColumn);
+                tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(colIndex, 1, true),tempEachColumn);
+
                 prototype.Worksheets[0].Cells[titleRow, colIndex].PutValue(period);
                 columnTable.Add(period, colIndex - 4);
                 colIndex++;
@@ -154,6 +160,11 @@ namespace JHSchool.Behavior.Report.班級點名表
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
+
+            wb.Worksheets[0].PageSetup.PaperSize = PaperSizeType.PaperA4;
+            wb.Worksheets[0].PageSetup.FitToPagesWide = 1;
+            wb.Worksheets[0].PageSetup.FitToPagesTall = 0;
 
             int index = 0;
             int dataIndex = 0;
@@ -167,7 +178,7 @@ namespace JHSchool.Behavior.Report.班級點名表
                     wb.Worksheets[0].Cells.CreateRange(index - 1, 0, 1, endIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Medium, Color.Black);
 
                 //複製 Header
-                wb.Worksheets[0].Cells.CreateRange(index, 5, false).Copy(prototypeHeader);
+                tool.CopyStyle(wb.Worksheets[0].Cells.CreateRange(index, 5, false),prototypeHeader);
 
                 //填寫基本資料
                 wb.Worksheets[0].Cells[index, 0].PutValue(School.ChineseName + " 班級點名表");
@@ -180,12 +191,7 @@ namespace JHSchool.Behavior.Report.班級點名表
                 while (studentCount < classStudent.Count)
                 {
                     //複製每一個 row
-                    wb.Worksheets[0].Cells.CreateRange(dataIndex, 1, false).Copy(prototypeRow);
-                    //if (studentCount % 5 == 0 && studentCount != 0)
-                    //{
-                    //    Range eachFiveRow = wb.Worksheets[0].Cells.CreateRange(dataIndex, 0, 1, dayStartIndex);
-                    //    eachFiveRow.SetOutlineBorder(BorderType.TopBorder, CellBorderType.Double, Color.Black);
-                    //}
+                    tool.CopyStyle(wb.Worksheets[0].Cells.CreateRange(dataIndex, 1, false), prototypeRow);
 
                     //填寫學生資料
                     StudentRecord student = classStudent[studentCount];
@@ -193,6 +199,19 @@ namespace JHSchool.Behavior.Report.班級點名表
                     wb.Worksheets[0].Cells[dataIndex, 1].PutValue(student.StudentNumber);
                     wb.Worksheets[0].Cells[dataIndex, 2].PutValue(student.Name);
                     wb.Worksheets[0].Cells[dataIndex, 3].PutValue(student.Gender);
+
+                    wb.Worksheets[0].Cells[dataIndex, 0].SetStyle(style);
+                    wb.Worksheets[0].Cells[dataIndex, 1].SetStyle(style);
+                    wb.Worksheets[0].Cells[dataIndex, 2].SetStyle(style);
+                    wb.Worksheets[0].Cells[dataIndex, 3].SetStyle(style);
+
+                    //處理每一個格子都要有線
+                    int countPeriod = 4;
+                    foreach (string each in userDefinedPeriodList)
+                    {
+                        wb.Worksheets[0].Cells[dataIndex, countPeriod].SetStyle(style);
+                        countPeriod++;
+                    }
 
                     studentCount++;
                     dataIndex++;
@@ -208,7 +227,7 @@ namespace JHSchool.Behavior.Report.班級點名表
                 index = dataIndex;
 
                 //設定分頁
-                wb.Worksheets[0].HPageBreaks.Add(index, endIndex);
+                wb.Worksheets[0].HorizontalPageBreaks.Add(index, endIndex);
             }
 
             //最後一頁的資料列下邊加上黑線
@@ -219,7 +238,7 @@ namespace JHSchool.Behavior.Report.班級點名表
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
 

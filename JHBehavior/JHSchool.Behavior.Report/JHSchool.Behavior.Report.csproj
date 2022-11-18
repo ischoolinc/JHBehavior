@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JHSchool.Behavior.Report</RootNamespace>
     <AssemblyName>JHSchool.Behavior.Report</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -59,10 +59,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
+    <Reference Include="Aspose.Cells_201402, Version=7.7.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Library\Aspose.Cells.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>Library\Aspose.Cells_201402.dll</HintPath>
     </Reference>
     <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -319,7 +318,6 @@
     <Compile Include="班級獎懲記錄明細\WeekReportCountConfig.designer.cs">
       <DependentUpon>WeekReportCountConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="班級通訊錄\Report.cs" />
     <Compile Include="班級點名表\ClassStudentAttendanceSelectPeriodForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -475,8 +473,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Library\Aspose.Cells.dll" />
-    <Content Include="Library\Aspose.Cells.xml" />
+    <Content Include="Library\Aspose.Cells_201402.dll" />
+    <Content Include="Library\Aspose.Cells_201402.xml" />
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\Aspose.Words.xml" />
     <Content Include="Library\Campus.ePaperCloud.dll" />
@@ -533,8 +531,8 @@
     <None Include="ProjectResource\班級學生缺曠明細.xls" />
     <None Include="ProjectResource\班級學生獎懲統計.xls" />
     <None Include="ProjectResource\班級獎懲記錄明細.xls" />
-    <None Include="ProjectResource\班級點名表.xls" />
     <None Include="ProjectResource\獎懲週報表.xls" />
+    <None Include="ProjectResource\班級點名表.xls" />
     <None Include="ProjectResource\缺曠通知單.doc" />
     <None Include="ProjectResource\缺曠週報表_依節次.xls" />
     <None Include="ProjectResource\缺曠週報表_依假別.xls" />
@@ -542,7 +540,7 @@
     <None Include="Resources\學生獎勵記錄明細.xls" />
     <None Include="Resources\學生獎懲記錄明細_2.xls" />
     <None Include="Resources\特殊組合點名表.doc" />
-    <None Include="Resources\班級通訊錄.xls" />
+    <None Include="Resources\班級通訊錄.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

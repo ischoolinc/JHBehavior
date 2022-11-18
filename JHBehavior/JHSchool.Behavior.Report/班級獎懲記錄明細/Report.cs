@@ -256,15 +256,15 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
 
             #region 產生範本
 
-            Workbook template = new Workbook();
-            template.Open(new MemoryStream(ProjectResource.班級獎懲記錄明細), FileFormatType.Excel2003);
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.班級獎懲記錄明細), new LoadOptions(LoadFormat.Excel97To2003));
 
-            Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 12, true);
+            Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 12, false);
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);
+            prototype.CopyTheme(template);
 
-            prototype.Worksheets[0].Cells.CreateRange(0, 12, true).Copy(tempStudent);
+            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 12, true), tempStudent);
 
             int colIndex = 3;
             int endIndex = colIndex;
@@ -295,6 +295,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
 
             Workbook wb = new Workbook();
             wb.Copy(prototype);
+            wb.CopyTheme(prototype);
 
             foreach (ClassRecord classInfo in selectedClass)
             {
@@ -313,17 +314,20 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                 if (size == 0)
                 {
                     ws.PageSetup.PaperSize = PaperSizeType.PaperA3;
-                    ws.PageSetup.Zoom = 140;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 else if (size == 1)
                 {
                     ws.PageSetup.PaperSize = PaperSizeType.PaperA4;
-                    ws.PageSetup.Zoom = 100;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 else if (size == 2)
                 {
                     ws.PageSetup.PaperSize = PaperSizeType.PaperB4;
-                    ws.PageSetup.Zoom = 122;
+                    ws.PageSetup.FitToPagesWide = 1;
+                    ws.PageSetup.FitToPagesTall = 0;
                 }
                 #endregion
 
@@ -346,31 +350,16 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                     ws.Cells.CreateRange(index - 1, 0, 1, endIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                 //複製 Header
-                ws.Cells.CreateRange(index, 2, false).Copy(prototypeHeader);
+                tool.CopyStyle(ws.Cells.CreateRange(index, 2, true), prototypeHeader);
 
                 dataIndex = index + 2;
-
-                ////學生Row筆數超過40筆,則添加換行符號,與標頭
-                //int CountRows = 0;
-                ////取總頁數
-                //int TotlePage = 0;
-                ////資料筆數count
-                //int CountDetail = 0;
-                //foreach (string each1 in classDisciplineDetail.Keys) //班級
-                //{
-                //    CountDetail += classDisciplineDetail[each1].Count;
-                //}
-                //TotlePage = CountDetail / 40; //取總頁數
-                //int pageCount = 1; //第一頁
-                //if (CountDetail % 40 != 0)
-                //{
-                //    TotlePage++; //如果有餘數代表要加一頁
-                //}
 
                 //填寫基本資料
                 ws.Cells[index, 0].PutValue(TitleName1);
                 //pageCount++;
                 ws.Cells[index, 11].PutValue(TitleName2);
+                //設定合併這個欄位
+                //prototype.Worksheets[0].Cells.CreateRange(0, 11, 1, 2).Merge();
 
                 wb.Worksheets[sheetindex].PageSetup.PrintTitleRows = "$1:$2";
                 wb.Worksheets[sheetindex].PageSetup.SetFooter(1, "");
@@ -389,7 +378,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                         //CountRows++;
 
                         //複製每一個 row
-                        ws.Cells.CreateRange(dataIndex, 1, false).Copy(prototypeRow);
+                        tool.CopyStyle(ws.Cells.CreateRange(dataIndex, 1, false), prototypeRow);
 
                         ws.Cells[dataIndex, 0].PutValue(studentInfoDict[studentID].SeatNo);
                         ws.Cells[dataIndex, 1].PutValue(studentInfoDict[studentID].Name);
@@ -406,43 +395,14 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
 
                         dataIndex++;
                         _BGWClassStudentDisciplineDetail.ReportProgress((int)(((double)currentCount++ * 100.0) / (double)totalNumber));
-
-                        //if (CountRows == 40 && pageCount <= TotlePage)
-                        //{
-                        //    CountRows = 0;
-                        //    //分頁
-                        //    ws.HPageBreaks.Add(dataIndex, endIndex);
-                        //    //複製 Header
-                        //    ws.Cells.CreateRange(dataIndex, 2, false).Copy(prototypeHeader);
-
-                        //    ws.Cells[dataIndex, 0].PutValue(TitleName1 + "(" + pageCount.ToString() + "/" + TotlePage.ToString() + ")");
-                        //    pageCount++;
-                        //    ws.Cells[dataIndex, 11].PutValue(TitleName2);
-
-                        //    dataIndex += 2;
-                        //}
                     }
                 }
 
                 index = dataIndex;
 
                 //設定分頁
-                ws.HPageBreaks.Add(index, endIndex);
+                ws.HorizontalPageBreaks.Add(index, endIndex);
             }
-
-            //5/8
-            //if (dataIndex > 0)//最後一頁的資料列下邊加上黑線              
-            //    ws.Cells.CreateRange(dataIndex - 1, 0, 1, endIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
-            //else
-            //    wb = new Workbook();
-
-            //wb.Worksheets[0].AutoFitRows();
-
-            //foreach (Cell each in wb.Worksheets[0].Cells)
-            //{
-            //    each.Style.HorizontalAlignment = TextAlignmentType.Center;
-            //    each.Style.VerticalAlignment = TextAlignmentType.Center;
-            //}
 
 
             #endregion
@@ -453,7 +413,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
             string path = Path.Combine(Application.StartupPath, "Reports");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            path = Path.Combine(path, reportName + ".xlt");
+            path = Path.Combine(path, reportName + ".xlsx");
             e.Result = new object[] { reportName, path, wb };
         }
         #endregion

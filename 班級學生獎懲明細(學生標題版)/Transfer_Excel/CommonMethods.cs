@@ -53,7 +53,7 @@ namespace Transfer_Excel
 
                 try
                 {
-                    wb.Save(path, FileFormatType.Excel2003);
+                    wb.Save(path);
                     FISCA.Presentation.MotherForm.SetStatusBarMessage(reportName + "產生完成");
                     System.Diagnostics.Process.Start(path);
                 }
@@ -61,13 +61,13 @@ namespace Transfer_Excel
                 {
                     SaveFileDialog sd = new SaveFileDialog();
                     sd.Title = "另存新檔";
-                    sd.FileName = reportName + ".xls";
-                    sd.Filter = "Excel檔案 (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+                    sd.FileName = reportName + ".xlsx";
+                    sd.Filter = "Excel檔案 (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
                     if (sd.ShowDialog() == DialogResult.OK)
                     {
                         try
                         {
-                            wb.Save(sd.FileName, FileFormatType.Excel2003);
+                            wb.Save(sd.FileName);
                         }
                         catch (IOException ex2)
                         {

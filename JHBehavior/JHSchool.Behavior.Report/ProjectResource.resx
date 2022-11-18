@@ -161,10 +161,10 @@
     <value>projectresource\班級獎懲記錄明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="班級通訊錄" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\班級通訊錄.xls;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Resources\班級通訊錄.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="班級點名表" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>projectresource\班級點名表.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>ProjectResource\班級點名表.xls;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="缺曠通知單" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>projectresource\缺曠通知單.doc;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

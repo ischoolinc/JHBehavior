@@ -9,6 +9,7 @@ using JHSchool.Behavior.Report;
 using K12.Data.Configuration;
 using FISCA.Presentation.Controls;
 using K12.Data;
+using System.Drawing;
 
 namespace _71103_classTDK
 {
@@ -66,9 +67,7 @@ namespace _71103_classTDK
 
             #region Excel建立
 
-            Workbook classCell = new Workbook();
-
-            classCell.Open(new MemoryStream(ProjectResource.班級學生缺曠統計));
+            Workbook classCell = new Workbook(new MemoryStream(ProjectResource.班級學生缺曠統計),new LoadOptions(LoadFormat.Excel97To2003));
 
             //儲存元件
             SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
@@ -211,12 +210,15 @@ namespace _71103_classTDK
             //把Excel的各欄位加上特定格式
             for (int y = 4; y <= classCell.Worksheets[0].Cells.MaxDataColumn; y++)
             {
-                classCell.Worksheets[0].Cells[1, y].Style.Copy(classCell.Worksheets[0].Cells[1, 3].Style);
+                Style style = classCell.Worksheets[0].Cells[1, y].GetStyle();
+                style.SetBorder(BorderType.TopBorder,CellBorderType.Double,Color.Black);
+                style.SetBorder(BorderType.BottomBorder, CellBorderType.Double, Color.Black);
+                classCell.Worksheets[0].Cells[1, y].SetStyle(style);
             }
 
             try
             {
-                SaveFileDialog1.Filter = "Excel (*.xls)|*.xls|所有檔案 (*.*)|*.*";
+                SaveFileDialog1.Filter = "Excel (*.xlsx)|*.xlsx|所有檔案 (*.*)|*.*";
                 SaveFileDialog1.FileName = "班級出席狀況統計報表";
 
                 Hide();
@@ -247,21 +249,6 @@ namespace _71103_classTDK
             {
                 each.Checked = checkBoxX1.Checked;
             }
-
-            //if (checkBoxX1.Checked == true)
-            //{
-            //    for (int x = 0; x < listView1.Items.Count; x++)
-            //    {
-            //        listView1.Items[x].Checked = true;
-            //    }
-            //}
-            //else
-            //{
-            //    for (int x = 0; x < listView1.Items.Count; x++)
-            //    {
-            //        listView1.Items[x].Checked = false;
-            //    }
-            //}
         }
 
         private void buttonX2_Click(object sender, EventArgs e)
