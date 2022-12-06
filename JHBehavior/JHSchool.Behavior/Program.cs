@@ -2,7 +2,6 @@
 using FISCA.Presentation;
 using Framework;
 using Framework.Security;
-using JHSchool.Affair;
 using JHSchool.Behavior.Legacy;
 using JHSchool.Behavior.StuAdminExtendControls;
 using JHSchool.Behavior.StuAdminExtendControls.BehaviorStatistics;
@@ -141,7 +140,7 @@ namespace JHSchool.Behavior
 
             #region 在學務作業上增加RibbonBar
 
-            RibbonBarItem rbItem1 = StuAdmin.Instance.RibbonBarItems["基本設定"];
+            RibbonBarItem rbItem1 = FISCA.Presentation.MotherForm.RibbonBarItems["學務作業", "基本設定"];
             rbItem1.Index = 0;
             rbItem1["管理"].Image = Properties.Resources.network_lock_64;
             rbItem1["管理"].Size = RibbonBarButton.MenuButtonSize.Large;
@@ -312,22 +311,22 @@ namespace JHSchool.Behavior
                 wizard.ShowDialog();
             };
 
-            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Enable = User.Acl["JHSchool.Student.Ribbon0161"].Executable;
 
-            // 2017/4/28 穎驊更新，因應高雄小組會議 [02-05][01] 非明細獎懲紀錄問題 項目， 局端決議 將各校 匯入獎勵懲戒統計 拿掉，避免使用者誤使用
+            // 2017/4/28 穎驊更新，因應高雄小組會議 [02-05][01] 非明細獎懲紀錄問題 項目，
+            //局端決議 將各校 匯入獎勵懲戒統計 拿掉，避免使用者誤使用
             // 在此將其改為不可以見。
-            // 另外由於局端要求，希望在test.kh.edu.tw 能暫時保留此選項，供它們 2017/9 教育訓練說明用，另外做了一個專門掛給test.kh.edu.tw的模組，
+            // 另外由於局端要求，希望在test.kh.edu.tw 能暫時保留此選項，
+            //供它們 2017/9 教育訓練說明用，另外做了一個專門掛給test.kh.edu.tw的模組，
             // 會將此功能開啟
 
-            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Visible = false;
-
-            rbItemImport["學務相關匯入"]["匯入獎懲統計"].Click += delegate
-            {
-                SmartSchool.API.PlugIn.Import.Importer importer = new JHSchool.Behavior.ImportExport.ImportDisciplineStatistics();
-                JHSchool.Behavior.ImportExport.ImportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ImportStudentV2(importer.Text, importer.Image);
-                importer.InitializeImport(wizard);
-                wizard.ShowDialog();
-            };
+            //rbItemImport["學務相關匯入"]["匯入獎懲統計"].Enable = User.Acl["JHSchool.Student.Ribbon0161"].Executable;
+            //rbItemImport["學務相關匯入"]["匯入獎懲統計"].Click += delegate
+            //{
+            //    SmartSchool.API.PlugIn.Import.Importer importer = new JHSchool.Behavior.ImportExport.ImportDisciplineStatistics();
+            //    JHSchool.Behavior.ImportExport.ImportStudentV2 wizard = new JHSchool.Behavior.ImportExport.ImportStudentV2(importer.Text, importer.Image);
+            //    importer.InitializeImport(wizard);
+            //    wizard.ShowDialog();
+            //};
             #endregion
 
             #region 註冊權限管理
@@ -344,7 +343,9 @@ namespace JHSchool.Behavior
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0151", "匯入缺曠記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0157", "匯入獎懲記錄"));
             ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0159", "匯入缺曠統計"));
-            ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0161", "匯入獎懲統計"));
+
+            //經確認是高雄小組會議決議註解的功能
+            //ribbon.Add(new RibbonFeature("JHSchool.Student.Ribbon0161", "匯入獎懲統計"));
 
             Catalog detail = RoleAclSource.Instance["學生"]["資料項目"];
             detail.Add(new DetailItemFeature(typeof(AttendanceItem)));

@@ -127,11 +127,6 @@
       <HintPath>Library\JHSchool.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="JHSchool.Permrec, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Library\JHSchool.Permrec.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="K12.Data, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\K12.Data.dll</HintPath>
@@ -503,8 +498,6 @@
     <Content Include="Library\JHSchool.Data.xml" />
     <Content Include="Library\JHSchool.dll" />
     <Content Include="Library\JHSchool.pdb" />
-    <Content Include="Library\JHSchool.Permrec.dll" />
-    <Content Include="Library\JHSchool.Permrec.pdb" />
     <Content Include="Library\K12.Data.dll" />
     <Content Include="Library\K12.Data.pdb" />
     <Content Include="Library\K12.Data.xml" />
