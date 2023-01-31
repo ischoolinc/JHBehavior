@@ -99,7 +99,7 @@ namespace JHSchool.Behavior.ImportExport
             //helpButton.Top = this.wizard1.Controls[1].Controls[0].Top + this.wizard1.Controls[1].Controls[0].Height - helpButton.Height;
             //helpButton.Left = 150;
             helpButton.Visible = false;
-            helpButton.Click += delegate { if (HelpButtonClick != null)HelpButtonClick(this, new EventArgs()); };
+            helpButton.Click += delegate { if (HelpButtonClick != null) HelpButtonClick(this, new EventArgs()); };
             helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             this.wizard1.Controls[1].Controls.Add(helpButton);
             #endregion
@@ -128,8 +128,8 @@ namespace JHSchool.Behavior.ImportExport
             _CheckAllManager.TargetComboBox = this.checkBox1;
             _CheckAllManager.TargetListView = this.listViewEx1;
 
-            advButton.PopupOpen += delegate { if (ControlPanelOpen != null)ControlPanelOpen(this, new EventArgs()); };
-            advButton.PopupClose += delegate { if (ControlPanelClose != null)ControlPanelClose(this, new EventArgs()); };
+            advButton.PopupOpen += delegate { if (ControlPanelOpen != null) ControlPanelOpen(this, new EventArgs()); };
+            advButton.PopupClose += delegate { if (ControlPanelClose != null) ControlPanelClose(this, new EventArgs()); };
 
             _ExportableFields = new SmartSchool.API.PlugIn.Collections.FieldsCollection();
             _SelectedFields = new SmartSchool.API.PlugIn.Collections.FieldsCollection();
@@ -528,26 +528,23 @@ namespace JHSchool.Behavior.ImportExport
 
                         if (student != null)
                         {
-                            if (RowIndex <= 65535)
+                            i = 0;
+                            for (; i < studentFieldList.Count; i++)
                             {
-                                i = 0;
-                                for (; i < studentFieldList.Count; i++)
+                                switch (studentFieldList[i])
                                 {
-                                    switch (studentFieldList[i])
-                                    {
-                                        case "學生系統編號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.ID); break;
-                                        case "學號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.StudentNumber); break;
-                                        case "班級": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.Class == null ? "" : student.Class.Name); break;
-                                        case "座號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.SeatNo); break;
-                                        case "姓名": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.Name); break;
-                                        default:
-                                            break;
-                                    }
+                                    case "學生系統編號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.ID); break;
+                                    case "學號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.StudentNumber); break;
+                                    case "班級": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.Class == null ? "" : student.Class.Name); break;
+                                    case "座號": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.SeatNo); break;
+                                    case "姓名": report.Worksheets[0].Cells[RowIndex, i].PutValue(student.Name); break;
+                                    default:
+                                        break;
                                 }
-                                for (int j = 0; j < exportFieldList.Count; j++)
-                                {
-                                    report.Worksheets[0].Cells[RowIndex, i + j].PutValue(row.ContainsKey(exportFieldList[j]) ? row[exportFieldList[j]] : "");
-                                }
+                            }
+                            for (int j = 0; j < exportFieldList.Count; j++)
+                            {
+                                report.Worksheets[0].Cells[RowIndex, i + j].PutValue(row.ContainsKey(exportFieldList[j]) ? row[exportFieldList[j]] : "");
                             }
                             RowIndex++;
                         }
@@ -567,7 +564,7 @@ namespace JHSchool.Behavior.ImportExport
                 report.Worksheets[0].AutoFitColumn(k, 0, 150);
             }
             report.Worksheets[0].FreezePanes(1, 0, 1, studentFieldList.Count + exportFieldList.Count);
-            e.Result = new object[] { report, fileName, RowIndex > 65535 };
+            e.Result = new object[] { report, fileName };
         }
 
         void bkwNotPassComputer_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -581,7 +578,6 @@ namespace JHSchool.Behavior.ImportExport
             if (e.Error == null)
             {
                 Workbook report = (Workbook)((object[])e.Result)[0];
-                bool overLimit = (bool)((object[])e.Result)[2];
                 //儲存 Excel
                 #region 儲存 Excel
                 string path = (string)((object[])e.Result)[1];
@@ -658,11 +654,9 @@ namespace JHSchool.Behavior.ImportExport
                         SB.AppendLine("姓名「" + each.Name + "」學號「" + each.StudentNumber + "」。");
                     }
                 }
-                ApplicationLog.Log("學務系統.匯出", _Title, "已進行「" + _Title + "」操作。\n" + SB.ToString()); 
+                ApplicationLog.Log("學務系統.匯出", _Title, "已進行「" + _Title + "」操作。\n" + SB.ToString());
                 #endregion
-
-                if (overLimit)
-                    MsgBox.Show("匯出資料已經超過Excel的極限(65536筆)。\n超出的資料無法被匯出。\n\n請減少選取學生人數。");
+                
                 System.Diagnostics.Process.Start(path);
             }
             else
