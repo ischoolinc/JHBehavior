@@ -326,6 +326,18 @@ namespace JHSchool.Behavior.StudentExtendControls
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+
+            //2023/3/14 - 增加驗證使用者是否未輸入時間
+            if (dateTimeInput1.Text == "0001/01/01 00:00:00" || dateTimeInput1.Text == "")
+            {
+                _errorProvider.SetError(dateTimeInput1, "請輸入時間日期");
+                return;
+            }
+            else
+            {
+                _errorProvider.SetError(dateTimeInput1, "");
+            }
+
             if (_status == EditorStatus.Insert)
             {
                 foreach (JHAttendanceRecord each in JHAttendance.SelectByStudentIDs(new string[] { _editor.RefStudentID }))

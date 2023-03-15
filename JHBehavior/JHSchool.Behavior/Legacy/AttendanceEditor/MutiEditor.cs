@@ -660,6 +660,16 @@ namespace JHSchool.Behavior.Legacy
 
         private bool IsValid()
         {
+            if (dateTimeInput1.Text == "0001/01/01 00:00:00" || dateTimeInput1.Text == "")
+            {
+                errorProvider1.SetError(dateTimeInput1, "請輸入時間日期");
+                return false;
+            }
+            else
+            {
+                errorProvider1.SetError(dateTimeInput1, "");
+            }
+
             #region DataGridView資料驗證(如果ErrorText內容為空)
 
             foreach (DataGridViewRow row in dataGridView.Rows)

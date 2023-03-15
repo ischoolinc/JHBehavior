@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.panelAbsence = new System.Windows.Forms.TableLayoutPanel();
@@ -41,12 +42,14 @@
             this.dataGridViewX1 = new JHSchool.Behavior.StudentExtendControls.CustomDataGridView();
             this.intSemester = new DevComponents.Editors.IntegerInput();
             this.intSchoolYear = new DevComponents.Editors.IntegerInput();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panelEx1.SuspendLayout();
             this.panelAbsence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intSemester)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intSchoolYear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelEx1
@@ -298,6 +301,10 @@
             this.intSchoolYear.TabIndex = 16;
             this.intSchoolYear.Value = 90;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // AttendanceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -325,6 +332,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.intSemester)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.intSchoolYear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -344,6 +352,6 @@
         private CustomDataGridView dataGridViewX1;
         private DevComponents.Editors.IntegerInput intSemester;
         private DevComponents.Editors.IntegerInput intSchoolYear;
-
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

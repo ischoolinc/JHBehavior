@@ -130,6 +130,9 @@ namespace K12.Behavior.Address
                 SetColumnNameLock("村里", 90);
                 SetColumnNameLock("鄰", 90);
                 SetColumnNameLock("其他", 250);
+
+                List<string> cols = new List<string>() { "郵遞區號" };
+                Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, cols);
                 #endregion
             }
             else
@@ -140,6 +143,9 @@ namespace K12.Behavior.Address
                 SetColumnNameLock("其他2", 90);
                 SetColumnNameLock("其他3", 90);
                 SetColumnNameLock("手機", 90);
+
+                List<string> cols = new List<string>() { "聯絡電話", "其他1", "其他2", "其他3", "手機" };
+                Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, cols);
                 #endregion
             }
             #endregion

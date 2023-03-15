@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JHSchool.Behavior</RootNamespace>
     <AssemblyName>JHSchool.Behavior</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -434,12 +434,6 @@
     <Compile Include="StudentExtendControls\BehaviorNewItemControls\ColumnAddInUnify.cs" />
     <Compile Include="StudentExtendControls\BehaviorNewItemControls\SummarySetupObj.cs" />
     <Compile Include="StudentExtendControls\Ribbon\LogStudent.cs" />
-    <Compile Include="StudentExtendControls\Ribbon\MutiAttendance.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StudentExtendControls\Ribbon\MutiAttendance.designer.cs">
-      <DependentUpon>MutiAttendance.cs</DependentUpon>
-    </Compile>
     <Compile Include="StudentExtendControls\Ribbon\MutiStudentObj.cs" />
     <Compile Include="StudentExtendControls\Ribbon\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -577,10 +571,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StudentExtendControls\AttendanceUnifytIItem.resx">
       <DependentUpon>AttendanceUnifytIItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StudentExtendControls\Ribbon\MutiAttendance.resx">
-      <DependentUpon>MutiAttendance.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="StudentExtendControls\Ribbon\Resources.resx">
