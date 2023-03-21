@@ -193,9 +193,9 @@ namespace JHSchool.Behavior.Report {
         /// <summary>
         ///   查詢類型 System.Byte[] 的當地語系化資源。
         /// </summary>
-        internal static byte[] 班級獎懲記錄明細 {
+        internal static byte[] 班級獎懲記錄明細_new {
             get {
-                object obj = ResourceManager.GetObject("班級獎懲記錄明細", resourceCulture);
+                object obj = ResourceManager.GetObject("班級獎懲記錄明細_new", resourceCulture);
                 return ((byte[])(obj));
             }
         }

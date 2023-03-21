@@ -76,6 +76,7 @@
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\DevComponents.DotNetBar2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="FISCA, Version=2.1.4.8, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -595,55 +596,40 @@
     <Content Include="Library\Aspose.Cells_201402.xml" />
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\Aspose.Words.xml" />
+    <Content Include="Library\Campus.Windows.dll" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
     <Content Include="Library\FISCA.Authentication.dll" />
-    <Content Include="Library\FISCA.Authentication.pdb" />
     <Content Include="Library\FISCA.Authentication.xml" />
     <Content Include="Library\FISCA.dll" />
     <Content Include="Library\FISCA.DSAClient.dll" />
-    <Content Include="Library\FISCA.DSAClient.pdb" />
     <Content Include="Library\FISCA.DSAClient.xml" />
     <Content Include="Library\FISCA.DSAUtil.dll" />
-    <Content Include="Library\FISCA.DSAUtil.pdb" />
     <Content Include="Library\FISCA.DSAUtil.xml" />
     <Content Include="Library\FISCA.LogAgent.dll" />
-    <Content Include="Library\FISCA.LogAgent.pdb" />
     <Content Include="Library\FISCA.LogAgent.xml" />
-    <Content Include="Library\FISCA.pdb" />
     <Content Include="Library\FISCA.Permission.dll" />
-    <Content Include="Library\FISCA.Permission.pdb" />
     <Content Include="Library\FISCA.Permission.xml" />
     <Content Include="Library\FISCA.Presentation.dll" />
-    <Content Include="Library\FISCA.Presentation.pdb" />
     <Content Include="Library\FISCA.Presentation.xml" />
     <Content Include="Library\FISCA.UDT.dll" />
-    <Content Include="Library\FISCA.UDT.pdb" />
     <Content Include="Library\FISCA.UDT.xml" />
     <Content Include="Library\Framework.dll" />
-    <Content Include="Library\Framework.pdb" />
     <Content Include="Library\IntelliSchool.DSA.ClientFramework.dll" />
     <Content Include="Library\IntelliSchool.DSA.ClientFramework.xml" />
     <Content Include="Library\JHSchool.Affair.dll" />
-    <Content Include="Library\JHSchool.Affair.pdb" />
     <Content Include="Library\JHSchool.Data.dll" />
-    <Content Include="Library\JHSchool.Data.pdb" />
     <Content Include="Library\JHSchool.Data.xml" />
     <Content Include="Library\JHSchool.dll" />
     <Content Include="Library\JHSchool.Logic.dll" />
-    <Content Include="Library\JHSchool.Logic.pdb" />
     <Content Include="Library\JHSchool.Logic.XML" />
-    <Content Include="Library\JHSchool.pdb" />
     <Content Include="Library\K12.Data.dll" />
-    <Content Include="Library\K12.Data.pdb" />
     <Content Include="Library\K12.Data.xml" />
     <Content Include="Library\K12.Presentation.dll" />
     <Content Include="Library\K12.Presentation.xml" />
     <Content Include="Library\SmartSchool.API.PlugIn.dll" />
     <Content Include="Library\SmartSchool.Common.dll" />
     <Content Include="Library\SmartSchool.Common.DotNetBar.dll" />
-    <Content Include="Library\SmartSchool.Common.DotNetBar.pdb" />
     <Content Include="Library\SmartSchool.Common.DotNetBar.xml" />
-    <Content Include="Library\SmartSchool.Common.pdb" />
     <Content Include="Library\SmartSchool.Common.xml" />
     <Content Include="Library\SmartSchool.Customization.PlugIn.dll" />
     <Content Include="Library\SmartSchool.Customization.PlugIn.xml" />

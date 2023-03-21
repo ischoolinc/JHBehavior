@@ -256,7 +256,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
 
             #region 產生範本
 
-            Workbook template = new Workbook(new MemoryStream(ProjectResource.班級獎懲記錄明細), new LoadOptions(LoadFormat.Excel97To2003));
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.班級獎懲記錄明細_new));
 
             Range tempStudent = template.Worksheets[0].Cells.CreateRange(0, 12, false);
 
@@ -264,7 +264,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
             prototype.Copy(template);
             prototype.CopyTheme(template);
 
-            tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 12, true), tempStudent);
+           tool.CopyStyle(prototype.Worksheets[0].Cells.CreateRange(0, 12, false), tempStudent);
 
             int colIndex = 3;
             int endIndex = colIndex;
@@ -350,7 +350,7 @@ namespace JHSchool.Behavior.Report.班級獎懲記錄明細
                     ws.Cells.CreateRange(index - 1, 0, 1, endIndex).SetOutlineBorder(BorderType.BottomBorder, CellBorderType.Thin, Color.Black);
 
                 //複製 Header
-                tool.CopyStyle(ws.Cells.CreateRange(index, 2, true), prototypeHeader);
+                tool.CopyStyle(ws.Cells.CreateRange(index, 2, false), prototypeHeader);
 
                 dataIndex = index + 2;
 

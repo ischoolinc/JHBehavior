@@ -274,11 +274,11 @@ namespace JHSchool.Behavior.Report.學生獎懲明細
 
             if (form.checkBoxX2Bool) //使用者已勾選"排除懲戒已銷過資料"
             {
-                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細_2),new LoadOptions(LoadFormat.Excel97To2003));
+                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細_2));
             }
             else
             {
-                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細), new LoadOptions(LoadFormat.Excel97To2003));
+                template = new Workbook(new MemoryStream(ProjectResource.學生獎懲記錄明細));
             }
             Workbook prototype = new Workbook();
             prototype.Copy(template);

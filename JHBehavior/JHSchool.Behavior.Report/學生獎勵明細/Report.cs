@@ -219,7 +219,7 @@ namespace JHSchool.Behavior.Report.學生獎勵明細
 
             #region 產生範本
 
-            Workbook template = new Workbook(new MemoryStream(ProjectResource.學生獎勵記錄明細),new LoadOptions(LoadFormat.Excel97To2003));
+            Workbook template = new Workbook(new MemoryStream(ProjectResource.學生獎勵記錄明細));
 
             Workbook prototype = new Workbook();
             prototype.Copy(template);

@@ -122,13 +122,13 @@
     <value>projectresource\loadingicon.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="學生獎勵記錄明細" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\學生獎勵記錄明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Resources\學生獎勵記錄明細.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="學生獎懲記錄明細" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>projectresource\學生獎懲記錄明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Resources\學生獎懲記錄明細.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="學生獎懲記錄明細_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\學生獎懲記錄明細_2.xls;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Resources\學生獎懲記錄明細_2.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="學生缺曠明細" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>projectresource\學生缺曠明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -157,8 +157,8 @@
   <data name="班級學生缺曠統計" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>projectresource\班級學生缺曠統計.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="班級獎懲記錄明細" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>projectresource\班級獎懲記錄明細.xls;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="班級獎懲記錄明細_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\班級獎懲記錄明細_new.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="班級通訊錄" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\班級通訊錄.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
