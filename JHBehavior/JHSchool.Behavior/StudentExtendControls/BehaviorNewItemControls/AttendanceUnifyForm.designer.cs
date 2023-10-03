@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lbHelp1 = new DevComponents.DotNetBar.LabelX();
             this.groupPanel4 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.lbHelp2 = new DevComponents.DotNetBar.LabelX();
@@ -66,6 +66,8 @@
             // 
             // groupPanel4
             // 
+            this.groupPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupPanel4.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel4.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
@@ -110,6 +112,7 @@
             // 
             // lbHelp2
             // 
+            this.lbHelp2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbHelp2.AutoSize = true;
             // 
             // 
@@ -127,16 +130,19 @@
             this.dgvAttendance.AllowUserToAddRows = false;
             this.dgvAttendance.AllowUserToDeleteRows = false;
             this.dgvAttendance.AllowUserToResizeRows = false;
+            this.dgvAttendance.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAttendance.BackgroundColor = System.Drawing.Color.White;
             this.dgvAttendance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAttendance.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAttendance.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAttendance.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dgvAttendance.Location = new System.Drawing.Point(10, 8);
             this.dgvAttendance.Name = "dgvAttendance";
@@ -150,6 +156,7 @@
             // btnSaveAttendanceStatistics
             // 
             this.btnSaveAttendanceStatistics.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnSaveAttendanceStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSaveAttendanceStatistics.AutoSize = true;
             this.btnSaveAttendanceStatistics.BackColor = System.Drawing.Color.Transparent;
             this.btnSaveAttendanceStatistics.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
@@ -162,6 +169,9 @@
             // 
             // groupPanel3
             // 
+            this.groupPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupPanel3.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel3.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
@@ -208,6 +218,9 @@
             // 
             // listViewAttendance
             // 
+            this.listViewAttendance.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -226,6 +239,7 @@
             // btnAttendanceNew
             // 
             this.btnAttendanceNew.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnAttendanceNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAttendanceNew.BackColor = System.Drawing.Color.Transparent;
             this.btnAttendanceNew.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnAttendanceNew.Location = new System.Drawing.Point(11, 161);
@@ -238,6 +252,7 @@
             // btnAttendanceDelete
             // 
             this.btnAttendanceDelete.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnAttendanceDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAttendanceDelete.BackColor = System.Drawing.Color.Transparent;
             this.btnAttendanceDelete.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnAttendanceDelete.Location = new System.Drawing.Point(173, 161);
@@ -250,6 +265,7 @@
             // buttonX4
             // 
             this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX4.BackColor = System.Drawing.Color.Transparent;
             this.buttonX4.Location = new System.Drawing.Point(11, 161);
             this.buttonX4.Name = "buttonX4";
@@ -260,6 +276,7 @@
             // btnAttendanceEdit
             // 
             this.btnAttendanceEdit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnAttendanceEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAttendanceEdit.BackColor = System.Drawing.Color.Transparent;
             this.btnAttendanceEdit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnAttendanceEdit.Location = new System.Drawing.Point(92, 161);
@@ -277,6 +294,7 @@
             // btnExitAll
             // 
             this.btnExitAll.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnExitAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExitAll.BackColor = System.Drawing.Color.Transparent;
             this.btnExitAll.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.btnExitAll.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -296,6 +314,8 @@
             this.Controls.Add(this.lbHelp1);
             this.Controls.Add(this.groupPanel3);
             this.Controls.Add(this.btnExitAll);
+            this.DoubleBuffered = true;
+            this.MaximizeBox = true;
             this.Name = "AttendanceUnifyForm";
             this.Text = "缺曠學期統計";
             this.Load += new System.EventHandler(this.AttendanceUnifyForm_Load);
