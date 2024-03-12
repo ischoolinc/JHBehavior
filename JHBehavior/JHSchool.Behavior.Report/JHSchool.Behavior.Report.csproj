@@ -69,6 +69,11 @@
       <HintPath>Library\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Behavior.Data, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Behavior.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Campus.ePaperCloud, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\Campus.ePaperCloud.dll</HintPath>
@@ -474,6 +479,8 @@
     <Content Include="Library\Aspose.Cells_201402.xml" />
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\Aspose.Words.xml" />
+    <Content Include="Library\Behavior.Data.dll" />
+    <Content Include="Library\Behavior.Data.pdb" />
     <Content Include="Library\Campus.ePaperCloud.dll" />
     <Content Include="Library\Campus.Report.dll" />
     <Content Include="Library\Campus.Report.pdb" />

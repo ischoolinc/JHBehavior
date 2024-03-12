@@ -10,6 +10,7 @@ using FISCA.DSAUtil;
 using K12.Data;
 using K12.Data.Configuration;
 using Framework;
+using Behavior.Data;
 
 namespace JHSchool.Behavior.Report.缺曠通知單
 {
@@ -649,7 +650,7 @@ namespace JHSchool.Behavior.Report.缺曠通知單
 
                 //學生資料
                 mapping.Add("系統編號", "系統編號{" + studentID + "}");
-                mapping.Add("學生姓名", eachStudentInfo["Name"]);
+                mapping.Add("學生姓名", BehTool.SurrogatePairString(eachStudentInfo["Name"]));
                 mapping.Add("班級", eachStudentInfo["ClassName"]);
                 mapping.Add("座號", eachStudentInfo["SeatNo"]);
                 mapping.Add("學號", eachStudentInfo["StudentNumber"]);
@@ -658,13 +659,13 @@ namespace JHSchool.Behavior.Report.缺曠通知單
 
                 //收件人資料
                 if (receiveName == "監護人姓名")
-                    mapping.Add("收件人姓名", eachStudentInfo["CustodianName"]);
+                    mapping.Add("收件人姓名", BehTool.SurrogatePairString(eachStudentInfo["CustodianName"]));
                 else if (receiveName == "父親姓名")
-                    mapping.Add("收件人姓名", eachStudentInfo["FatherName"]);
+                    mapping.Add("收件人姓名", BehTool.SurrogatePairString(eachStudentInfo["FatherName"]));
                 else if (receiveName == "母親姓名")
-                    mapping.Add("收件人姓名", eachStudentInfo["MotherName"]);
+                    mapping.Add("收件人姓名", BehTool.SurrogatePairString(eachStudentInfo["MotherName"]));
                 else
-                    mapping.Add("收件人姓名", eachStudentInfo["Name"]);
+                    mapping.Add("收件人姓名", BehTool.SurrogatePairString(eachStudentInfo["Name"]));
 
                 //收件人地址資料
                 mapping.Add("收件人地址", eachStudentInfo["Address"]);

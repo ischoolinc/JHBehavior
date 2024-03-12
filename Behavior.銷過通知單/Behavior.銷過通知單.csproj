@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JHBehavior.銷過通知單</RootNamespace>
     <AssemblyName>Behavior.ClearDemeritReport</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -46,6 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +56,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=4.3.0.0, Culture=neutral, PublicKeyToken=9a40d5a4b59e5256, processorArchitecture=MSIL">
@@ -65,6 +67,11 @@
     <Reference Include="Aspose.Words, Version=4.4.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\Aspose.Words.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Behavior.Data, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Behavior.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.1, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
@@ -200,6 +207,8 @@
   <ItemGroup>
     <Content Include="Library\Aspose.Cells.dll" />
     <Content Include="Library\Aspose.Words.dll" />
+    <Content Include="Library\Behavior.Data.dll" />
+    <Content Include="Library\Behavior.Data.pdb" />
     <Content Include="Library\DevComponents.DotNetBar2.dll" />
     <Content Include="Library\FISCA.dll" />
     <Content Include="Library\FISCA.DSAUtil.dll" />
@@ -207,7 +216,6 @@
     <Content Include="Library\FISCA.Presentation.dll" />
     <Content Include="Library\Framework.dll" />
     <Content Include="Library\K12.Data.dll" />
-    <Content Include="Library\K12.Data.pdb" />
     <Content Include="Library\K12.Presentation.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
