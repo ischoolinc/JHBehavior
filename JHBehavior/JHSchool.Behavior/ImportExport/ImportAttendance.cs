@@ -140,7 +140,10 @@ namespace JHSchool.Behavior.ImportExport
             {
                 int schoolYear = int.Parse(Row["學年度"]);
                 int semester = int.Parse(Row["學期"]);
-                DateTime date = DateTime.Parse(Row["日期"]);
+
+                //20240319 將日期的時分秒Parse掉 - Dylan
+                DateTime date2 = DateTime.Parse(Row["日期"]);
+                DateTime date = DateTime.Parse(date2.ToString("yyyy/MM/dd"));
                 string studentID = Row.ID;
 
                 #region 1010913 - 新增檢查匯入日期,是否存在於不同學年度學期

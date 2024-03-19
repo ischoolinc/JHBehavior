@@ -465,7 +465,11 @@ namespace JHSchool.Behavior.ImportExport
                 {
                     int schoolYear = int.Parse(row["學年度"]);
                     int semester = int.Parse(row["學期"]);
-                    DateTime occurdate = DateTime.Parse(row["日期"]);
+
+                    //20240319 將日期的時分秒Parse掉 - Dylan
+                    DateTime date2 = DateTime.Parse(row["日期"]);
+                    DateTime occurdate = DateTime.Parse(date2.ToString("yyyy/MM/dd"));
+
                     if (chose1.Checked)
                     {
                         #region 以事由為Key更新
