@@ -151,12 +151,12 @@ namespace JHSchool.Behavior
                 AbsForm.ShowDialog();
             };
 
-            rbItem1["管理"]["每日節次管理"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0030"].Executable;
-            rbItem1["管理"]["每日節次管理"].Click += delegate
-            {
-                PeriodConfigForm PerForm = new PeriodConfigForm();
-                PerForm.ShowDialog();
-            };
+            //rbItem1["管理"]["每日節次管理"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0030"].Executable;
+            //rbItem1["管理"]["每日節次管理"].Click += delegate
+            //{
+            //    PeriodConfigForm PerForm = new PeriodConfigForm();
+            //    PerForm.ShowDialog();
+            //};
 
             rbItem1["管理"]["功過換算管理"].Enable = User.Acl["JHSchool.StuAdmin.Ribbon0010"].Executable;
             rbItem1["管理"]["功過換算管理"].Click += delegate
@@ -172,12 +172,12 @@ namespace JHSchool.Behavior
                 AbsForm.ShowDialog();
             });
 
-            string URL每日節次管理 = "ischool/國中系統/學務/管理/每日節次管理";
-            FISCA.Features.Register(URL每日節次管理, arg =>
-            {
-                PeriodConfigForm PerForm = new PeriodConfigForm();
-                PerForm.ShowDialog();
-            });
+            //string URL每日節次管理 = "ischool/國中系統/學務/管理/每日節次管理";
+            //FISCA.Features.Register(URL每日節次管理, arg =>
+            //{
+            //    PeriodConfigForm PerForm = new PeriodConfigForm();
+            //    PerForm.ShowDialog();
+            //});
 
             string URL功過換算管理 = "ischool/國中系統/學務/管理/功過換算管理";
             FISCA.Features.Register(URL功過換算管理, arg =>
@@ -358,7 +358,7 @@ namespace JHSchool.Behavior
             ribbon = RoleAclSource.Instance["學務作業"];
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0000", "缺曠類別管理"));
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0010", "功過換算管理"));
-            ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0030", "每日節次管理"));
+            //ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0030", "每日節次管理"));
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0040", "獎懲事由管理"));
 
             ribbon.Add(new RibbonFeature("JHSchool.StuAdmin.Ribbon0090", "導師評語代碼表"));
