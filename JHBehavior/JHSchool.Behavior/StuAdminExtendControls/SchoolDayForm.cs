@@ -326,22 +326,36 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             bool hasError = false;
 
+
+
+
             //主XML
             XElement elem = new XElement("SchoolHolidays", new XElement("BeginDate", this.dtBeginDate.Value.ToShortDateString()), new XElement("EndDate", this.dtEndDate.Value.ToShortDateString()));
 
+            StringBuilder sb_log = new StringBuilder();
+            sb_log.AppendLine("上課天數設定儲存:");
+            sb_log.AppendLine(string.Format("學期開始日期「{0}」", this.dtBeginDate.Value.ToShortDateString()));
+            sb_log.AppendLine(string.Format("學期結束日期「{0}」", this.dtEndDate.Value.ToShortDateString()));
+            sb_log.AppendLine("");
+            sb_log.AppendLine("上課天數:");
             //掛上各年級的上課天數節點(順便驗證欄位資料)
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 row.ErrorText = string.Empty;
                 int count;
                 if (int.TryParse(row.Cells[colDays.Index].Value + "", out count))
+                {
                     elem.Add(new XElement("SchoolDayCountG" + row.Tag, count));
+
+                    sb_log.AppendLine(string.Format("{0}年級「{1}」", row.Tag, row.Cells[colDays.Index].Value + ""));
+                }
                 else
                 {
                     row.ErrorText = "上課天數欄位必須輸入數字";
                     hasError = true;
                 }
             }
+            sb_log.AppendLine("");
 
             if (hasError)
             {
@@ -375,16 +389,22 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 return;
             }
 
+
             //建立畫面設定的假日節點
             XElement holidayList = new XElement("HolidayList");
+            sb_log.AppendLine("");
+            sb_log.AppendLine("假日清單:");
             foreach (DevComponents.AdvTree.Node nd in this.allDays)
             {
                 if (nd.Cells[1].Checked)
                 {
                     DateTime dt = (DateTime)nd.Tag;
                     holidayList.Add(new XElement("Holiday", dt.ToShortDateString()));
+
+                    sb_log.AppendLine(string.Format("「{0}」", dt.ToShortDateString()));
                 }
             }
+
             //掛上假日節點
             elem.Add(holidayList);
 
@@ -400,6 +420,9 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             _CD[configString] = elem.ToString(SaveOptions.DisableFormatting);
             _CD.Save();
 
+            FISCA.LogAgent.ApplicationLog.Log("上課天數設定", "儲存", sb_log.ToString());
+
+            FISCA.Presentation.Controls.MsgBox.Show("儲存成功!");
             this.Close();
         }
 
