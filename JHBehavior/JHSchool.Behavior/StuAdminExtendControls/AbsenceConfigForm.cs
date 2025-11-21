@@ -66,7 +66,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 row.CreateCells(dataGridView);
                 row.Cells[0].Value = info.Name; //缺曠名稱
                 row.Cells[1].Value = info.Abbreviation; //缺曠名稱
-                row.Cells[2].Value = info.Hotkey; //缺曠名稱
+                row.Cells[2].Value = info.Hotkey.ToUpper(); //缺曠名稱
                 row.Cells[3].Value = info.Noabsence; //缺曠名稱
                 dataGridView.Rows.Add(row);
 
@@ -75,11 +75,11 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 {
                     if (info.Noabsence)
                     {
-                        DicLogBefor.Add(info.Name, "缺曠名稱「" + info.Name + "」縮寫「" + info.Abbreviation + "」熱鍵「" + info.Hotkey + "」不影響全勤「是」");
+                        DicLogBefor.Add(info.Name, "缺曠名稱「" + info.Name + "」縮寫「" + info.Abbreviation + "」熱鍵「" + info.Hotkey.ToUpper() + "」不影響全勤「是」");
                     }
                     else
                     {
-                        DicLogBefor.Add(info.Name, "缺曠名稱「" + info.Name + "」縮寫「" + info.Abbreviation + "」熱鍵「" + info.Hotkey + "」不影響全勤「否」");
+                        DicLogBefor.Add(info.Name, "缺曠名稱「" + info.Name + "」縮寫「" + info.Abbreviation + "」熱鍵「" + info.Hotkey.ToUpper() + "」不影響全勤「否」");
                     }
                 }
             }
@@ -118,7 +118,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 root.AppendChild(absence);
                 absence.SetAttribute("Name", ("" + row.Cells[0].Value).Trim());
                 absence.SetAttribute("Abbreviation", ("" + row.Cells[1].Value).Trim());
-                absence.SetAttribute("HotKey", ("" + row.Cells[2].Value).Trim());
+                absence.SetAttribute("HotKey", ("" + row.Cells[2].Value).Trim().ToUpper());
                 absence.SetAttribute("Noabsence", ("" + row.Cells[3].Value).Trim());
 
                 if (!DicLogAeft.ContainsKey("" + row.Cells[0].Value))
@@ -232,53 +232,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             }
 
             return true;
-
-            #region 註解掉
-            //    bool pass = true;
-            //    //如果是新行
-            //    if (row.IsNewRow)
-            //        return true;
-            //    #region 不允許空白
-            //    foreach (DataGridViewCell cell in row.Cells)
-            //    {
-            //        //如果是CheckBox則略過
-            //        if (cell is System.Windows.Forms.DataGridViewCheckBoxCell)
-            //            continue;                
-            //        if ("" + cell.Value == "") //如果Cell是空的
-            //        {
-            //            cell.ErrorText = "不允許空白";
-            //            pass &= false;
-            //        }
-            //        else if (cell.ErrorText == "不允許空白") //如果Cell已有錯誤訊息 & Cell不是空的 則清空
-            //        {
-            //            cell.ErrorText = "";
-            //        }
-            //    }
-            //    #endregion
-            //    #region 不得重複(名稱　縮寫　熱鍵)
-            //    //foreach (DataGridViewRow r in dataGridView.Rows)
-            //    //{
-            //    //    if (r != row)
-            //    //    {
-            //    //        foreach (int index in new int[] { colName.Index, colHotKey.Index, colAbbreviation.Index })
-            //    //        {
-            //    //            if ("" + r.Cells[index].Value == "" + row.Cells[index].Value)
-            //    //            {
-            //    //                row.Cells[index].ErrorText = "不得重複";
-            //    //                dataGridView.UpdateCellErrorText(index, row.Index);
-            //    //                pass &= false;
-            //    //            }
-            //    //            else if (row.Cells[index].ErrorText == "不得重複")
-            //    //            {
-            //    //                row.Cells[index].ErrorText = "";
-            //    //                dataGridView.UpdateCellErrorText(index, row.Index);
-            //    //            }
-            //    //        }
-            //    //    }
-            //    //}
-            //    #endregion
-            //    return pass; 
-            #endregion
         }
 
         /// <summary>
@@ -338,7 +291,15 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         /// <param name="row">傳入Row的Index</param>
         private void CheckNameRepeat(int ColumnIndex,int RowIndex)
         {
-            string Name = ""+dataGridView.Rows[RowIndex].Cells[ColumnIndex].Value;
+            string Name = "" + dataGridView.Rows[RowIndex].Cells[ColumnIndex].Value;
+
+            //如果是第3欄,則將內容轉為大寫
+            if (ColumnIndex == 2)
+            {
+                Name = Name.Trim().ToUpper();
+                dataGridView.Rows[RowIndex].Cells[ColumnIndex].Value = Name;
+            }
+
             DataGridViewRow row = dataGridView.Rows[RowIndex];
 
             List<string> list = new List<string>();
@@ -464,17 +425,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 return;
             }
 
-            //string CellName1 = wb.Worksheets[0].Cells[0, 0].StringValue;
-            //string CellName2 = wb.Worksheets[0].Cells[0, 1].StringValue;
-            //string CellName3 = wb.Worksheets[0].Cells[0, 2].StringValue;
-            //string CellName4 = wb.Worksheets[0].Cells[0, 3].StringValue;
-
-            //if (CellName1 != "缺曠名稱" || CellName2 != "縮寫" || CellName3 != "熱鍵" || CellName4 != "不影響全勤")
-            //{
-            //    FISCA.Presentation.Controls.MsgBox.Show("匯入格式不符合。\n匯入資料標題必須依照:\n缺曠名稱,縮寫,熱鍵,不影響全勤\n目前為:\n" + CellName1 + "," + CellName2 + "," + CellName3 + "," + CellName4);
-            //    return;
-            //}
-
             #endregion
 
             #region 匯入
@@ -512,7 +462,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 {
                     NameSb.AppendLine("縮寫重覆:" + abbreviation);
                 }
-                string hotKey = ws.Cells[x, headers["熱鍵"]].StringValue;
+                string hotKey = ws.Cells[x, headers["熱鍵"]].StringValue.Trim().ToUpper();
                 if (!NameList3.Contains(hotKey.Trim()))
                 {
                     NameList3.Add(hotKey);
@@ -533,14 +483,11 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             {
                 string name = ws.Cells[x, headers["缺曠名稱"]].StringValue;
                 string abbreviation = ws.Cells[x, headers["縮寫"]].StringValue;
-                string hotKey = ws.Cells[x, headers["熱鍵"]].StringValue;
+                string hotKey = ws.Cells[x, headers["熱鍵"]].StringValue.Trim().ToUpper();
                 string noabsence = ws.Cells[x, headers["不影響全勤"]].StringValue;
 
                 if (string.IsNullOrEmpty(name.Trim())) //沒有缺曠名稱則跳過
                     continue;
-
-                //if (string.IsNullOrEmpty("" + wb.Worksheets[0].Cells[x, 0].Value))
-                //    continue;
 
                 XmlElement absence = doc.CreateElement("Absence");
                 root.AppendChild(absence);
@@ -556,8 +503,8 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     return;
                 }
 
-                if (CheckHotKey(hotKey.Trim()))
-                    absence.SetAttribute("HotKey", hotKey.Trim());
+                if (CheckHotKey(hotKey))
+                    absence.SetAttribute("HotKey", hotKey);
                 else
                 {
                     FISCA.Presentation.Controls.MsgBox.Show("匯入失敗,熱鍵必須是英文或數字!\n此錯誤發生於缺曠名稱:[" + name + "]");
@@ -607,19 +554,6 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             return Pattern.Match(hotKey).Success;
         }
-
-        //private bool CheckInt(string j)
-        //{
-        //    int HotKeyint;
-        //    if (int.TryParse(j, out HotKeyint))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
 
         private string ChangeF(string u)
         {
