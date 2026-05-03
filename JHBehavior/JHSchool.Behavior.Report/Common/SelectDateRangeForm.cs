@@ -72,7 +72,7 @@ namespace JHSchool.Behavior.Report
             if (_endTextBoxOK)
             {
                 if (!ValidateRange(dateTimeInput1.Text, dateTimeInput2.Text))
-                    errorProvider1.SetError(dateTimeInput1, "¤é´Á°Ï¶¡¿ù»~");
+                    errorProvider1.SetError(dateTimeInput1, "æ—¥æœŸå€é–“éŒ¯èª¤");
                 else
                 {
                     errorProvider1.Clear();
@@ -88,7 +88,7 @@ namespace JHSchool.Behavior.Report
             if (_startTextBoxOK)
             {
                 if (!ValidateRange(dateTimeInput1.Text, dateTimeInput2.Text))
-                    errorProvider2.SetError(dateTimeInput2, "¤é´Á°Ï¶¡¿ù»~");
+                    errorProvider2.SetError(dateTimeInput2, "æ—¥æœŸå€é–“éŒ¯èª¤");
                 else
                 {
                     errorProvider1.Clear();

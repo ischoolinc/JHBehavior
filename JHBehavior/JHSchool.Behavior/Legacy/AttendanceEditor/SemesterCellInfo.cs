@@ -14,7 +14,7 @@ namespace JHSchool.Behavior.Legacy
             _semester = semester;
             _isdirty = false;
         }
-        #region ICellInfo<string> ¦¨­û
+        #region ICellInfo<string> æˆå“¡
 
         public string OriginValue
         {

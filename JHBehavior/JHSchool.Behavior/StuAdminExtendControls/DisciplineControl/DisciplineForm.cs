@@ -40,7 +40,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
         private void InitialList()
         {
-            List<string> cols = new List<string>() { "¨Æ¥Ñ¥N½X" };
+            List<string> cols = new List<string>() { "äº‹ç”±ä»£ç¢¼" };
             Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, cols);
 
             _isInititaled = false;
@@ -52,7 +52,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 string code = var.GetAttribute("Code");
                 string desc = var.GetAttribute("Description");
 
-                if (type == "¼úÀy")
+                if (type == "çå‹µ")
                 {
                     if (!_origMerit.ContainsKey(code))
                     {
@@ -60,7 +60,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                         _meritList.Add(code, desc);
                     }
                 }
-                else if (type == "Ãg§Ù" || type == "Ãg»|")
+                else if (type == "æ‡²æˆ’" || type == "æ‡²èª¡")
                 {
                     if (!_origDemerit.ContainsKey(code))
                     {
@@ -70,8 +70,8 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 }
             }
 
-            comboBoxEx1.Items.Add("¼úÀy¨Æ¥Ñ¥N½Xªí");
-            comboBoxEx1.Items.Add("Ãg§Ù¨Æ¥Ñ¥N½Xªí");
+            comboBoxEx1.Items.Add("çå‹µäº‹ç”±ä»£ç¢¼è¡¨");
+            comboBoxEx1.Items.Add("æ‡²æˆ’äº‹ç”±ä»£ç¢¼è¡¨");
 
             comboBoxEx1.SelectedIndex = 0;
             //ValidateList();
@@ -154,7 +154,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 if (row.IsNewRow) continue;
                 if (row.Cells[Code.Name].Value == null)
                 {
-                    row.Cells[Code.Name].ErrorText = "¤£¯à¬°ªÅ¥Õ";
+                    row.Cells[Code.Name].ErrorText = "ä¸èƒ½ç‚ºç©ºç™½";
                     valid = false;
                     break;
                 }
@@ -170,12 +170,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 }
                 else
                 {
-                    row.Cells[Code.Name].ErrorText = "¦WºÙ­«½Æ";
+                    row.Cells[Code.Name].ErrorText = "åç¨±é‡è¤‡";
                     valid = false;
                     break;
                 }
 
-                //ÀË¬d¸ê®Æ¬O§_ÅÜ°Ê
+                //æª¢æŸ¥è³‡æ–™æ˜¯å¦è®Šå‹•
                 if (isSave)
                 {
                     if (origList.ContainsKey(codeValue))
@@ -223,33 +223,33 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
             foreach (string code in _meritList.Keys)
                 if (!_origMerit.ContainsKey(code))
-                    merit.AppendLine("·s¼W¡u" + code + "¡G" + _meritList[code] + "¡v");
+                    merit.AppendLine("æ–°å¢ã€Œ" + code + "ï¼š" + _meritList[code] + "ã€");
             foreach (string code in _origMerit.Keys)
                 if (_meritList.ContainsKey(code) && _origMerit[code] != _meritList[code])
-                    merit.AppendLine("¥N½X¡u" + code + "¡vªº¨Æ¥Ñ¥Ñ¡u" + _origMerit[code] + "¡vÅÜ§ó¬°¡u" + _meritList[code] + "¡v");
+                    merit.AppendLine("ä»£ç¢¼ã€Œ" + code + "ã€çš„äº‹ç”±ç”±ã€Œ" + _origMerit[code] + "ã€è®Šæ›´ç‚ºã€Œ" + _meritList[code] + "ã€");
             foreach (string code in _origMerit.Keys)
                 if (!_meritList.ContainsKey(code))
-                    merit.AppendLine("§R°£¡u" + code + "¡G" + _origMerit[code] + "¡v");
+                    merit.AppendLine("åˆªé™¤ã€Œ" + code + "ï¼š" + _origMerit[code] + "ã€");
 
             foreach (string code in _demeritList.Keys)
                 if (!_origDemerit.ContainsKey(code))
-                    demerit.AppendLine("·s¼W¡u" + code + "¡G" + _demeritList[code] + "¡v");
+                    demerit.AppendLine("æ–°å¢ã€Œ" + code + "ï¼š" + _demeritList[code] + "ã€");
             foreach (string code in _origDemerit.Keys)
                 if (_demeritList.ContainsKey(code) && _origDemerit[code] != _demeritList[code])
-                    demerit.AppendLine("¥N½X¡u" + code + "¡vªº¨Æ¥Ñ¥Ñ¡u" + _origDemerit[code] + "¡vÅÜ§ó¬°¡u" + _demeritList[code] + "¡v");
+                    demerit.AppendLine("ä»£ç¢¼ã€Œ" + code + "ã€çš„äº‹ç”±ç”±ã€Œ" + _origDemerit[code] + "ã€è®Šæ›´ç‚ºã€Œ" + _demeritList[code] + "ã€");
             foreach (string code in _origDemerit.Keys)
                 if (!_demeritList.ContainsKey(code))
-                    demerit.AppendLine("§R°£¡u" + code + "¡G" + _origDemerit[code] + "¡v");
+                    demerit.AppendLine("åˆªé™¤ã€Œ" + code + "ï¼š" + _origDemerit[code] + "ã€");
 
             if (!string.IsNullOrEmpty(merit.ToString()))
             {
-                _log_desc.AppendLine("¼úÀy¨Æ¥Ñªí¡G");
+                _log_desc.AppendLine("çå‹µäº‹ç”±è¡¨ï¼š");
                 _log_desc.Append(merit.ToString());
             }
             if (!string.IsNullOrEmpty(demerit.ToString()))
             {
                 if (!string.IsNullOrEmpty(_log_desc.ToString())) _log_desc.AppendLine("");
-                _log_desc.AppendLine("Ãg§Ù¨Æ¥Ñªí¡G");
+                _log_desc.AppendLine("æ‡²æˆ’äº‹ç”±è¡¨ï¼š");
                 _log_desc.Append(demerit.ToString());
             }
         }
@@ -258,8 +258,8 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             if (!string.IsNullOrEmpty(_log_desc.ToString()))
             {
-                //Log³¡¥÷
-                //CurrentUser.Instance.AppLog.Write("­×§ï¼úÃg¨Æ¥Ñªí", _log_desc.ToString(), "¼úÃg¨Æ¥Ñªí", "");
+                //Logéƒ¨ä»½
+                //CurrentUser.Instance.AppLog.Write("ä¿®æ”¹çæ‡²äº‹ç”±è¡¨", _log_desc.ToString(), "çæ‡²äº‹ç”±è¡¨", "");
             }
         }
         #endregion
@@ -281,14 +281,14 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 {
                     if (_demeritList.ContainsKey(code))
                     {
-                        MsgBox.Show("Àx¦s¥¢±Ñ,¥N½X:(" + code + ")¤w­«ÂĞ,½Ğ­«·s¿é¤J!");
+                        MsgBox.Show("å„²å­˜å¤±æ•—,ä»£ç¢¼:(" + code + ")å·²é‡è¦†,è«‹é‡æ–°è¼¸å…¥!");
                         return;
                     }
 
                     XmlElement reason = doc.CreateElement("Reason");
                     reason.SetAttribute("Code", code);
                     reason.SetAttribute("Description", _meritList[code]);
-                    reason.SetAttribute("Type", "¼úÀy");
+                    reason.SetAttribute("Type", "çå‹µ");
                     content.AppendChild(reason);
                     _origMerit.Add(code, _meritList[code]);
                 }
@@ -297,14 +297,14 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 {
                     if (_meritList.ContainsKey(code))
                     {
-                        MsgBox.Show("Àx¦s¥¢±Ñ,¥N½X:(" + code + ")¤w­«ÂĞ,½Ğ­«·s¿é¤J!");
+                        MsgBox.Show("å„²å­˜å¤±æ•—,ä»£ç¢¼:(" + code + ")å·²é‡è¦†,è«‹é‡æ–°è¼¸å…¥!");
                         return;
                     }
 
                     XmlElement reason = doc.CreateElement("Reason");
                     reason.SetAttribute("Code", code);
                     reason.SetAttribute("Description", _demeritList[code]);
-                    reason.SetAttribute("Type", "Ãg§Ù");
+                    reason.SetAttribute("Type", "æ‡²æˆ’");
                     content.AppendChild(reason);
                     _origDemerit.Add(code, _demeritList[code]);
                 }
@@ -316,26 +316,26 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     _meritIsSave = true;
                     _demeritIsSave = true;
 
-                    FISCA.Presentation.Controls.MsgBox.Show("Àx¦s¦¨¥\¡C");
+                    FISCA.Presentation.Controls.MsgBox.Show("å„²å­˜æˆåŠŸã€‚");
                     this.DialogResult = DialogResult.OK;
                 }
                 catch (Exception ex)
                 {
                     //CurrentUser.ReportError(ex);
-                    FISCA.Presentation.Controls.MsgBox.Show("Àx¦s¥¢±Ñ¡C\n" + ex.Message);
+                    FISCA.Presentation.Controls.MsgBox.Show("å„²å­˜å¤±æ•—ã€‚\n" + ex.Message);
                     return;
                 }
 
-                ApplicationLog.Log("¾Ç°È¨t²Î.¼úÃg¨Æ¥Ñ¥N½Xªí", "­×§ï¼úÃg¨Æ¥Ñ¥N½Xªí", "¡u¼úÃg¨Æ¥Ñ¥N½Xªí¡v¤w³Q­×§ï¡C");
+                ApplicationLog.Log("å­¸å‹™ç³»çµ±.çæ‡²äº‹ç”±ä»£ç¢¼è¡¨", "ä¿®æ”¹çæ‡²äº‹ç”±ä»£ç¢¼è¡¨", "ã€Œçæ‡²äº‹ç”±ä»£ç¢¼è¡¨ã€å·²è¢«ä¿®æ”¹ã€‚");
             }
             else
             {
                 if (!_meritCanSave && !_demeritCanSave)
-                    FISCA.Presentation.Controls.MsgBox.Show("¸ê®Æ¦³»~¡C");
+                    FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™æœ‰èª¤ã€‚");
                 else if (!_meritCanSave)
-                    FISCA.Presentation.Controls.MsgBox.Show("¼úÀy¨Æ¥Ñªí¸ê®Æ¦³»~¡C");
+                    FISCA.Presentation.Controls.MsgBox.Show("çå‹µäº‹ç”±è¡¨è³‡æ–™æœ‰èª¤ã€‚");
                 else if (!_demeritCanSave)
-                    FISCA.Presentation.Controls.MsgBox.Show("Ãg§Ù¨Æ¥Ñªí¸ê®Æ¦³»~¡C");
+                    FISCA.Presentation.Controls.MsgBox.Show("æ‡²æˆ’äº‹ç”±è¡¨è³‡æ–™æœ‰èª¤ã€‚");
             }
         }
 
@@ -346,26 +346,26 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            #region ¶×¥X
+            #region åŒ¯å‡º
             Workbook wb = new Workbook();
             wb.Worksheets.Clear();
             Worksheet ws = wb.Worksheets[wb.Worksheets.Add()];
-            ws.Name = "¼úÃg¨Æ¥Ñ¥N½Xªí";
+            ws.Name = "çæ‡²äº‹ç”±ä»£ç¢¼è¡¨";
 
             ws.Cells.CreateRange(0, 1, true).ColumnWidth = 10;
             ws.Cells.CreateRange(1, 1, true).ColumnWidth = 8;
             ws.Cells.CreateRange(2, 1, true).ColumnWidth = 40;
 
-            ws.Cells[0, 0].PutValue("¼úÃg¨Æ¥Ñ¥N½X");
-            ws.Cells[0, 1].PutValue("Ãş§O");
-            ws.Cells[0, 2].PutValue("¨Æ¥Ñ");
+            ws.Cells[0, 0].PutValue("çæ‡²äº‹ç”±ä»£ç¢¼");
+            ws.Cells[0, 1].PutValue("é¡åˆ¥");
+            ws.Cells[0, 2].PutValue("äº‹ç”±");
 
             int rowIndex = 1;
 
             foreach (string code in _meritList.Keys)
             {
                 ws.Cells[rowIndex, 0].PutValue(code);
-                ws.Cells[rowIndex, 1].PutValue("¼úÀy");
+                ws.Cells[rowIndex, 1].PutValue("çå‹µ");
                 ws.Cells[rowIndex, 2].PutValue(_meritList[code]);
                 rowIndex++;
             }
@@ -373,42 +373,42 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             foreach (string code in _demeritList.Keys)
             {
                 ws.Cells[rowIndex, 0].PutValue(code);
-                ws.Cells[rowIndex, 1].PutValue("Ãg§Ù");
+                ws.Cells[rowIndex, 1].PutValue("æ‡²æˆ’");
                 ws.Cells[rowIndex, 2].PutValue(_demeritList[code]);
                 rowIndex++;
             }
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "¥t¦s·sÀÉ";
-            sfd.FileName = "¼úÃg¨Æ¥Ñ¥N½Xªí.xlsx";
-            sfd.Filter = "ExcelÀÉ®× (*.xlsx)|*.xlsx|©Ò¦³ÀÉ®× (*.*)|*.*";
+            sfd.Title = "å¦å­˜æ–°æª”";
+            sfd.FileName = "çæ‡²äº‹ç”±ä»£ç¢¼è¡¨.xlsx";
+            sfd.Filter = "Excelæª”æ¡ˆ (*.xlsx)|*.xlsx|æ‰€æœ‰æª”æ¡ˆ (*.*)|*.*";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     wb.Save(sfd.FileName);
-                    FISCA.Presentation.Controls.MsgBox.Show("¶×¥X§¹¦¨¡C");
+                    FISCA.Presentation.Controls.MsgBox.Show("åŒ¯å‡ºå®Œæˆã€‚");
                 }
                 catch
                 {
-                    FISCA.Presentation.Controls.MsgBox.Show("«ü©w¸ô®|µLªk¦s¨ú¡C", "¥t¦sÀÉ®×¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FISCA.Presentation.Controls.MsgBox.Show("æŒ‡å®šè·¯å¾‘ç„¡æ³•å­˜å–ã€‚", "å¦å­˜æª”æ¡ˆå¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                ApplicationLog.Log("¾Ç°È¨t²Î.¼úÃg¨Æ¥Ñ¥N½Xªí", "¶×¥X¼úÃg¨Æ¥Ñ¥N½X", "¡u¾É®vµû»y¥N½Xªí¡v¤w³Q¶×¥X¡C");
+                ApplicationLog.Log("å­¸å‹™ç³»çµ±.çæ‡²äº‹ç”±ä»£ç¢¼è¡¨", "åŒ¯å‡ºçæ‡²äº‹ç”±ä»£ç¢¼", "ã€Œå°å¸«è©•èªä»£ç¢¼è¡¨ã€å·²è¢«åŒ¯å‡ºã€‚");
             }
             #endregion
         }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            #region ¶×¤J
+            #region åŒ¯å…¥
             Workbook wb = new Workbook();
             Dictionary<string, string> importMeritList = new Dictionary<string, string>();
             Dictionary<string, string> importDemeritList = new Dictionary<string, string>();
 
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "¿ï¾Ü­n¶×¤Jªº¼úÃg¨Æ¥Ñ¥N½Xªí";
-            ofd.Filter = "ExcelÀÉ®× (*.xlsx)|*.xlsx";
+            ofd.Title = "é¸æ“‡è¦åŒ¯å…¥çš„çæ‡²äº‹ç”±ä»£ç¢¼è¡¨";
+            ofd.Filter = "Excelæª”æ¡ˆ (*.xlsx)|*.xlsx";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -417,14 +417,14 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 }
                 catch
                 {
-                    FISCA.Presentation.Controls.MsgBox.Show("«ü©w¸ô®|µLªk¦s¨ú¡C", "¶}±ÒÀÉ®×¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FISCA.Presentation.Controls.MsgBox.Show("æŒ‡å®šè·¯å¾‘ç„¡æ³•å­˜å–ã€‚", "é–‹å•Ÿæª”æ¡ˆå¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             else
                 return;
 
-            List<string> requiredHeaders = new List<string>(new string[] { "¼úÃg¨Æ¥Ñ¥N½X", "Ãş§O", "¨Æ¥Ñ" });
+            List<string> requiredHeaders = new List<string>(new string[] { "çæ‡²äº‹ç”±ä»£ç¢¼", "é¡åˆ¥", "äº‹ç”±" });
             Dictionary<string, int> headerIndexes = new Dictionary<string, int>();
             Worksheet ws = wb.Worksheets[0];
             for (int i = 0; i <= ws.Cells.MaxDataColumn; i++)
@@ -433,14 +433,14 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                 if (requiredHeaders.Contains(header))
                     headerIndexes.Add(header, i);
             }
-            //if (wb.Worksheets[0].Cells[0, 0].StringValue != "¨Æ¥Ñ¥N½X" ||
-            //    wb.Worksheets[0].Cells[0, 1].StringValue != "Ãş§O" ||
-            //    wb.Worksheets[0].Cells[0, 2].StringValue != "¨Æ¥Ñ")
+            //if (wb.Worksheets[0].Cells[0, 0].StringValue != "äº‹ç”±ä»£ç¢¼" ||
+            //    wb.Worksheets[0].Cells[0, 1].StringValue != "é¡åˆ¥" ||
+            //    wb.Worksheets[0].Cells[0, 2].StringValue != "äº‹ç”±")
             if (headerIndexes.Count != requiredHeaders.Count)
             {
                 StringBuilder builder = new StringBuilder("");
-                builder.AppendLine("¶×¤J®æ¦¡¤£²Å¦X¡C");
-                builder.AppendLine("¶×¤J¸ê®Æ¼ĞÃD¥²¶·¥]§t¡G");
+                builder.AppendLine("åŒ¯å…¥æ ¼å¼ä¸ç¬¦åˆã€‚");
+                builder.AppendLine("åŒ¯å…¥è³‡æ–™æ¨™é¡Œå¿…é ˆåŒ…å«ï¼š");
                 builder.AppendLine(string.Join(",", requiredHeaders.ToArray()));
                 FISCA.Presentation.Controls.MsgBox.Show(builder.ToString());
                 return;
@@ -453,28 +453,28 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
                 while (!string.IsNullOrEmpty(ws.Cells[rowIndex, 0].StringValue))
                 {
-                    string code = ws.Cells[rowIndex, headerIndexes["¼úÃg¨Æ¥Ñ¥N½X"]].StringValue;
-                    string type = ws.Cells[rowIndex, headerIndexes["Ãş§O"]].StringValue;
-                    string reason = ws.Cells[rowIndex, headerIndexes["¨Æ¥Ñ"]].StringValue;
+                    string code = ws.Cells[rowIndex, headerIndexes["çæ‡²äº‹ç”±ä»£ç¢¼"]].StringValue;
+                    string type = ws.Cells[rowIndex, headerIndexes["é¡åˆ¥"]].StringValue;
+                    string reason = ws.Cells[rowIndex, headerIndexes["äº‹ç”±"]].StringValue;
 
                     rowIndex++;
 
                     if (!importMeritList.ContainsKey(code) && !importDemeritList.ContainsKey(code))
                     {
-                        if (type == "¼úÀy")
+                        if (type == "çå‹µ")
                             importMeritList.Add(code, reason);
-                        else if (type == "Ãg§Ù" || type == "Ãg»|")
+                        else if (type == "æ‡²æˆ’" || type == "æ‡²èª¡")
                             importDemeritList.Add(code, reason);
                     }
                     else
                     {
-                        if (type == "¼úÀy")
+                        if (type == "çå‹µ")
                         {
                             importMeritList[code] = reason;
                             if (importDemeritList.ContainsKey(code))
                                 importDemeritList.Remove(code);
                         }
-                        else if (type == "Ãg§Ù" || type == "Ãg»|")
+                        else if (type == "æ‡²æˆ’" || type == "æ‡²èª¡")
                         {
                             importDemeritList[code] = reason;
                             if (importMeritList.ContainsKey(code))
@@ -485,7 +485,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
 
                 if (form.Overwrite)
                 {
-                    #region ·s¼W
+                    #region æ–°å¢
                     _meritList = importMeritList;
                     _demeritList = importDemeritList;
                     if (comboBoxEx1.SelectedIndex == 0)
@@ -493,12 +493,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     else
                         FillGrid(_demeritList);
 
-                    ApplicationLog.Log("¾Ç°È¨t²Î.¼úÃg¨Æ¥Ñ¥N½Xªí", "¶×¤J¼úÃg¨Æ¥Ñ¥N½X", "¡u¼úÃg¨Æ¥Ñ¥N½Xªí¡v¤w³Q¶×¤J¨Ã·s¼W¡C");
+                    ApplicationLog.Log("å­¸å‹™ç³»çµ±.çæ‡²äº‹ç”±ä»£ç¢¼è¡¨", "åŒ¯å…¥çæ‡²äº‹ç”±ä»£ç¢¼", "ã€Œçæ‡²äº‹ç”±ä»£ç¢¼è¡¨ã€å·²è¢«åŒ¯å…¥ä¸¦æ–°å¢ã€‚");
                     #endregion
                 }
                 else
                 {
-                    #region ÂĞ»\
+                    #region è¦†è“‹
                     foreach (string code in importMeritList.Keys)
                     {
                         if (!_meritList.ContainsKey(code) && !_demeritList.ContainsKey(code))
@@ -539,11 +539,11 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     else
                         FillGrid(_demeritList);
 
-                    ApplicationLog.Log("¾Ç°È¨t²Î.¼úÃg¨Æ¥Ñ¥N½Xªí", "¶×¤J¼úÃg¨Æ¥Ñ¥N½X", "¡u¼úÃg¨Æ¥Ñ¥N½Xªí¡v¤w³Q¶×¤J¨ÃÂĞ»\¡C");
+                    ApplicationLog.Log("å­¸å‹™ç³»çµ±.çæ‡²äº‹ç”±ä»£ç¢¼è¡¨", "åŒ¯å…¥çæ‡²äº‹ç”±ä»£ç¢¼", "ã€Œçæ‡²äº‹ç”±ä»£ç¢¼è¡¨ã€å·²è¢«åŒ¯å…¥ä¸¦è¦†è“‹ã€‚");
                     #endregion
                 }
 
-                FISCA.Presentation.Controls.MsgBox.Show("¤w¶×¤J§¹¦¨!\n½ĞÂI¿ïÀx¦s«áÂ÷¶}¡C");
+                FISCA.Presentation.Controls.MsgBox.Show("å·²åŒ¯å…¥å®Œæˆ!\nè«‹é»é¸å„²å­˜å¾Œé›¢é–‹ã€‚");
             }
             #endregion
         }
@@ -562,24 +562,24 @@ namespace JHSchool.Behavior.StuAdminExtendControls
         {
             if (!_demeritIsSave && !_meritIsSave)
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("¸ê®Æ©|¥¼Àx¦s¡A±z½T©w­nÂ÷¶}¡H", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™å°šæœªå„²å­˜ï¼Œæ‚¨ç¢ºå®šè¦é›¢é–‹ï¼Ÿ", "", MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true;
             }
             else if (!_meritIsSave)
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("¼úÀy¨Æ¥Ñªí¸ê®Æ©|¥¼Àx¦s¡A±z½T©w­nÂ÷¶}¡H", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (FISCA.Presentation.Controls.MsgBox.Show("çå‹µäº‹ç”±è¡¨è³‡æ–™å°šæœªå„²å­˜ï¼Œæ‚¨ç¢ºå®šè¦é›¢é–‹ï¼Ÿ", "", MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true;
             }
             else if (!_demeritIsSave)
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("Ãg§Ù¨Æ¥Ñªí¸ê®Æ©|¥¼Àx¦s¡A±z½T©w­nÂ÷¶}¡H", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (FISCA.Presentation.Controls.MsgBox.Show("æ‡²æˆ’äº‹ç”±è¡¨è³‡æ–™å°šæœªå„²å­˜ï¼Œæ‚¨ç¢ºå®šè¦é›¢é–‹ï¼Ÿ", "", MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true;
             }
         }
 
-        private void ¼W¥[¨Æ¥Ñ«e¸mµüToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void å¢åŠ äº‹ç”±å‰ç½®è©ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ResonText rt = new ResonText("§å¦¸½Õ¾ã¨Æ¥Ñ «e¸mµü");
+            ResonText rt = new ResonText("æ‰¹æ¬¡èª¿æ•´äº‹ç”± å‰ç½®è©");
             DialogResult dr = rt.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.Yes)
             {
@@ -597,9 +597,9 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             }
         }
 
-        private void ¼W¥[¨Æ¥Ñ«á¸mµüToolStripMenuItem_Click(object sender, EventArgs e)
+        private void å¢åŠ äº‹ç”±å¾Œç½®è©ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ResonText rt = new ResonText("§å¦¸½Õ¾ã¨Æ¥Ñ «á¸mµü");
+            ResonText rt = new ResonText("æ‰¹æ¬¡èª¿æ•´äº‹ç”± å¾Œç½®è©");
             DialogResult dr = rt.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.Yes)
             {
@@ -617,9 +617,9 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             }
         }
 
-        private void ²M°£¨Æ¥Ñ¤º¬Û¦P¤å¦rToolStripMenuItem_Click(object sender, EventArgs e)
+        private void æ¸…é™¤äº‹ç”±å…§ç›¸åŒæ–‡å­—ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ResonText rt = new ResonText("²M°£¨Æ¥Ñ¤º²Å¦X±ø¥ó¤§¤å¦r(½Ğ¿é¤J±ø¥ó)");
+            ResonText rt = new ResonText("æ¸…é™¤äº‹ç”±å…§ç¬¦åˆæ¢ä»¶ä¹‹æ–‡å­—(è«‹è¼¸å…¥æ¢ä»¶)");
             DialogResult dr = rt.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.Yes)
             {
@@ -638,7 +638,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
             }
         }
 
-        private void ­×§ï¬°·F³¡ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ä¿®æ”¹ç‚ºå¹¹éƒ¨ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
             {
@@ -648,12 +648,12 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     if (row.IsNewRow)
                         continue;
 
-                    row.Cells[1].Value = "[·F³¡]" + row.Cells[1].Value;
+                    row.Cells[1].Value = "[å¹¹éƒ¨]" + row.Cells[1].Value;
                 }
             }
         }
 
-        private void ­×§ï¬°ÄvÁÉToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ä¿®æ”¹ç‚ºç«¶è³½ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewCell cell in dataGridViewX1.SelectedCells)
             {
@@ -663,7 +663,7 @@ namespace JHSchool.Behavior.StuAdminExtendControls
                     if (row.IsNewRow)
                         continue;
 
-                    row.Cells[1].Value = "[ÄvÁÉ]" + row.Cells[1].Value;
+                    row.Cells[1].Value = "[ç«¶è³½]" + row.Cells[1].Value;
                 }
             }
         }

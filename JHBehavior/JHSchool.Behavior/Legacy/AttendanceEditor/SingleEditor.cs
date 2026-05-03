@@ -26,7 +26,7 @@ namespace JHSchool.Behavior.Legacy
     public partial class SingleEditor : FISCA.Presentation.Controls.BaseForm
     {
         private AbsenceInfo _checkedAbsence;
-        private Dictionary<string, AbsenceInfo> _absenceList;//°²§O²M³æ
+        private Dictionary<string, AbsenceInfo> _absenceList;//å‡åˆ¥æ¸…å–®
         private StudentRecord _student;
         private ISemester _semesterProvider;
         private int _startIndex;
@@ -43,14 +43,14 @@ namespace JHSchool.Behavior.Legacy
 
         //System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
 
-        //log »İ­n¥Î¨ìªº
+        //log éœ€è¦ç”¨åˆ°çš„
         private Dictionary<string, Dictionary<string, string>> beforeData = new Dictionary<string, Dictionary<string, string>>();
         private Dictionary<string, Dictionary<string, string>> afterData = new Dictionary<string, Dictionary<string, string>>();
         private List<string> deleteData = new List<string>();
 
         public SingleEditor(StudentRecord student)
         {
-            InitializeComponent(); //³]­p¤u¨ã²£¥Íªº
+            InitializeComponent(); //è¨­è¨ˆå·¥å…·ç”¢ç”Ÿçš„
 
             _errorProvider = new ErrorProvider();
             _student = student;
@@ -60,10 +60,10 @@ namespace JHSchool.Behavior.Legacy
 
         }
 
-        // ¾Ç¥Í¤ò¤òÂÎ¯ÊÃmµn¿ı
+        // å­¸ç”Ÿæ¯›æ¯›èŸ²ç¼ºæ› ç™»éŒ„
         public SingleEditor(StudentRecord student,DateTime occurDate)
         {
-            InitializeComponent(); //³]­p¤u¨ã²£¥Íªº
+            InitializeComponent(); //è¨­è¨ˆå·¥å…·ç”¢ç”Ÿçš„
 
             _errorProvider = new ErrorProvider();
             _student = student;
@@ -77,16 +77,16 @@ namespace JHSchool.Behavior.Legacy
         private void SingleEditor_Load(object sender, EventArgs e)
         {
             #region Load
-            this.Text = "³æ¤H¦h¤Ñ¯ÊÃmºŞ²z";
+            this.Text = "å–®äººå¤šå¤©ç¼ºæ› ç®¡ç†";
             StringBuilder sb = new StringBuilder();
             string ClassName = _student.Class != null ? _student.Class.Name : "";
-            sb.Append("¯Z¯Å¡G<b>" + ClassName + "</b>¡@");
-            sb.Append("®y¸¹¡G<b>" + _student.SeatNo + "</b>¡@");
-            sb.Append("©m¦W¡G<b>" + _student.Name + "</b>¡@");
-            sb.Append("¾Ç¸¹¡G<b>" + _student.StudentNumber + "</b>");
+            sb.Append("ç­ç´šï¼š<b>" + ClassName + "</b>ã€€");
+            sb.Append("åº§è™Ÿï¼š<b>" + _student.SeatNo + "</b>ã€€");
+            sb.Append("å§“åï¼š<b>" + _student.Name + "</b>ã€€");
+            sb.Append("å­¸è™Ÿï¼š<b>" + _student.StudentNumber + "</b>");
             lblInfo.Text = sb.ToString();
             InitializeRadioButton();
-            InitializeDateRange(); //¨ú±o¤é´Á©w¸q
+            InitializeDateRange(); //å–å¾—æ—¥æœŸå®šç¾©
             InitializeDataGridViewColumn();
             //SearchDateRange();
             //GetAbsense();
@@ -104,7 +104,7 @@ namespace JHSchool.Behavior.Legacy
             }
             else
             {
-                #region ¤é´Á©w¸q
+                #region æ—¥æœŸå®šç¾©
                 K12.Data.Configuration.ConfigData DateConfig = K12.Data.School.Configuration["Attendance_BatchEditor"];
 
                 string date = DateConfig["SingleEditor"];
@@ -121,18 +121,18 @@ namespace JHSchool.Behavior.Legacy
 
                     date = helper.BaseElement.OuterXml;
                     DateConfig["SingleEditor"] = date;
-                    DateConfig.Save(); //Àx¦s¦¹¹w³]ÀÉ
+                    DateConfig.Save(); //å„²å­˜æ­¤é è¨­æª”
                 }
 
                 XmlElement loadXml = DSXmlHelper.LoadXml(date);
                 checkBoxX1.Checked = bool.Parse(loadXml.SelectSingleNode("Locked").InnerText);
 
-                if (checkBoxX1.Checked) //¦pªG¬OÂê©w,´N¨úÂê©w¤é´Á
+                if (checkBoxX1.Checked) //å¦‚æœæ˜¯é–å®š,å°±å–é–å®šæ—¥æœŸ
                 {
                     dateTimeInput1.Text = loadXml.SelectSingleNode("StartDate").InnerText;
                     dateTimeInput2.Text = loadXml.SelectSingleNode("EndDate").InnerText;
                 }
-                else //¦pªG¨S¦³Âê©w,´N¨ú·í¤Ñ
+                else //å¦‚æœæ²’æœ‰é–å®š,å°±å–ç•¶å¤©
                 {
                     dateTimeInput1.Text = DateTime.Today.AddDays(-6).ToShortDateString();
                     dateTimeInput2.Text = DateTime.Today.ToShortDateString();
@@ -145,7 +145,7 @@ namespace JHSchool.Behavior.Legacy
 
         private void SaveDateSetting()
         {
-            #region Àx¦s¤é´Á¸ê®Æ
+            #region å„²å­˜æ—¥æœŸè³‡æ–™
             K12.Data.Configuration.ConfigData DateConfig = K12.Data.School.Configuration["Attendance_BatchEditor"];
 
             DSXmlHelper helper = new DSXmlHelper("xml");
@@ -157,20 +157,20 @@ namespace JHSchool.Behavior.Legacy
             helper.AddText("Locked", checkBoxX1.Checked.ToString());
 
             DateConfig["SingleEditor"] = helper.BaseElement.OuterXml;
-            DateConfig.Save(); //Àx¦s¦¹¹w³]ÀÉ
+            DateConfig.Save(); //å„²å­˜æ­¤é è¨­æª”
 
             #endregion
         }
 
         private void InitializeRadioButton()
         {
-            #region ¯ÊÃmÃş§O«Ø¥ß
+            #region ç¼ºæ› é¡åˆ¥å»ºç«‹
             DSResponse dsrsp = Config.GetAbsenceList();
             DSXmlHelper helper = dsrsp.GetContent();
             foreach (XmlElement element in helper.GetElements("Absence"))
             {
                 AbsenceInfo info = new AbsenceInfo(element);
-                //¼öÁä¤£­«ÂĞ
+                //ç†±éµä¸é‡è¦†
                 if (!_absenceList.ContainsKey(info.Hotkey.ToUpper()))
                 {
                     _absenceList.Add(info.Hotkey.ToUpper(), info);
@@ -178,7 +178,7 @@ namespace JHSchool.Behavior.Legacy
                 else
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("¯ÊÃm§O¡G{0}\n¼öÁä¡G{1} ¤w­«ÂĞ\n(­^¤å¦r¥À¤j¤p¼gµø¬°¬Û¦P¼öÁä)");
+                    sb.Append("ç¼ºæ› åˆ¥ï¼š{0}\nç†±éµï¼š{1} å·²é‡è¦†\n(è‹±æ–‡å­—æ¯å¤§å°å¯«è¦–ç‚ºç›¸åŒç†±éµ)");
                     MsgBox.Show(string.Format(sb.ToString(), info.Name, info.Hotkey));
                 }
 
@@ -201,7 +201,7 @@ namespace JHSchool.Behavior.Legacy
 
         void rb_CheckedChanged(object sender, EventArgs e)
         {
-            #region ¯ÊÃmÃş§O«Ø¥ß(¨Æ¥ó)
+            #region ç¼ºæ› é¡åˆ¥å»ºç«‹(äº‹ä»¶)
             RadioButton rb = sender as RadioButton;
             if (rb.Checked) 
             {
@@ -223,54 +223,54 @@ namespace JHSchool.Behavior.Legacy
             }
             #endregion
         }
-        //ªì©l¤ÆDataGri
+        //åˆå§‹åŒ–DataGri
         private void InitializeDataGridViewColumn()
         {
-            #region DataGridViewªºColumn«Ø¥ß
+            #region DataGridViewçš„Columnå»ºç«‹
 
-            ColumnIndex.Clear(); //²M°£
+            ColumnIndex.Clear(); //æ¸…é™¤
 
             DSResponse dsrsp = Config.GetPeriodList();
             DSXmlHelper helper = dsrsp.GetContent();
-            //©ñ¸ê§¨§O©M²Ä´X¸`¸ê®Æ
+            //æ”¾è³‡å¤¾åˆ¥å’Œç¬¬å¹¾ç¯€è³‡æ–™
             PeriodCollection collection = new PeriodCollection();
             foreach (XmlElement element in helper.GetElements("Period"))
             {
-                //¨ú±o°²§O¤Î¸`¼Æ
+                //å–å¾—å‡åˆ¥åŠç¯€æ•¸
                 PeriodInfo info = new PeriodInfo(element);
                 collection.Items.Add(info);
             }
-            //°ÊºA²£¥ÍDataGridView 
-            int ColumnsIndex = dataGridView.Columns.Add("colDate", "¤é´Á");
-            ColumnIndex.Add("¤é´Á", ColumnsIndex);
+            //å‹•æ…‹ç”¢ç”ŸDataGridView 
+            int ColumnsIndex = dataGridView.Columns.Add("colDate", "æ—¥æœŸ");
+            ColumnIndex.Add("æ—¥æœŸ", ColumnsIndex);
             //dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[ColumnsIndex].ReadOnly = true;
             dataGridView.Columns[ColumnsIndex].Width = 120;
 
-            ColumnsIndex = dataGridView.Columns.Add("colWeek", "¬P´Á");
-            ColumnIndex.Add("¬P´Á", ColumnsIndex);
+            ColumnsIndex = dataGridView.Columns.Add("colWeek", "æ˜ŸæœŸ");
+            ColumnIndex.Add("æ˜ŸæœŸ", ColumnsIndex);
             dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[ColumnsIndex].ReadOnly = true;
 
-            ColumnsIndex = dataGridView.Columns.Add("colSchoolYear", "¾Ç¦~«×");
-            ColumnIndex.Add("¾Ç¦~«×", ColumnsIndex);
+            ColumnsIndex = dataGridView.Columns.Add("colSchoolYear", "å­¸å¹´åº¦");
+            ColumnIndex.Add("å­¸å¹´åº¦", ColumnsIndex);
             dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[ColumnsIndex].ReadOnly = false;
 
-            ColumnsIndex = dataGridView.Columns.Add("colSemester", "¾Ç´Á");
-            ColumnIndex.Add("¾Ç´Á", ColumnsIndex);
+            ColumnsIndex = dataGridView.Columns.Add("colSemester", "å­¸æœŸ");
+            ColumnIndex.Add("å­¸æœŸ", ColumnsIndex);
             dataGridView.Columns[ColumnsIndex].SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView.Columns[ColumnsIndex].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[ColumnsIndex].ReadOnly = false;
             dataGridView.Columns[ColumnsIndex].Frozen = true;
 
-            _startIndex = ColumnIndex["¾Ç´Á"] + 1;
+            _startIndex = ColumnIndex["å­¸æœŸ"] + 1;
 
-            List<string> cols = new List<string>() { "¾Ç¦~«×", "¾Ç´Á" };
+            List<string> cols = new List<string>() { "å­¸å¹´åº¦", "å­¸æœŸ" };
 
-            //§â¸ê®Æ¯ÊÃmDetail©ñ¤JDataGridView
+            //æŠŠè³‡æ–™ç¼ºæ› Detailæ”¾å…¥DataGridView
             foreach (PeriodInfo info in collection.GetSortedList())
             {
                 cols.Add(info.Name);
@@ -290,7 +290,7 @@ namespace JHSchool.Behavior.Legacy
 
         private void SearchDateRange()
         {
-            #region ¤é´Á¿ï¾Ü
+            #region æ—¥æœŸé¸æ“‡
             DateTime start = dateTimeInput1.Value;
             DateTime end = dateTimeInput2.Value;
 
@@ -300,7 +300,7 @@ namespace JHSchool.Behavior.Legacy
             TimeSpan ts = dateTimeInput2.Value - dateTimeInput1.Value;
             if (ts.Days > 1500)
             {
-                FISCA.Presentation.Controls.MsgBox.Show("±z¿ï¨ú¤F" + ts.Days.ToString() + "¤Ñ\n¥Ñ©ó¿ï¨ú¤é´Á°Ï¶¡¹Lªø,½Ğ­«·s³]©w¤é´Á¡I");
+                FISCA.Presentation.Controls.MsgBox.Show("æ‚¨é¸å–äº†" + ts.Days.ToString() + "å¤©\nç”±æ–¼é¸å–æ—¥æœŸå€é–“éé•·,è«‹é‡æ–°è¨­å®šæ—¥æœŸï¼");
                 _currentStartDate = dateTimeInput1.Value = DateTime.Today;
                 _currentEndDate = dateTimeInput2.Value = DateTime.Today;
                 return;
@@ -317,11 +317,11 @@ namespace JHSchool.Behavior.Legacy
                 tag.IsNew = true;
                 row.Tag = tag;
 
-                row.Cells[ColumnIndex["¤é´Á"]].Value = dateValue;
-                row.Cells[ColumnIndex["¬P´Á"]].Value = GetDayOfWeekInChinese(date.DayOfWeek);
+                row.Cells[ColumnIndex["æ—¥æœŸ"]].Value = dateValue;
+                row.Cells[ColumnIndex["æ˜ŸæœŸ"]].Value = GetDayOfWeekInChinese(date.DayOfWeek);
                 _semesterProvider.SetDate(date);
-                row.Cells[ColumnIndex["¾Ç¦~«×"]].Value = _semesterProvider.SchoolYear;
-                row.Cells[ColumnIndex["¾Ç´Á"]].Value = _semesterProvider.Semester;
+                row.Cells[ColumnIndex["å­¸å¹´åº¦"]].Value = _semesterProvider.SchoolYear;
+                row.Cells[ColumnIndex["å­¸æœŸ"]].Value = _semesterProvider.Semester;
                 date = date.AddDays(1);
 
                 dataGridView.Rows.Add(row);
@@ -331,8 +331,8 @@ namespace JHSchool.Behavior.Legacy
 
         private void GetAbsense()
         {
-            #region ¨ú±o¯ÊÃm°O¿ı
-            //µo°exml request
+            #region å–å¾—ç¼ºæ› è¨˜éŒ„
+            //ç™¼é€xml request
             DSXmlHelper helper = new DSXmlHelper("Request");
             helper.AddElement("Field");
             helper.AddElement("Field", "All");
@@ -343,24 +343,24 @@ namespace JHSchool.Behavior.Legacy
             DSResponse dsrsp = JHSchool.Feature.Legacy.QueryAttendance.GetAttendance(new DSRequest(helper));
             helper = dsrsp.GetContent();
 
-            //log ²M°£ beforeData
+            //log æ¸…é™¤ beforeData
             beforeData.Clear();
 
             foreach (XmlElement element in helper.GetElements("Attendance"))
             {
-                // ³o¸Ì­n°µ¤@¨Ç¨Æ±¡  ¨Ò¦p§ä¨ìªF¦è¶ë¶i¥h
+                // é€™è£¡è¦åšä¸€äº›äº‹æƒ…  ä¾‹å¦‚æ‰¾åˆ°æ±è¥¿å¡é€²å»
                 string occurDate = element.SelectSingleNode("OccurDate").InnerText;
                 string schoolYear = element.SelectSingleNode("SchoolYear").InnerText;
                 string semester = element.SelectSingleNode("Semester").InnerText;
                 string id = element.GetAttribute("ID");
                 XmlNode dNode = element.SelectSingleNode("Detail").FirstChild;
 
-                //log ¬ö¿ı­×§ï«eªº¸ê®Æ ¤é´Á³¡¤À
+                //log ç´€éŒ„ä¿®æ”¹å‰çš„è³‡æ–™ æ—¥æœŸéƒ¨åˆ†
                 DateTime logDate;
-                //log dic key­È¬°¯ÊÃm¤é´Á
+                //log dic keyå€¼ç‚ºç¼ºæ› æ—¥æœŸ
                 if (DateTime.TryParse(occurDate, out logDate))
                 {
-                    //¦pªGÁÙ¨S¦³¥]§t¦¹¤é´Áªºkey´N¥[¤J
+                    //å¦‚æœé‚„æ²’æœ‰åŒ…å«æ­¤æ—¥æœŸçš„keyå°±åŠ å…¥
                     if (!beforeData.ContainsKey(logDate.ToShortDateString()))
                         beforeData.Add(logDate.ToShortDateString(), new Dictionary<string, string>());
                 }
@@ -369,7 +369,7 @@ namespace JHSchool.Behavior.Legacy
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
                     DateTime date;
-                    //§ì DataGridView    
+                    //æŠ“ DataGridView    
                     RowTag rt = r.Tag as RowTag;
 
                     if (!DateTime.TryParse(occurDate, out date)) continue;
@@ -382,12 +382,12 @@ namespace JHSchool.Behavior.Legacy
                 rowTag.IsNew = false;
                 rowTag.Key = id;
 
-                row.Cells[ColumnIndex["¾Ç¦~«×"]].Value = schoolYear;
-                row.Cells[ColumnIndex["¾Ç¦~«×"]].Tag = new SemesterCellInfo(schoolYear);
+                row.Cells[ColumnIndex["å­¸å¹´åº¦"]].Value = schoolYear;
+                row.Cells[ColumnIndex["å­¸å¹´åº¦"]].Tag = new SemesterCellInfo(schoolYear);
 
-                row.Cells[ColumnIndex["¾Ç´Á"]].Value = semester;
-                row.Cells[ColumnIndex["¾Ç´Á"]].Tag = new SemesterCellInfo(semester);
-                //¨ú¦^dataGridView
+                row.Cells[ColumnIndex["å­¸æœŸ"]].Value = semester;
+                row.Cells[ColumnIndex["å­¸æœŸ"]].Tag = new SemesterCellInfo(semester);
+                //å–å›dataGridView
                 for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                 {
                     DataGridViewColumn column = dataGridView.Columns[i];
@@ -406,7 +406,7 @@ namespace JHSchool.Behavior.Legacy
                             cell.Tag = new AbsenceCellInfo(ainfo);
                             cell.Value = ai.Abbreviation;
 
-                            //log ¬ö¿ı­×§ï«eªº¸ê®Æ ¯ÊÃm©ú²Ó³¡¤À
+                            //log ç´€éŒ„ä¿®æ”¹å‰çš„è³‡æ–™ ç¼ºæ› æ˜ç´°éƒ¨åˆ†
                             if (!beforeData[logDate.ToShortDateString()].ContainsKey(info.Name))
                                 beforeData[logDate.ToShortDateString()].Add(info.Name, ai.Name);
 
@@ -418,14 +418,29 @@ namespace JHSchool.Behavior.Legacy
             #endregion
         }
 
-        //Àx¦s
+        //å„²å­˜
         private void btnSave_Click(object sender, EventArgs e)
         {
             #region Save
             if (!IsValid())
             {
-                FISCA.Presentation.Controls.MsgBox.Show("¸ê®ÆÅçÃÒ¥¢±Ñ¡A½Ğ­×¥¿«á¦A¦æÀx¦s", "ÅçÃÒ¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™é©—è­‰å¤±æ•—ï¼Œè«‹ä¿®æ­£å¾Œå†è¡Œå„²å­˜", "é©—è­‰å¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
+            }
+            // --- å„²å­˜å‰è¡çªåµæ¸¬ ---
+            {
+                var userEdits = CollectUserEditsFromGrid_Single();
+                var currentDbState = FetchCurrentDbState_Single();
+                List<ConflictInfo> conflicts = DetectConflicts_Single(userEdits, currentDbState);
+                if (conflicts.Count > 0)
+                {
+                    ConflictDialog dlg = new ConflictDialog(conflicts);
+                    if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.Yes)
+                    {
+                        LoadAbsense();
+                        return;
+                    }
+                }
             }
             DSXmlHelper InsertHelper = new DSXmlHelper("InsertRequest");
             DSXmlHelper updateHelper = new DSXmlHelper("UpdateRequest");
@@ -439,7 +454,7 @@ namespace JHSchool.Behavior.Legacy
                 RowTag tag = row.Tag as RowTag;
                 semester.SetDate(tag.Date);
 
-                //log ¬ö¿ı­×§ï«áªº¸ê®Æ ¤é´Á³¡¤À
+                //log ç´€éŒ„ä¿®æ”¹å¾Œçš„è³‡æ–™ æ—¥æœŸéƒ¨åˆ†
                 if (!afterData.ContainsKey(tag.Date.ToShortDateString()))
                     afterData.Add(tag.Date.ToShortDateString(), new Dictionary<string, string>());
 
@@ -462,7 +477,7 @@ namespace JHSchool.Behavior.Legacy
                         element.SetAttribute("AttendanceType", pinfo.Type);
                         hasContent = true;
 
-                        //log ¬ö¿ı­×§ï«áªº¸ê®Æ ¯ÊÃm©ú²Ó³¡¤À
+                        //log ç´€éŒ„ä¿®æ”¹å¾Œçš„è³‡æ–™ ç¼ºæ› æ˜ç´°éƒ¨åˆ†
                         if (!afterData[tag.Date.ToShortDateString()].ContainsKey(pinfo.Name))
                             afterData[tag.Date.ToShortDateString()].Add(pinfo.Name, ainfo.Name);
 
@@ -472,17 +487,17 @@ namespace JHSchool.Behavior.Legacy
                         InsertHelper.AddElement("Attendance");
                         InsertHelper.AddElement("Attendance", "Field");
                         InsertHelper.AddElement("Attendance/Field", "RefStudentID", _student.ID);
-                        InsertHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["¾Ç¦~«×"]].Value.ToString());
-                        InsertHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["¾Ç´Á"]].Value.ToString());
+                        InsertHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["å­¸å¹´åº¦"]].Value.ToString());
+                        InsertHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["å­¸æœŸ"]].Value.ToString());
                         InsertHelper.AddElement("Attendance/Field", "OccurDate", tag.Date.ToShortDateString());
                         InsertHelper.AddElement("Attendance/Field", "Detail", h2.GetRawXml(), true);
                     }
 
                     #endregion
                 }
-                else // ­Y¬O­ì¥»´N¦³¬ö¿ıªº
+                else // è‹¥æ˜¯åŸæœ¬å°±æœ‰ç´€éŒ„çš„
                 {
-                    #region ¬OÂÂªº
+                    #region æ˜¯èˆŠçš„
                     DSXmlHelper h2 = new DSXmlHelper("Attendance");
                     bool hasContent = false;
                     for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
@@ -500,7 +515,7 @@ namespace JHSchool.Behavior.Legacy
                         element.SetAttribute("AttendanceType", pinfo.Type);
                         hasContent = true;
 
-                        //log ¬ö¿ı­×§ï«áªº¸ê®Æ ¯ÊÃm©ú²Ó³¡¤À
+                        //log ç´€éŒ„ä¿®æ”¹å¾Œçš„è³‡æ–™ ç¼ºæ› æ˜ç´°éƒ¨åˆ†
                         if (!afterData[tag.Date.ToShortDateString()].ContainsKey(pinfo.Name))
                             afterData[tag.Date.ToShortDateString()].Add(pinfo.Name, ainfo.Name);
                     }
@@ -510,8 +525,8 @@ namespace JHSchool.Behavior.Legacy
                         updateHelper.AddElement("Attendance");
                         updateHelper.AddElement("Attendance", "Field");
                         updateHelper.AddElement("Attendance/Field", "RefStudentID", _student.ID);
-                        updateHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["¾Ç¦~«×"]].Value.ToString());
-                        updateHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["¾Ç´Á"]].Value.ToString());
+                        updateHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["å­¸å¹´åº¦"]].Value.ToString());
+                        updateHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["å­¸æœŸ"]].Value.ToString());
                         updateHelper.AddElement("Attendance/Field", "OccurDate", tag.Date.ToShortDateString());
                         updateHelper.AddElement("Attendance/Field", "Detail", h2.GetRawXml(), true);
                         updateHelper.AddElement("Attendance", "Condition");
@@ -521,7 +536,7 @@ namespace JHSchool.Behavior.Legacy
                     {
                         deleteList.Add(tag.Key);
 
-                        //log ¬ö¿ı³Q§R°£ªº¸ê®Æ
+                        //log ç´€éŒ„è¢«åˆªé™¤çš„è³‡æ–™
                         afterData.Remove(tag.Date.ToShortDateString());
                         deleteData.Add(tag.Date.ToShortDateString());
                     }
@@ -538,25 +553,25 @@ namespace JHSchool.Behavior.Legacy
                 }
                 catch (Exception ex)
                 {
-                    FISCA.Presentation.Controls.MsgBox.Show("¯ÊÃm¬ö¿ı·s¼W¥¢±Ñ : " + ex.Message, "·s¼W¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FISCA.Presentation.Controls.MsgBox.Show("ç¼ºæ› ç´€éŒ„æ–°å¢å¤±æ•— : " + ex.Message, "æ–°å¢å¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
-                //log ¼g¤Jlog
+                //log å¯«å…¥log
                 foreach (string date in afterData.Keys)
                 {
                     if (!beforeData.ContainsKey(date) && afterData[date].Count > 0)
                     {
                         StringBuilder desc = new StringBuilder("");
-                        desc.AppendLine("¾Ç¥Í¡u" + Student.Instance.Items[_student.ID].Name + "¡v");
-                        desc.AppendLine("¤é´Á¡u" + date + "¡v");
+                        desc.AppendLine("å­¸ç”Ÿã€Œ" + Student.Instance.Items[_student.ID].Name + "ã€");
+                        desc.AppendLine("æ—¥æœŸã€Œ" + date + "ã€");
                         foreach (string period in afterData[date].Keys)
                         {
-                            desc.AppendLine("¸`¦¸¡u" + period + "¡v³]¬°¡u" + afterData[date][period] + "¡v");
+                            desc.AppendLine("ç¯€æ¬¡ã€Œ" + period + "ã€è¨­ç‚ºã€Œ" + afterData[date][period] + "ã€");
                         }
 
-                        ApplicationLog.Log("¾Ç°È¨t²Î.¯ÊÃm¸ê®Æ", "§å¦¸·s¼W¯ÊÃm¸ê®Æ", "student", _student.ID, desc.ToString());
-                        //Log³¡¥÷
+                        ApplicationLog.Log("å­¸å‹™ç³»çµ±.ç¼ºæ› è³‡æ–™", "æ‰¹æ¬¡æ–°å¢ç¼ºæ› è³‡æ–™", "student", _student.ID, desc.ToString());
+                        //Logéƒ¨ä»½
                         //CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Insert, _student.ID, desc.ToString(), this.Text, "");
                     }
                 }
@@ -572,18 +587,18 @@ namespace JHSchool.Behavior.Legacy
                 }
                 catch (Exception ex)
                 {
-                    FISCA.Presentation.Controls.MsgBox.Show("¯ÊÃm¬ö¿ı§ó·s¥¢±Ñ : " + ex.Message, "§ó·s¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FISCA.Presentation.Controls.MsgBox.Show("ç¼ºæ› ç´€éŒ„æ›´æ–°å¤±æ•— : " + ex.Message, "æ›´æ–°å¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                //log ¼g¤Jlog
+                //log å¯«å…¥log
                 foreach (string date in afterData.Keys)
                 {
                     if (beforeData.ContainsKey(date) && afterData[date].Count > 0)
                     {
                         bool dirty = false;
                         StringBuilder desc = new StringBuilder("");
-                        desc.AppendLine("¾Ç¥Í¡u" + Student.Instance.Items[_student.ID].Name + "¡v ");
-                        desc.AppendLine("¤é´Á¡u" + date + "¡v ");
+                        desc.AppendLine("å­¸ç”Ÿã€Œ" + Student.Instance.Items[_student.ID].Name + "ã€ ");
+                        desc.AppendLine("æ—¥æœŸã€Œ" + date + "ã€ ");
                         foreach (string period in beforeData[date].Keys)
                         {
                             if (!afterData[date].ContainsKey(period))
@@ -596,20 +611,20 @@ namespace JHSchool.Behavior.Legacy
                                 if (beforeData[date][period] != afterData[date][period])
                                 {
                                     dirty = true;
-                                    desc.AppendLine("¸`¦¸¡u" + period + "¡v¥Ñ¡u" + beforeData[date][period] + "¡vÅÜ§ó¬°¡u" + afterData[date][period] + "¡v");
+                                    desc.AppendLine("ç¯€æ¬¡ã€Œ" + period + "ã€ç”±ã€Œ" + beforeData[date][period] + "ã€è®Šæ›´ç‚ºã€Œ" + afterData[date][period] + "ã€");
                                 }
                             }
                             else
                             {
                                 dirty = true;
-                                desc.AppendLine("¸`¦¸¡u" + period + "¡v¥Ñ¡u¡vÅÜ§ó¬°¡u" + afterData[date][period] + "¡v ");
+                                desc.AppendLine("ç¯€æ¬¡ã€Œ" + period + "ã€ç”±ã€Œã€è®Šæ›´ç‚ºã€Œ" + afterData[date][period] + "ã€ ");
                             }
 
                         }
                         if (dirty)
                         {
-                            //Log³¡¥÷
-                            ApplicationLog.Log("¾Ç°È¨t²Î.¯ÊÃm¸ê®Æ", "§å¦¸­×§ï¯ÊÃm¸ê®Æ", "student", _student.ID, desc.ToString());
+                            //Logéƒ¨ä»½
+                            ApplicationLog.Log("å­¸å‹™ç³»çµ±.ç¼ºæ› è³‡æ–™", "æ‰¹æ¬¡ä¿®æ”¹ç¼ºæ› è³‡æ–™", "student", _student.ID, desc.ToString());
                             //CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Update, _student.ID, desc.ToString(), this.Text, "");
                         }
                     }
@@ -633,34 +648,34 @@ namespace JHSchool.Behavior.Legacy
                 }
                 catch (Exception ex)
                 {
-                    FISCA.Presentation.Controls.MsgBox.Show("¯ÊÃm¬ö¿ı§R°£¥¢±Ñ : " + ex.Message, "§R°£¥¢±Ñ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FISCA.Presentation.Controls.MsgBox.Show("ç¼ºæ› ç´€éŒ„åˆªé™¤å¤±æ•— : " + ex.Message, "åˆªé™¤å¤±æ•—", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                //log ¼g¤J³Q§R°£ªº¸ê®Æªºlog
+                //log å¯«å…¥è¢«åˆªé™¤çš„è³‡æ–™çš„log
                 StringBuilder desc = new StringBuilder("");
-                desc.AppendLine("¾Ç¥Í¡u" + Student.Instance.Items[_student.ID].Name + "¡v");
+                desc.AppendLine("å­¸ç”Ÿã€Œ" + Student.Instance.Items[_student.ID].Name + "ã€");
                 foreach (string date in deleteData)
                 {
-                    desc.AppendLine("§R°£¡u" + date + "¡v¯ÊÃm¬ö¿ı ");
+                    desc.AppendLine("åˆªé™¤ã€Œ" + date + "ã€ç¼ºæ› ç´€éŒ„ ");
                 }
-                //Log³¡¥÷
-                ApplicationLog.Log("¾Ç°È¨t²Î.¯ÊÃm¸ê®Æ", "§å¦¸§R°£¯ÊÃm¸ê®Æ", "student", _student.ID, desc.ToString());
+                //Logéƒ¨ä»½
+                ApplicationLog.Log("å­¸å‹™ç³»çµ±.ç¼ºæ› è³‡æ–™", "æ‰¹æ¬¡åˆªé™¤ç¼ºæ› è³‡æ–™", "student", _student.ID, desc.ToString());
                 //CurrentUser.Instance.AppLog.Write(EntityType.Student, EntityAction.Delete, _student.ID, desc.ToString(), this.Text, "");
             }
             #endregion
 
-            //Ä²µoÅÜ§ó¨Æ¥ó
+            //è§¸ç™¼è®Šæ›´äº‹ä»¶
             Attendance.Instance.SyncDataBackground(_student.ID);
             //Student.Instance.SyncDataBackground(_student.ID);
 
-            FISCA.Presentation.Controls.MsgBox.Show("Àx¦s¯ÊÃm¸ê®Æ¦¨¥\!", "§¹¦¨", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FISCA.Presentation.Controls.MsgBox.Show("å„²å­˜ç¼ºæ› è³‡æ–™æˆåŠŸ!", "å®Œæˆ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
             #endregion
         }
 
         private bool IsValid()
         {
-            #region DataGridView¸ê®ÆÅçÃÒ(¦pªGErrorText¤º®e¬°ªÅ)
+            #region DataGridViewè³‡æ–™é©—è­‰(å¦‚æœErrorTextå…§å®¹ç‚ºç©º)
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
@@ -675,16 +690,16 @@ namespace JHSchool.Behavior.Legacy
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            LoadAbsense(); //­«·s¾ã²z
+            LoadAbsense(); //é‡æ–°æ•´ç†
         }
 
         private void LoadAbsense()
         {
-            #region ³B²z¬P´Á³]©wÀÉ
+            #region è™•ç†æ˜ŸæœŸè¨­å®šæª”
             WeekDay.Clear();
             nowWeekDay.Clear();
-            K12.Data.Configuration.ConfigData cd = K12.Data.School.Configuration["¯ÊÃm§å¦¸µn¿ı_¬P´Á³]©w"];
-            string cdIN = cd["¬P´Á³]©w"];
+            K12.Data.Configuration.ConfigData cd = K12.Data.School.Configuration["ç¼ºæ› æ‰¹æ¬¡ç™»éŒ„_æ˜ŸæœŸè¨­å®š"];
+            string cdIN = cd["æ˜ŸæœŸè¨­å®š"];
 
             XmlElement day;
 
@@ -707,15 +722,15 @@ namespace JHSchool.Behavior.Legacy
             }
             else
             {
-                WeekDay.AddRange(new string[] { "¬P´Á¤@", "¬P´Á¤G", "¬P´Á¤T", "¬P´Á¥|", "¬P´Á¤­", "¬P´Á¤»", "¬P´Á¤é" });
+                WeekDay.AddRange(new string[] { "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­", "æ˜ŸæœŸæ—¥" });
             }
 
             nowWeekDay = ChengDayOfWeel(WeekDay);
             #endregion
 
-            #region ¨ú±o°²§O²M³æ
+            #region å–å¾—å‡åˆ¥æ¸…å–®
             ConfigData _CD;
-            //¨ú±o¤§«e³]©w³]©w
+            //å–å¾—ä¹‹å‰è¨­å®šè¨­å®š
             _CD = School.Configuration["SCHOOL_HOLIDAY_CONFIG_STRING"];
             XElement rootXml = null;
             string xmlContent = _CD["CONFIG_STRING"];
@@ -725,7 +740,7 @@ namespace JHSchool.Behavior.Legacy
             else
                 rootXml = new XElement("SchoolHolidays");
 
-            //Åª¥X¤§«eªº°²¤é²M³æ
+            //è®€å‡ºä¹‹å‰çš„å‡æ—¥æ¸…å–®
             foreach (XElement holiday in rootXml.XPathSelectElements("//Holiday"))
             {
                 DateTime date;
@@ -742,35 +757,35 @@ namespace JHSchool.Behavior.Legacy
 
         private List<DayOfWeek> ChengDayOfWeel(List<string> list)
         {
-            #region ¨ú±o¬P´Á¹ï·Óªí
+            #region å–å¾—æ˜ŸæœŸå°ç…§è¡¨
             List<DayOfWeek> DOW = new List<DayOfWeek>();
             foreach (string each in list)
             {
-                if (each == "¬P´Á¤@")
+                if (each == "æ˜ŸæœŸä¸€")
                 {
                     DOW.Add(DayOfWeek.Monday);
                 }
-                else if (each == "¬P´Á¤G")
+                else if (each == "æ˜ŸæœŸäºŒ")
                 {
                     DOW.Add(DayOfWeek.Tuesday);
                 }
-                else if (each == "¬P´Á¤T")
+                else if (each == "æ˜ŸæœŸä¸‰")
                 {
                     DOW.Add(DayOfWeek.Wednesday);
                 }
-                else if (each == "¬P´Á¥|")
+                else if (each == "æ˜ŸæœŸå››")
                 {
                     DOW.Add(DayOfWeek.Thursday);
                 }
-                else if (each == "¬P´Á¤­")
+                else if (each == "æ˜ŸæœŸäº”")
                 {
                     DOW.Add(DayOfWeek.Friday);
                 }
-                else if (each == "¬P´Á¤»")
+                else if (each == "æ˜ŸæœŸå…­")
                 {
                     DOW.Add(DayOfWeek.Saturday);
                 }
-                else if (each == "¬P´Á¤é")
+                else if (each == "æ˜ŸæœŸæ—¥")
                 {
                     DOW.Add(DayOfWeek.Sunday);
                 }
@@ -782,23 +797,23 @@ namespace JHSchool.Behavior.Legacy
 
         private string GetDayOfWeekInChinese(DayOfWeek day)
         {
-            #region ¬P´Á(¤¤/­^)¹ï·Óªí
+            #region æ˜ŸæœŸ(ä¸­/è‹±)å°ç…§è¡¨
             switch (day)
             {
                 case DayOfWeek.Monday:
-                    return "¤@";
+                    return "ä¸€";
                 case DayOfWeek.Tuesday:
-                    return "¤G";
+                    return "äºŒ";
                 case DayOfWeek.Wednesday:
-                    return "¤T";
+                    return "ä¸‰";
                 case DayOfWeek.Thursday:
-                    return "¥|";
+                    return "å››";
                 case DayOfWeek.Friday:
-                    return "¤­";
+                    return "äº”";
                 case DayOfWeek.Saturday:
-                    return "¤»";
+                    return "å…­";
                 default:
-                    return "¤é";
+                    return "æ—¥";
             }
             #endregion
         }
@@ -807,7 +822,7 @@ namespace JHSchool.Behavior.Legacy
         {
             if (IsDirty())
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("¸ê®Æ¤wÅÜ§ó¥B©|¥¼Àx¦s¡A¬O§_©ñ±ó¤w½s¿è¸ê®Æ?", "½T»{", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™å·²è®Šæ›´ä¸”å°šæœªå„²å­˜ï¼Œæ˜¯å¦æ”¾æ£„å·²ç·¨è¼¯è³‡æ–™?", "ç¢ºèª", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     this.Close();
                 }
@@ -843,16 +858,16 @@ namespace JHSchool.Behavior.Legacy
 
         private void dataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            #region ¾Ç¦~«×/¾Ç´Á¿é¤JÅçÃÒ
+            #region å­¸å¹´åº¦/å­¸æœŸè¼¸å…¥é©—è­‰
             DataGridViewCell cell = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            if (e.ColumnIndex == ColumnIndex["¾Ç¦~«×"])
+            if (e.ColumnIndex == ColumnIndex["å­¸å¹´åº¦"])
             {
                 string errorMessage = "";
                 int schoolYear;
                 if (cell.Value == null)
-                    errorMessage = "¾Ç¦~«×¤£¥i¬°ªÅ¥Õ";
+                    errorMessage = "å­¸å¹´åº¦ä¸å¯ç‚ºç©ºç™½";
                 else if (!int.TryParse(cell.Value.ToString(), out schoolYear))
-                    errorMessage = "¾Ç¦~«×¥²¶·¬°¾ã¼Æ";
+                    errorMessage = "å­¸å¹´åº¦å¿…é ˆç‚ºæ•´æ•¸";
 
                 if (errorMessage != "")
                 {
@@ -865,14 +880,14 @@ namespace JHSchool.Behavior.Legacy
                     cell.ToolTipText = "";
                 }
             }
-            else if (e.ColumnIndex == ColumnIndex["¾Ç´Á"])
+            else if (e.ColumnIndex == ColumnIndex["å­¸æœŸ"])
             {
                 string errorMessage = "";
 
                 if (cell.Value == null)
-                    errorMessage = "¾Ç´Á¤£¥i¬°ªÅ¥Õ";
+                    errorMessage = "å­¸æœŸä¸å¯ç‚ºç©ºç™½";
                 else if (cell.Value.ToString() != "1" && cell.Value.ToString() != "2")
-                    errorMessage = "¾Ç´Á¥²¶·¬°¾ã¼Æ¡y1¡z©Î¡y2¡z";
+                    errorMessage = "å­¸æœŸå¿…é ˆç‚ºæ•´æ•¸ã€1ã€æˆ–ã€2ã€";
 
                 if (errorMessage != "")
                 {
@@ -888,7 +903,7 @@ namespace JHSchool.Behavior.Legacy
 
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
         {
-            #region ¦pªG«ö¤U«ö¶s
+            #region å¦‚æœæŒ‰ä¸‹æŒ‰éˆ•
             string key = KeyConverter.GetKeyMapping(e);
 
             if (!_absenceList.ContainsKey(key))
@@ -942,27 +957,27 @@ namespace JHSchool.Behavior.Legacy
         //    {
         //        picLock.Image = Resources.unlock;
         //        picLock.Tag = false;
-        //        toolTip.SetToolTip(picLock, "¯ÊÃmµn¿ı¤é´Á¬°¥¼Âê©wª¬ºA¡A±z¥i¥HÂI¿ï¹Ï¥Ü¡A±N¯S©w¤é´Á°Ï¶¡Âê©w¡C");
+        //        toolTip.SetToolTip(picLock, "ç¼ºæ› ç™»éŒ„æ—¥æœŸç‚ºæœªé–å®šç‹€æ…‹ï¼Œæ‚¨å¯ä»¥é»é¸åœ–ç¤ºï¼Œå°‡ç‰¹å®šæ—¥æœŸå€é–“é–å®šã€‚");
         //        labelX2.Text = "";
         //    }
         //    else
         //    {
         //        picLock.Image = Resources._lock;
         //        picLock.Tag = true;
-        //        toolTip.SetToolTip(picLock, "¯ÊÃmµn¿ı¤é´Á¤wÂê©w¡A±z¥i¥HÂI¿ï¹Ï¥Ü¸Ñ°£Âê©w¡C");
-        //        labelX2.Text = "¤wÂê©w¯ÊÃm¤é´Á";
+        //        toolTip.SetToolTip(picLock, "ç¼ºæ› ç™»éŒ„æ—¥æœŸå·²é–å®šï¼Œæ‚¨å¯ä»¥é»é¸åœ–ç¤ºè§£é™¤é–å®šã€‚");
+        //        labelX2.Text = "å·²é–å®šç¼ºæ› æ—¥æœŸ";
         //    }
         //    SaveDateSetting();
         //}
 
         private void dateTimeInput1_Validated(object sender, EventArgs e)
         {
-            #region dateTimeInput1¸ê®ÆÅÜ§ó¨Æ¥ó
+            #region dateTimeInput1è³‡æ–™è®Šæ›´äº‹ä»¶
             _errorProvider.SetError(dateTimeInput1, string.Empty);
 
             if (IsDirty())
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("¸ê®Æ¤wÅÜ§ó¥B©|¥¼Àx¦s¡A¬O§_©ñ±ó¤w½s¿è¸ê®Æ?", "½T»{", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™å·²è®Šæ›´ä¸”å°šæœªå„²å­˜ï¼Œæ˜¯å¦æ”¾æ£„å·²ç·¨è¼¯è³‡æ–™?", "ç¢ºèª", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     dateTimeInput1.Value = _currentStartDate;
                     return;
@@ -977,12 +992,12 @@ namespace JHSchool.Behavior.Legacy
 
         private void dateTimeInput2_Validated(object sender, EventArgs e)
         {
-            #region dateTimeInput1¸ê®ÆÅÜ§ó¨Æ¥ó
+            #region dateTimeInput1è³‡æ–™è®Šæ›´äº‹ä»¶
             _errorProvider.SetError(dateTimeInput2, string.Empty);
 
             if (IsDirty())
             {
-                if (FISCA.Presentation.Controls.MsgBox.Show("¸ê®Æ¤wÅÜ§ó¥B©|¥¼Àx¦s¡A¬O§_©ñ±ó¤w½s¿è¸ê®Æ?", "½T»{", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (FISCA.Presentation.Controls.MsgBox.Show("è³‡æ–™å·²è®Šæ›´ä¸”å°šæœªå„²å­˜ï¼Œæ˜¯å¦æ”¾æ£„å·²ç·¨è¼¯è³‡æ–™?", "ç¢ºèª", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     dateTimeInput2.Value = _currentEndDate;
                     return;
@@ -996,7 +1011,7 @@ namespace JHSchool.Behavior.Legacy
 
         private bool IsDirty()
         {
-            #region ¸ê®ÆÅçÃÒ
+            #region è³‡æ–™é©—è­‰
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
@@ -1039,11 +1054,11 @@ namespace JHSchool.Behavior.Legacy
 
                 bool isHolday = false;
                 RowTag rowTag = row.Tag as RowTag;
-                if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //¿z¿ï¤£Åã¥Üªº¬P´Á
+                if (!nowWeekDay.Contains(rowTag.Date.DayOfWeek)) //ç¯©é¸ä¸é¡¯ç¤ºçš„æ˜ŸæœŸ
                 {
                     isHolday = true;
                 }
-                else if (_Holidays.Contains(rowTag.Date)) //¿z¿ï°²¤é
+                else if (_Holidays.Contains(rowTag.Date)) //ç¯©é¸å‡æ—¥
                 {
                     isHolday = true;
                 }
@@ -1052,7 +1067,7 @@ namespace JHSchool.Behavior.Legacy
                 {
                     if (isHolday)
                     {
-                        row.Cells[ColumnIndex["¬P´Á"]].Style.ForeColor = Color.Red;
+                        row.Cells[ColumnIndex["æ˜ŸæœŸ"]].Style.ForeColor = Color.Red;
                     }
                 }
                 else
@@ -1069,8 +1084,8 @@ namespace JHSchool.Behavior.Legacy
 
         private void btnDay_Click(object sender, EventArgs e)
         {
-            #region ¬P´Á³]©w
-            Searchday Sday = new Searchday("¯ÊÃm§å¦¸µn¿ı_¬P´Á³]©w");
+            #region æ˜ŸæœŸè¨­å®š
+            Searchday Sday = new Searchday("ç¼ºæ› æ‰¹æ¬¡ç™»éŒ„_æ˜ŸæœŸè¨­å®š");
             if (Sday.ShowDialog() == DialogResult.Yes)
             {
                 LoadAbsense();
@@ -1107,6 +1122,124 @@ namespace JHSchool.Behavior.Legacy
             }
         }
 
+        private Dictionary<string, Dictionary<string, string>> CollectUserEditsFromGrid_Single()
+        {
+            var result = new Dictionary<string, Dictionary<string, string>>();
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                RowTag tag = row.Tag as RowTag;
+                string dateStr = tag.Date.ToShortDateString();
+                var periods = new Dictionary<string, string>();
+                for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
+                {
+                    DataGridViewCell cell = row.Cells[i];
+                    AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
+                    if (acInfo != null && acInfo.AbsenceInfo != null && !string.IsNullOrEmpty(acInfo.AbsenceInfo.Name))
+                    {
+                        PeriodInfo pinfo = dataGridView.Columns[i].Tag as PeriodInfo;
+                        periods[pinfo.Name] = acInfo.AbsenceInfo.Name;
+                    }
+                }
+                result[dateStr] = periods;
+            }
+            return result;
+        }
+
+        private Dictionary<string, Dictionary<string, string>> FetchCurrentDbState_Single()
+        {
+            var result = new Dictionary<string, Dictionary<string, string>>();
+            DSXmlHelper helper = new DSXmlHelper("Request");
+            helper.AddElement("Field");
+            helper.AddElement("Field", "All");
+            helper.AddElement("Condition");
+            helper.AddElement("Condition", "RefStudentID", _student.ID);
+            helper.AddElement("Condition", "StartDate", dateTimeInput1.Value.ToShortDateString());
+            helper.AddElement("Condition", "EndDate", dateTimeInput2.Value.ToShortDateString());
+            DSResponse dsrsp = JHSchool.Feature.Legacy.QueryAttendance.GetAttendance(new DSRequest(helper));
+            helper = dsrsp.GetContent();
+            foreach (XmlElement element in helper.GetElements("Attendance"))
+            {
+                string occurDate = element.SelectSingleNode("OccurDate").InnerText;
+                DateTime dt;
+                if (!DateTime.TryParse(occurDate, out dt)) continue;
+                string dateStr = dt.ToShortDateString();
+                if (!result.ContainsKey(dateStr))
+                    result[dateStr] = new Dictionary<string, string>();
+                XmlNode detailNode = element.SelectSingleNode("Detail");
+                if (detailNode == null || detailNode.FirstChild == null) continue;
+                foreach (XmlNode node in detailNode.FirstChild.SelectNodes("Period"))
+                {
+                    string periodName = node.InnerText;
+                    XmlNode attrNode = node.SelectSingleNode("@AbsenceType");
+                    if (attrNode == null) continue;
+                    if (!result[dateStr].ContainsKey(periodName))
+                        result[dateStr][periodName] = attrNode.InnerText;
+                }
+            }
+            return result;
+        }
+
+        private List<ConflictInfo> DetectConflicts_Single(
+            Dictionary<string, Dictionary<string, string>> userEdits,
+            Dictionary<string, Dictionary<string, string>> currentDbState)
+        {
+            var conflicts = new List<ConflictInfo>();
+            string className = _student.Class != null ? _student.Class.Name : "";
+            string seatNo = "" + _student.SeatNo;
+            foreach (string dateStr in beforeData.Keys)
+            {
+                Dictionary<string, string> before = beforeData[dateStr];
+                Dictionary<string, string> current;
+                if (!currentDbState.TryGetValue(dateStr, out current))
+                    current = new Dictionary<string, string>();
+                bool deletedByOther = before.Count > 0 && current.Count == 0;
+                bool hasChange = deletedByOther;
+                if (!hasChange)
+                {
+                    foreach (var kv in before)
+                        if (!current.ContainsKey(kv.Key) || current[kv.Key] != kv.Value) { hasChange = true; break; }
+                    if (!hasChange)
+                        foreach (var kv in current)
+                            if (!before.ContainsKey(kv.Key)) { hasChange = true; break; }
+                }
+                if (!hasChange) continue;
+                DateTime occurDate;
+                DateTime.TryParse(dateStr, out occurDate);
+                ConflictInfo ci = new ConflictInfo();
+                ci.StudentID = _student.ID;
+                ci.ClassName = className;
+                ci.SeatNo = seatNo;
+                ci.Name = _student.Name;
+                ci.OccurDate = occurDate;
+                ci.DeletedByOther = deletedByOther;
+                if (!deletedByOther)
+                {
+                    var allPeriods = new HashSet<string>(before.Keys);
+                    foreach (string p in current.Keys) allPeriods.Add(p);
+                    Dictionary<string, string> userDay;
+                    userEdits.TryGetValue(dateStr, out userDay);
+                    if (userDay == null) userDay = new Dictionary<string, string>();
+                    foreach (string period in allPeriods)
+                    {
+                        string beforeAbsence, currentAbsence;
+                        before.TryGetValue(period, out beforeAbsence);
+                        current.TryGetValue(period, out currentAbsence);
+                        if (beforeAbsence == currentAbsence) continue;
+                        string userAbsence;
+                        userDay.TryGetValue(period, out userAbsence);
+                        ci.PeriodDiffs.Add(new PeriodDiff
+                        {
+                            PeriodName = period,
+                            BeforeAbsence = beforeAbsence,
+                            UserAbsence = userAbsence,
+                            CurrentAbsence = currentAbsence
+                        });
+                    }
+                }
+                conflicts.Add(ci);
+            }
+            return conflicts;
+        }
     }
 
     class RowTag

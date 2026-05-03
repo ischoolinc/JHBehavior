@@ -25,7 +25,7 @@ namespace JHSchool.Behavior.Legacy
             _isdirty = false;
         } 
 
-        #region ICellInfo<AbsenceInfo> ¦¨­û
+        #region ICellInfo<AbsenceInfo> æˆå“¡
 
         public AbsenceInfo OriginValue
         {

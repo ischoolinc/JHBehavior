@@ -29,7 +29,7 @@ namespace JHSchool.Behavior.Legacy
         private DateTime _date;
         DateTime d1;
         DateTime d2;
-        #region ISemesterProvider ¦¨­û
+        #region ISemesterProvider æˆå“¡
 
         public void SetDate(DateTime date)
         {

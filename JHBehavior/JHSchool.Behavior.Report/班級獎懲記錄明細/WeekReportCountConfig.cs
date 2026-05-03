@@ -12,7 +12,7 @@ namespace JHSchool.Behavior.Report
         private string _reportName = "";
 
         /// <summary>
-        /// ¶Ç¤J³]©w¦r¦ê
+        /// å‚³å…¥è¨­å®šå­—ä¸²
         /// </summary>
         /// <param name="reportname"></param>
         /// <param name="sizeIndex"></param>
@@ -21,9 +21,9 @@ namespace JHSchool.Behavior.Report
         {
             InitializeComponent();
 
-            //³]©wÀÉ
+            //è¨­å®šæª”
             _reportName = reportname;
-            //³]©wµe­±
+            //è¨­å®šç•«é¢
             BingData();
         }
 
@@ -41,7 +41,7 @@ namespace JHSchool.Behavior.Report
 
         private void buttonX1_Click(object sender, EventArgs e)
         {
-            #region Àx¦s Preference
+            #region å„²å­˜ Preference
 
             //XmlElement config = CurrentUser.Instance.Preference[_reportName];
             ConfigData cd = User.Configuration[_reportName];
@@ -90,7 +90,7 @@ namespace JHSchool.Behavior.Report
         {
             if (!checkBoxX1.Checked && !checkBoxX3.Checked && !checkBoxX4.Checked)
             {
-                FISCA.Presentation.Controls.MsgBox.Show("¼úÀy/Ãg§Ù/¾P¹L...µ¥3¿ï¶µ,¦Ü¤Ö¥²¶·¿ï¾Ü¤@¶µ\n§_«h±N·|µLªk¦C¦L¥X¥ô¦ó¸ê®Æ!", "Äµ§i", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                FISCA.Presentation.Controls.MsgBox.Show("çå‹µ/æ‡²æˆ’/éŠ·é...ç­‰3é¸é …,è‡³å°‘å¿…é ˆé¸æ“‡ä¸€é …\nå¦å‰‡å°‡æœƒç„¡æ³•åˆ—å°å‡ºä»»ä½•è³‡æ–™!", "è­¦å‘Š", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

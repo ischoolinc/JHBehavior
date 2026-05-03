@@ -20,7 +20,7 @@ namespace JHSchool.Behavior.Report
 
         private void buttonX1_Click(object sender, EventArgs e)
         {
-            #region Àx¦s Preference
+            #region å„²å­˜ Preference
 
             //XmlElement config = CurrentUser.Instance.Preference[_reportName];
             ConfigData cd = User.Configuration[_reportName];

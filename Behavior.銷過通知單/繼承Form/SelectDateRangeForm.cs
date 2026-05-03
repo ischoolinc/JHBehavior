@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using FISCA.Presentation.Controls;
 
-namespace JHBehavior.¾P¹L³qª¾³æ
+namespace JHBehavior.éŠ·éé€šçŸ¥å–®
 {
     public partial class SelectDateRangeForm : BaseForm
     {
@@ -72,7 +72,7 @@ namespace JHBehavior.¾P¹L³qª¾³æ
             if (_endTextBoxOK)
             {
                 if (!ValidateRange(dateTimeInput1.Text, dateTimeInput2.Text))
-                    errorProvider1.SetError(dateTimeInput1, "¤é´Á°Ï¶¡¿ù»~");
+                    errorProvider1.SetError(dateTimeInput1, "æ—¥æœŸå€é–“éŒ¯èª¤");
                 else
                 {
                     errorProvider1.Clear();
@@ -88,7 +88,7 @@ namespace JHBehavior.¾P¹L³qª¾³æ
             if (_startTextBoxOK)
             {
                 if (!ValidateRange(dateTimeInput1.Text, dateTimeInput2.Text))
-                    errorProvider2.SetError(dateTimeInput2, "¤é´Á°Ï¶¡¿ù»~");
+                    errorProvider2.SetError(dateTimeInput2, "æ—¥æœŸå€é–“éŒ¯èª¤");
                 else
                 {
                     errorProvider1.Clear();

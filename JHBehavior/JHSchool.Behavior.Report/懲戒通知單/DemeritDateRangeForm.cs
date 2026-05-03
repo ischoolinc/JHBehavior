@@ -9,7 +9,7 @@ namespace JHSchool.Behavior.Report
     public partial class DemeritDateRangeForm : SelectDateRangeForm
     {
         private MemoryStream _template = null;
-        private MemoryStream _defaultTemplate = new MemoryStream(ProjectResource.Ãg§Ù³qª¾³æ);
+        private MemoryStream _defaultTemplate = new MemoryStream(ProjectResource.æ‡²æˆ’é€šçŸ¥å–®);
         private byte[] _buffer = null;
 
         private bool _preferenceLoaded = false;
@@ -45,14 +45,14 @@ namespace JHSchool.Behavior.Report
             get { return true; }
         }
 
-        //¬O§_¦C¦L¾Ç¥Í²M³æ
+        //æ˜¯å¦åˆ—å°å­¸ç”Ÿæ¸…å–®
         private bool _PrintStudentList = false;
         public bool PrintStudentList
         {
             get { return _PrintStudentList; }
         }
 
-        //¬O§_¦C¦L³Æµù
+        //æ˜¯å¦åˆ—å°å‚™è¨»
         private bool _PrintRemark = false;
         public bool PrintRemark
         {
@@ -62,17 +62,17 @@ namespace JHSchool.Behavior.Report
         public DemeritDateRangeForm()
         {
             InitializeComponent();
-            Text = "Ãg§Ù³qª¾³æ";
+            Text = "æ‡²æˆ’é€šçŸ¥å–®";
             LoadPreference();
             InitialDateRange();
         }
 
         private void LoadPreference()
         {
-            #region Åª¨ú Preference
+            #region è®€å– Preference
 
-            //XmlElement config = CurrentUser.Instance.Preference["Ãg§Ù³qª¾³æ"];
-            ConfigData cd = User.Configuration["Ãg§Ù³qª¾³æ"];
+            //XmlElement config = CurrentUser.Instance.Preference["æ‡²æˆ’é€šçŸ¥å–®"];
+            ConfigData cd = User.Configuration["æ‡²æˆ’é€šçŸ¥å–®"];
             XmlElement config = cd.GetXml("XmlData", null);
 
             if (config != null)
@@ -93,7 +93,7 @@ namespace JHSchool.Behavior.Report
                     _template = new MemoryStream(_buffer);
                 }
 
-                //¦C¦L¾Ç¥Í²M³æ
+                //åˆ—å°å­¸ç”Ÿæ¸…å–®
                 if (PrintStudentList != null)
                 {
                     if (PrintStudentList.HasAttribute("Checked"))
@@ -109,7 +109,7 @@ namespace JHSchool.Behavior.Report
                     cd.SetXml("XmlData", config);
                 }
 
-                //¦C¦L³Æµù
+                //åˆ—å°å‚™è¨»
                 if (PrintRemark != null)
                 {
                     if (PrintRemark.HasAttribute("Checked"))
@@ -141,7 +141,7 @@ namespace JHSchool.Behavior.Report
                     newReceive.SetAttribute("Address", "");
                     config.AppendChild(newReceive);
                     cd.SetXml("XmlData", config);
-                    //CurrentUser.Instance.Preference["Ãg§Ù³qª¾³æ"] = config;
+                    //CurrentUser.Instance.Preference["æ‡²æˆ’é€šçŸ¥å–®"] = config;
                 }
 
                 if (conditions != null)
@@ -153,7 +153,7 @@ namespace JHSchool.Behavior.Report
                     }
                     else
                     {
-                        _conditionName = "¤j¹L";
+                        _conditionName = "å¤§é";
                         _conditionNumber = "1";
                     }
                 }
@@ -164,7 +164,7 @@ namespace JHSchool.Behavior.Report
                     newConditions.SetAttribute("ConditionNumber", "1");
                     config.AppendChild(newConditions);
                     cd.SetXml("XmlData", config);
-                    //CurrentUser.Instance.Preference["Ãg§Ù³qª¾³æ"] = config;
+                    //CurrentUser.Instance.Preference["æ‡²æˆ’é€šçŸ¥å–®"] = config;
                 }
 
                 if (dateRangeMode != null)
@@ -181,13 +181,13 @@ namespace JHSchool.Behavior.Report
                     newDateRangeMode.InnerText = ((int)_mode).ToString();
                     config.AppendChild(newDateRangeMode);
                     cd.SetXml("XmlData", config);
-                    //CurrentUser.Instance.Preference["Ãg§Ù³qª¾³æ"] = config;
+                    //CurrentUser.Instance.Preference["æ‡²æˆ’é€šçŸ¥å–®"] = config;
                 }
             }
             else
             {
-                #region ²£¥ÍªÅ¥Õ³]©wÀÉ
-                config = new XmlDocument().CreateElement("Ãg§Ù³qª¾³æ");
+                #region ç”¢ç”Ÿç©ºç™½è¨­å®šæª”
+                config = new XmlDocument().CreateElement("æ‡²æˆ’é€šçŸ¥å–®");
                 config.SetAttribute("Default", "true");
                 XmlElement customize = config.OwnerDocument.CreateElement("CustomizeTemplate");
                 XmlElement dateRangeMode = config.OwnerDocument.CreateElement("DateRangeMode");
@@ -202,7 +202,7 @@ namespace JHSchool.Behavior.Report
                 conditions.SetAttribute("ConditionName", "");
                 conditions.SetAttribute("ConditionNumber", "1");
                 printStudentList.SetAttribute("Checked", "false");
-                printRemark.SetAttribute("Checked", "false"); //2019/1/21 - ³ÆµùÄæ¦ì
+                printRemark.SetAttribute("Checked", "false"); //2019/1/21 - å‚™è¨»æ¬„ä½
 
                 config.AppendChild(customize);
                 config.AppendChild(dateRangeMode);
@@ -212,7 +212,7 @@ namespace JHSchool.Behavior.Report
                 config.AppendChild(printRemark);
 
                 cd.SetXml("XmlData", config);
-                //CurrentUser.Instance.Preference["Ãg§Ù³qª¾³æ"] = config;
+                //CurrentUser.Instance.Preference["æ‡²æˆ’é€šçŸ¥å–®"] = config;
 
                 _useDefaultTemplate = true;
                 _printHasRecordOnly = true;
@@ -221,7 +221,7 @@ namespace JHSchool.Behavior.Report
                 #endregion
             }
 
-            cd.Save(); //Àx¦s²ÕºA¸ê®Æ¡C
+            cd.Save(); //å„²å­˜çµ„æ…‹è³‡æ–™ã€‚
 
             #endregion
 
@@ -230,7 +230,7 @@ namespace JHSchool.Behavior.Report
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //¶Ç¤JTrue¬O¦]¬°¤£¼vÅTµ{¦¡µ²ºc
+            //å‚³å…¥Trueæ˜¯å› ç‚ºä¸å½±éŸ¿ç¨‹å¼çµæ§‹
             DemeritConfigForm configForm = new DemeritConfigForm(
                 _useDefaultTemplate, _mode, _buffer, _receiveName, _receiveAddress, _conditionName,
                 _conditionNumber, _PrintStudentList, _PrintRemark);
@@ -246,7 +246,7 @@ namespace JHSchool.Behavior.Report
         {
             switch (_mode)
             {
-                case DateRangeModeNew.Month: //¤ë
+                case DateRangeModeNew.Month: //æœˆ
                     {
                         DateTime a = dateTimeInput1.Value;
                         a = GetMonthFirstDay(a);
@@ -254,7 +254,7 @@ namespace JHSchool.Behavior.Report
                         dateTimeInput2.Text = a.AddMonths(1).AddDays(-1).ToShortDateString();
                         break;
                     }
-                case DateRangeModeNew.Week: //¶g
+                case DateRangeModeNew.Week: //é€±
                     {
                         DateTime b = dateTimeInput1.Value;
                         b = GetWeekFirstDay(b);
@@ -262,7 +262,7 @@ namespace JHSchool.Behavior.Report
                         dateTimeInput2.Text = b.AddDays(5).ToShortDateString();
                         break;
                     }
-                case DateRangeModeNew.Custom: //¦Û­q
+                case DateRangeModeNew.Custom: //è‡ªè¨‚
                     {
                         //dateTimeInput2.Text = dateTimeInput1.Text = DateTime.Today.ToShortDateString();
                         break;
@@ -320,7 +320,7 @@ namespace JHSchool.Behavior.Report
             {
                 switch (_mode)
                 {
-                    case DateRangeModeNew.Month: //¤ë
+                    case DateRangeModeNew.Month: //æœˆ
                         {
                             _startDate = GetMonthFirstDay(DateTime.Parse(dateTimeInput1.Text));
                             _endDate = _startDate.AddMonths(1).AddDays(-1);
@@ -329,7 +329,7 @@ namespace JHSchool.Behavior.Report
                             _printable = true;
                             break;
                         }
-                    case DateRangeModeNew.Week: //¶g
+                    case DateRangeModeNew.Week: //é€±
                         {
                             _startDate = GetWeekFirstDay(DateTime.Parse(dateTimeInput1.Text));
                             _endDate = _startDate.AddDays(4);
@@ -338,7 +338,7 @@ namespace JHSchool.Behavior.Report
                             _printable = true;
                             break;
                         }
-                    case DateRangeModeNew.Custom: //¦Û­q
+                    case DateRangeModeNew.Custom: //è‡ªè¨‚
                         break;
                     default:
                         throw new Exception("Date Range Mode Error");
