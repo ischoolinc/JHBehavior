@@ -9,6 +9,8 @@ using System.Windows.Forms;
 //using SmartSchool.StudentRelated;
 using FISCA.DSAUtil;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using DevComponents.DotNetBar;
 using JHSchool.Behavior.Properties;
 using JHSchool.Feature.Legacy;
@@ -33,6 +35,7 @@ namespace JHSchool.Behavior.Legacy
         private AbsenceInfo _checkedAbsence;
         private DateTime _currentDate;
         List<DataGridViewRow> _hiddenRows;
+        List<DateTime> _Holidays = new List<DateTime>();
 
         Dictionary<string, int> ColumnIndex = new Dictionary<string, int>();
 
@@ -921,34 +924,40 @@ namespace JHSchool.Behavior.Legacy
             #region 僅顯示有缺曠的資料
             dataGridView.SuspendLayout();
 
-            if (chkHasData.Checked == true)
-            {
-                foreach (DataGridViewRow row in dataGridView.Rows)
-                {
-                    bool hasData = false;
-                    foreach (DataGridViewCell cell in row.Cells)
-                    {
-                        if (cell.ColumnIndex < _startIndex || cell.OwningRow.Visible == false) continue;
-                        if (!string.IsNullOrEmpty("" + cell.Value))
-                        {
-                            hasData = true;
-                            break;
-                        }
-                    }
-                    if (hasData == false)
-                    {
-                        _hiddenRows.Add(row);
-                        row.Visible = false;
-                    }
-                }
-            }
+            #region 取得假別清單
+            _Holidays.Clear();
+            ConfigData _CD = School.Configuration["SCHOOL_HOLIDAY_CONFIG_STRING"];
+            XElement rootXml = null;
+            string xmlContent = _CD["CONFIG_STRING"];
+            if (!string.IsNullOrWhiteSpace(xmlContent))
+                rootXml = XElement.Parse(xmlContent);
             else
+                rootXml = new XElement("SchoolHolidays");
+            foreach (XElement holiday in rootXml.XPathSelectElements("//Holiday"))
             {
-                foreach (DataGridViewRow row in _hiddenRows)
-                    row.Visible = true;
+                DateTime date;
+                if (DateTime.TryParse(holiday.Value, out date))
+                    _Holidays.Add(date);
+            }
+            #endregion
+
+            bool isHoliday = _Holidays.Contains(dateTimeInput1.Value.Date);
+
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                row.Visible = true;
+
+                bool hasData = false;
+                for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty("" + row.Cells[i].Value)) { hasData = true; break; }
+                }
+
+                if (!hasData && (chkHasData.Checked || isHoliday))
+                    row.Visible = false;
             }
 
-            dataGridView.ResumeLayout(); 
+            dataGridView.ResumeLayout();
             #endregion
         }
 
