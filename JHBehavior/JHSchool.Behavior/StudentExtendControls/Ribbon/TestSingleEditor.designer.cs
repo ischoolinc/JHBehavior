@@ -35,6 +35,14 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel = new System.Windows.Forms.FlowLayoutPanel();
             this.dataGridView = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.colClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStudentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWeek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSchoolYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSemester = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSave = new DevComponents.DotNetBar.ButtonX();
             this.btnClose = new DevComponents.DotNetBar.ButtonX();
             this.btnSearch = new DevComponents.DotNetBar.ButtonX();
@@ -44,14 +52,8 @@
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.btnDay = new DevComponents.DotNetBar.ButtonX();
             this.chkHasData = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.colClassName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSeatNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStudentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStudentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWeek = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSchoolYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSemester = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelX4 = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.panelEx1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -100,7 +102,7 @@
             this.panelEx1.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelEx1.Location = new System.Drawing.Point(12, 43);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(727, 85);
+            this.panelEx1.Size = new System.Drawing.Size(759, 85);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -125,7 +127,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(727, 85);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(759, 85);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel
@@ -134,7 +136,7 @@
             this.panel.AutoSize = true;
             this.panel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel.Font = new System.Drawing.Font("微軟正黑體", 8F);
-            this.panel.Location = new System.Drawing.Point(363, 42);
+            this.panel.Location = new System.Drawing.Point(379, 42);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(0, 0);
             this.panel.TabIndex = 0;
@@ -170,12 +172,66 @@
             this.dataGridView.Location = new System.Drawing.Point(9, 132);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 24;
-            this.dataGridView.Size = new System.Drawing.Size(727, 372);
+            this.dataGridView.Size = new System.Drawing.Size(759, 358);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEndEdit);
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
             this.dataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_ColumnHeaderMouseClick);
             this.dataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView_KeyDown);
+            // 
+            // colClassName
+            // 
+            this.colClassName.HeaderText = "班級";
+            this.colClassName.Name = "colClassName";
+            this.colClassName.ReadOnly = true;
+            this.colClassName.Width = 59;
+            // 
+            // colSeatNo
+            // 
+            this.colSeatNo.HeaderText = "座號";
+            this.colSeatNo.Name = "colSeatNo";
+            this.colSeatNo.ReadOnly = true;
+            this.colSeatNo.Width = 59;
+            // 
+            // colStudentName
+            // 
+            this.colStudentName.HeaderText = "姓名";
+            this.colStudentName.Name = "colStudentName";
+            this.colStudentName.ReadOnly = true;
+            this.colStudentName.Width = 59;
+            // 
+            // colStudentNumber
+            // 
+            this.colStudentNumber.HeaderText = "學號";
+            this.colStudentNumber.Name = "colStudentNumber";
+            this.colStudentNumber.ReadOnly = true;
+            this.colStudentNumber.Width = 59;
+            // 
+            // colDate
+            // 
+            this.colDate.HeaderText = "日期";
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            this.colDate.Width = 120;
+            // 
+            // colWeek
+            // 
+            this.colWeek.HeaderText = "星期";
+            this.colWeek.Name = "colWeek";
+            this.colWeek.ReadOnly = true;
+            this.colWeek.Width = 59;
+            // 
+            // colSchoolYear
+            // 
+            this.colSchoolYear.HeaderText = "學年度";
+            this.colSchoolYear.Name = "colSchoolYear";
+            this.colSchoolYear.Width = 71;
+            // 
+            // colSemester
+            // 
+            this.colSemester.HeaderText = "學期";
+            this.colSemester.Name = "colSemester";
+            this.colSemester.Width = 59;
             // 
             // btnSave
             // 
@@ -183,7 +239,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.BackColor = System.Drawing.Color.Transparent;
             this.btnSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSave.Location = new System.Drawing.Point(584, 510);
+            this.btnSave.Location = new System.Drawing.Point(616, 525);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 24);
             this.btnSave.TabIndex = 1;
@@ -196,7 +252,7 @@
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnClose.Location = new System.Drawing.Point(665, 510);
+            this.btnClose.Location = new System.Drawing.Point(697, 525);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 24);
             this.btnClose.TabIndex = 2;
@@ -209,7 +265,7 @@
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.BackColor = System.Drawing.Color.Transparent;
             this.btnSearch.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnSearch.Location = new System.Drawing.Point(574, 11);
+            this.btnSearch.Location = new System.Drawing.Point(606, 11);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(72, 24);
             this.btnSearch.TabIndex = 5;
@@ -220,6 +276,8 @@
             // 
             this.panelEx2.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelEx2.Controls.Add(this.labelX4);
+            this.panelEx2.Controls.Add(this.labelX2);
             this.panelEx2.Controls.Add(this.checkBoxX1);
             this.panelEx2.Controls.Add(this.dataGridView);
             this.panelEx2.Controls.Add(this.btnClose);
@@ -232,7 +290,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(752, 546);
+            this.panelEx2.Size = new System.Drawing.Size(784, 561);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx2.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -388,7 +446,7 @@
             this.btnDay.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnDay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDay.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnDay.Location = new System.Drawing.Point(655, 11);
+            this.btnDay.Location = new System.Drawing.Point(687, 11);
             this.btnDay.Name = "btnDay";
             this.btnDay.Size = new System.Drawing.Size(72, 24);
             this.btnDay.TabIndex = 7;
@@ -397,78 +455,57 @@
             // 
             // chkHasData
             // 
-            this.chkHasData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkHasData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkHasData.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
             this.chkHasData.BackgroundStyle.Class = "";
             this.chkHasData.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.chkHasData.Location = new System.Drawing.Point(13, 513);
+            this.chkHasData.Location = new System.Drawing.Point(613, 496);
             this.chkHasData.Name = "chkHasData";
             this.chkHasData.Size = new System.Drawing.Size(146, 21);
             this.chkHasData.TabIndex = 6;
-            this.chkHasData.Text = "僅顯示有缺曠之資料";
+            this.chkHasData.Text = "僅顯示有缺曠的資料";
             this.chkHasData.Visible = false;
             this.chkHasData.CheckedChanged += new System.EventHandler(this.filterRows);
             // 
-            // colClassName
+            // labelX4
             // 
-            this.colClassName.HeaderText = "班級";
-            this.colClassName.Name = "colClassName";
-            this.colClassName.ReadOnly = true;
-            this.colClassName.Width = 59;
+            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelX4.AutoSize = true;
+            this.labelX4.BackColor = System.Drawing.Color.Transparent;
             // 
-            // colSeatNo
             // 
-            this.colSeatNo.HeaderText = "座號";
-            this.colSeatNo.Name = "colSeatNo";
-            this.colSeatNo.ReadOnly = true;
-            this.colSeatNo.Width = 59;
             // 
-            // colStudentName
+            this.labelX4.BackgroundStyle.Class = "";
+            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX4.ForeColor = System.Drawing.Color.Red;
+            this.labelX4.Location = new System.Drawing.Point(248, 514);
+            this.labelX4.Name = "labelX4";
+            this.labelX4.Size = new System.Drawing.Size(34, 21);
+            this.labelX4.TabIndex = 31;
+            this.labelX4.Text = "紅字";
             // 
-            this.colStudentName.HeaderText = "姓名";
-            this.colStudentName.Name = "colStudentName";
-            this.colStudentName.ReadOnly = true;
-            this.colStudentName.Width = 59;
+            // labelX2
             // 
-            // colStudentNumber
+            this.labelX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelX2.AutoSize = true;
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
             // 
-            this.colStudentNumber.HeaderText = "學號";
-            this.colStudentNumber.Name = "colStudentNumber";
-            this.colStudentNumber.ReadOnly = true;
-            this.colStudentNumber.Width = 59;
             // 
-            // colDate
             // 
-            this.colDate.HeaderText = "日期";
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            this.colDate.Width = 120;
-            // 
-            // colWeek
-            // 
-            this.colWeek.HeaderText = "星期";
-            this.colWeek.Name = "colWeek";
-            this.colWeek.ReadOnly = true;
-            this.colWeek.Width = 59;
-            // 
-            // colSchoolYear
-            // 
-            this.colSchoolYear.HeaderText = "學年度";
-            this.colSchoolYear.Name = "colSchoolYear";
-            this.colSchoolYear.Width = 71;
-            // 
-            // colSemester
-            // 
-            this.colSemester.HeaderText = "學期";
-            this.colSemester.Name = "colSemester";
-            this.colSemester.Width = 59;
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(9, 496);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(359, 56);
+            this.labelX2.TabIndex = 30;
+            this.labelX2.Text = "1.本功能依據[上課日設定]顯示日期\r\n2.假日卻有缺曠資料,將在星期欄位標示為\r\n3.儲存前若缺曠被[線上請假]或[課堂點名]變更,將會提示訊息";
             // 
             // TestSingleEditor
             // 
-            this.ClientSize = new System.Drawing.Size(752, 546);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.labelX3);
             this.Controls.Add(this.labelX1);
@@ -518,5 +555,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colWeek;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSchoolYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSemester;
+        private DevComponents.DotNetBar.LabelX labelX4;
+        private DevComponents.DotNetBar.LabelX labelX2;
     }
 }
