@@ -437,7 +437,7 @@ namespace JHSchool.Behavior.Legacy
                     ConflictDialog dlg = new ConflictDialog(conflicts);
                     if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.Yes)
                     {
-                        LoadAbsense();
+                        MsgBox.Show("已取消操作!");
                         return;
                     }
                 }

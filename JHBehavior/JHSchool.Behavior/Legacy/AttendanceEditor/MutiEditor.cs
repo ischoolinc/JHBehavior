@@ -428,6 +428,7 @@ namespace JHSchool.Behavior.Legacy
                 FISCA.Presentation.Controls.MsgBox.Show("資料驗證失敗，請修正後再行儲存", "驗證失敗", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
+
             // --- 儲存前衝突偵測 ---
             {
                 var userEdits = CollectUserEditsFromGrid_Muti();
@@ -438,7 +439,7 @@ namespace JHSchool.Behavior.Legacy
                     ConflictDialog dlg = new ConflictDialog(conflicts);
                     if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.Yes)
                     {
-                        btnRenew_Click(null, null);
+                        MsgBox.Show("已取消操作!");
                         return;
                     }
                 }
@@ -1099,6 +1100,49 @@ namespace JHSchool.Behavior.Legacy
                 }
                 conflicts.Add(ci);
             }
+            // 補偵測：開啟時無資料，但他人在此期間新增了紀錄，且本機也有編輯的情況
+            foreach (string studentID in currentDbState.Keys)
+            {
+                if (beforeData.ContainsKey(studentID)) continue; // 已在上面處理過
+                if (currentDbState[studentID].Count == 0) continue; // DB 實際上無資料
+
+                // 若使用者沒有對此學生做任何編輯，儲存時不會影響該學生，不算衝突
+                Dictionary<string, string> userStudent;
+                userEdits.TryGetValue(studentID, out userStudent);
+                if (userStudent == null || userStudent.Count == 0) continue;
+
+                K12.Data.StudentRecord sr;
+                if (!studentMap.TryGetValue(studentID, out sr)) continue;
+
+                ConflictInfo ci = new ConflictInfo();
+                ci.StudentID = studentID;
+                ci.ClassName = sr.Class != null ? sr.Class.Name : "";
+                ci.SeatNo = sr.SeatNo.HasValue ? sr.SeatNo.Value.ToString() : "";
+                ci.Name = sr.Name;
+                ci.OccurDate = logDate;
+                ci.DeletedByOther = false;
+
+                var currentPeriods = currentDbState[studentID];
+                var allPeriods = new HashSet<string>(currentPeriods.Keys);
+                foreach (string p in userStudent.Keys) allPeriods.Add(p);
+
+                foreach (string period in allPeriods)
+                {
+                    string currentAbsence;
+                    currentPeriods.TryGetValue(period, out currentAbsence);
+                    string userAbsence;
+                    userStudent.TryGetValue(period, out userAbsence);
+                    ci.PeriodDiffs.Add(new PeriodDiff
+                    {
+                        PeriodName = period,
+                        BeforeAbsence = null,
+                        UserAbsence = userAbsence,
+                        CurrentAbsence = currentAbsence
+                    });
+                }
+                conflicts.Add(ci);
+            }
+
             return conflicts;
         }
     }
