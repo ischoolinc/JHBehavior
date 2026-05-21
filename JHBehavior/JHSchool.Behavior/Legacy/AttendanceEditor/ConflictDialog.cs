@@ -74,39 +74,60 @@ namespace JHSchool.Behavior.Legacy
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.SuspendLayout();
+            // 
+            // textBoxX1
+            // 
+            this.textBoxX1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            // 
+            // 
             this.textBoxX1.Border.Class = "TextBoxBorder";
             this.textBoxX1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.textBoxX1.Location = new System.Drawing.Point(12, 8);
             this.textBoxX1.Multiline = true;
             this.textBoxX1.Name = "textBoxX1";
             this.textBoxX1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxX1.Size = new System.Drawing.Size(576, 481);
+            this.textBoxX1.Size = new System.Drawing.Size(760, 512);
             this.textBoxX1.TabIndex = 2;
+            // 
+            // buttonX1
+            // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(343, 500);
+            this.buttonX1.Location = new System.Drawing.Point(527, 531);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(164, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX1.TabIndex = 3;
             this.buttonX1.Text = "仍要覆蓋儲存";
+            // 
+            // buttonX2
+            // 
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.Location = new System.Drawing.Point(513, 500);
+            this.buttonX2.Location = new System.Drawing.Point(697, 531);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(75, 23);
             this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX2.TabIndex = 4;
             this.buttonX2.Text = "取消操作";
-            this.ClientSize = new System.Drawing.Size(600, 530);
+            // 
+            // ConflictDialog
+            // 
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.textBoxX1);
             this.DoubleBuffered = true;
             this.Name = "ConflictDialog";
             this.ResumeLayout(false);
+
         }
     }
 

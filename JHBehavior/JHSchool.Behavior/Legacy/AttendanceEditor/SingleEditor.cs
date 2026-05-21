@@ -17,6 +17,7 @@ using FISCA.LogAgent;
 using JHSchool.Behavior.Legacy.AttendanceEditor;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using JHSchool.Data;
 //using SmartSchool.StudentRelated;
 //using SmartSchool.ApplicationLog;
 //using SmartSchool.Properties;
@@ -27,7 +28,7 @@ namespace JHSchool.Behavior.Legacy
     {
         private AbsenceInfo _checkedAbsence;
         private Dictionary<string, AbsenceInfo> _absenceList;//假別清單
-        private StudentRecord _student;
+        private JHStudentRecord _student;
         private ISemester _semesterProvider;
         private int _startIndex;
         private ErrorProvider _errorProvider;
@@ -48,7 +49,7 @@ namespace JHSchool.Behavior.Legacy
         private Dictionary<string, Dictionary<string, string>> afterData = new Dictionary<string, Dictionary<string, string>>();
         private List<string> deleteData = new List<string>();
 
-        public SingleEditor(StudentRecord student)
+        public SingleEditor(JHStudentRecord student)
         {
             InitializeComponent(); //設計工具產生的
 
@@ -61,7 +62,7 @@ namespace JHSchool.Behavior.Legacy
         }
 
         // 學生毛毛蟲缺曠登錄
-        public SingleEditor(StudentRecord student,DateTime occurDate)
+        public SingleEditor(JHStudentRecord student,DateTime occurDate)
         {
             InitializeComponent(); //設計工具產生的
 
@@ -318,6 +319,7 @@ namespace JHSchool.Behavior.Legacy
                 row.Tag = tag;
 
                 row.Cells[ColumnIndex["日期"]].Value = dateValue;
+                row.Cells[0].Tag = _student.ID; //新 row 預先存 student ID,Save 時 IsNew 分支會讀
                 row.Cells[ColumnIndex["星期"]].Value = GetDayOfWeekInChinese(date.DayOfWeek);
                 _semesterProvider.SetDate(date);
                 row.Cells[ColumnIndex["學年度"]].Value = _semesterProvider.SchoolYear;
@@ -332,28 +334,27 @@ namespace JHSchool.Behavior.Legacy
         private void GetAbsense()
         {
             #region 取得缺曠記錄
-            //發送xml request
-            DSXmlHelper helper = new DSXmlHelper("Request");
-            helper.AddElement("Field");
-            helper.AddElement("Field", "All");
-            helper.AddElement("Condition");
-            helper.AddElement("Condition", "RefStudentID", _student.ID);
-            helper.AddElement("Condition", "StartDate", dateTimeInput1.Value.ToShortDateString());
-            helper.AddElement("Condition", "EndDate", dateTimeInput2.Value.ToShortDateString());
-            DSResponse dsrsp = JHSchool.Feature.Legacy.QueryAttendance.GetAttendance(new DSRequest(helper));
-            helper = dsrsp.GetContent();
-
             //log 清除 beforeData
             beforeData.Clear();
 
-            foreach (XmlElement element in helper.GetElements("Attendance"))
+            // 改用資料邏輯層取得缺曠紀錄,並過濾日期區間
+            List<K12.Data.AttendanceRecord> attendList = new List<K12.Data.AttendanceRecord>();
+            foreach (K12.Data.AttendanceRecord each in K12.Data.Attendance.SelectByStudents(new K12.Data.StudentRecord[] { _student }))
             {
-                // 這裡要做一些事情  例如找到東西塞進去
-                string occurDate = element.SelectSingleNode("OccurDate").InnerText;
-                string schoolYear = element.SelectSingleNode("SchoolYear").InnerText;
-                string semester = element.SelectSingleNode("Semester").InnerText;
-                string id = element.GetAttribute("ID");
-                XmlNode dNode = element.SelectSingleNode("Detail").FirstChild;
+                //當缺曠日期(大於/等於)起始日期 且 (小於等於)結束日期
+                if (each.OccurDate.CompareTo(dateTimeInput1.Value) != -1 && each.OccurDate.CompareTo(dateTimeInput2.Value) != 1)
+                {
+                    attendList.Add(each);
+                }
+            }
+
+            foreach (K12.Data.AttendanceRecord element in attendList)
+            {
+                string occurDate = element.OccurDate.ToShortDateString();
+                string schoolYear = element.SchoolYear.ToString();
+                string semester = element.Semester.ToString();
+                string id = element.ID;
+                List<K12.Data.AttendancePeriod> dNode = element.PeriodDetail;
 
                 //log 紀錄修改前的資料 日期部分
                 DateTime logDate;
@@ -369,7 +370,7 @@ namespace JHSchool.Behavior.Legacy
                 foreach (DataGridViewRow r in dataGridView.Rows)
                 {
                     DateTime date;
-                    //抓 DataGridView    
+                    //抓 DataGridView
                     RowTag rt = r.Tag as RowTag;
 
                     if (!DateTime.TryParse(occurDate, out date)) continue;
@@ -382,6 +383,8 @@ namespace JHSchool.Behavior.Legacy
                 rowTag.IsNew = false;
                 rowTag.Key = id;
 
+                row.Cells[0].Tag = element; //舊 row 把 AttendanceRecord 存到 Cell[0],Save 時 update 分支會取出
+
                 row.Cells[ColumnIndex["學年度"]].Value = schoolYear;
                 row.Cells[ColumnIndex["學年度"]].Tag = new SemesterCellInfo(schoolYear);
 
@@ -393,15 +396,15 @@ namespace JHSchool.Behavior.Legacy
                     DataGridViewColumn column = dataGridView.Columns[i];
                     PeriodInfo info = column.Tag as PeriodInfo;
 
-                    foreach (XmlNode node in dNode.SelectNodes("Period"))
+                    foreach (K12.Data.AttendancePeriod node in dNode)
                     {
-                        if (node.InnerText != info.Name) continue;
-                        if (node.SelectSingleNode("@AbsenceType") == null) continue;
+                        if (node.Period != info.Name) continue;
+                        if (node.AbsenceType == null) continue;
 
                         DataGridViewCell cell = row.Cells[i];
                         foreach (AbsenceInfo ai in _absenceList.Values)
                         {
-                            if (ai.Name != node.SelectSingleNode("@AbsenceType").InnerText) continue;
+                            if (ai.Name != node.AbsenceType) continue;
                             AbsenceInfo ainfo = ai.Clone();
                             cell.Tag = new AbsenceCellInfo(ainfo);
                             cell.Value = ai.Abbreviation;
@@ -440,11 +443,15 @@ namespace JHSchool.Behavior.Legacy
                         MsgBox.Show("已取消操作!");
                         return;
                     }
+                    // 使用者選擇覆蓋,把 row 狀態與當下 DB 同步:
+                    // - 他人新增的日期(原本 IsNew):改成 update 分支,避免撞 unique constraint
+                    // - 他人刪除的日期(原本是舊 row):改成 insert 分支
+                    ReconcileRowsWithCurrentDb_Single();
                 }
             }
-            DSXmlHelper InsertHelper = new DSXmlHelper("InsertRequest");
-            DSXmlHelper updateHelper = new DSXmlHelper("UpdateRequest");
-            List<string> deleteList = new List<string>();
+            List<K12.Data.AttendanceRecord> InsertHelper = new List<K12.Data.AttendanceRecord>(); //新增
+            List<K12.Data.AttendanceRecord> updateHelper = new List<K12.Data.AttendanceRecord>(); //更新
+            List<string> deleteList = new List<string>(); //清空
 
             List<string> synclist = new List<string>();
 
@@ -461,7 +468,10 @@ namespace JHSchool.Behavior.Legacy
                 if (tag.IsNew)
                 {
                     #region IsNew
-                    DSXmlHelper h2 = new DSXmlHelper("Attendance");
+                    string studentID = row.Cells[0].Tag as string;
+
+                    K12.Data.AttendanceRecord attRecord = new K12.Data.AttendanceRecord();
+
                     bool hasContent = false;
                     for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                     {
@@ -471,10 +481,12 @@ namespace JHSchool.Behavior.Legacy
                         PeriodInfo pinfo = dataGridView.Columns[i].Tag as PeriodInfo;
                         AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
                         AbsenceInfo ainfo = acInfo.AbsenceInfo;
-                        XmlElement element = h2.AddElement("Period");
-                        element.InnerText = pinfo.Name;
-                        element.SetAttribute("AbsenceType", ainfo.Name);
-                        element.SetAttribute("AttendanceType", pinfo.Type);
+
+                        K12.Data.AttendancePeriod ap = new K12.Data.AttendancePeriod();
+                        ap.Period = pinfo.Name;
+                        ap.AbsenceType = ainfo.Name;
+                        attRecord.PeriodDetail.Add(ap);
+
                         hasContent = true;
 
                         //log 紀錄修改後的資料 缺曠明細部分
@@ -482,15 +494,14 @@ namespace JHSchool.Behavior.Legacy
                             afterData[tag.Date.ToShortDateString()].Add(pinfo.Name, ainfo.Name);
 
                     }
+
                     if (hasContent)
                     {
-                        InsertHelper.AddElement("Attendance");
-                        InsertHelper.AddElement("Attendance", "Field");
-                        InsertHelper.AddElement("Attendance/Field", "RefStudentID", _student.ID);
-                        InsertHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["學年度"]].Value.ToString());
-                        InsertHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["學期"]].Value.ToString());
-                        InsertHelper.AddElement("Attendance/Field", "OccurDate", tag.Date.ToShortDateString());
-                        InsertHelper.AddElement("Attendance/Field", "Detail", h2.GetRawXml(), true);
+                        attRecord.RefStudentID = studentID;
+                        attRecord.SchoolYear = int.Parse("" + row.Cells[ColumnIndex["學年度"]].Value);
+                        attRecord.Semester = int.Parse("" + row.Cells[ColumnIndex["學期"]].Value);
+                        attRecord.OccurDate = DateTime.Parse(tag.Date.ToShortDateString());
+                        InsertHelper.Add(attRecord);
                     }
 
                     #endregion
@@ -498,7 +509,10 @@ namespace JHSchool.Behavior.Legacy
                 else // 若是原本就有紀錄的
                 {
                     #region 是舊的
-                    DSXmlHelper h2 = new DSXmlHelper("Attendance");
+
+                    K12.Data.AttendanceRecord attRecord = row.Cells[0].Tag as K12.Data.AttendanceRecord;
+                    attRecord.PeriodDetail.Clear(); //清空
+
                     bool hasContent = false;
                     for (int i = _startIndex; i < dataGridView.Columns.Count; i++)
                     {
@@ -509,10 +523,11 @@ namespace JHSchool.Behavior.Legacy
                         AbsenceCellInfo acInfo = cell.Tag as AbsenceCellInfo;
                         AbsenceInfo ainfo = acInfo.AbsenceInfo;
 
-                        XmlElement element = h2.AddElement("Period");
-                        element.InnerText = pinfo.Name;
-                        element.SetAttribute("AbsenceType", ainfo.Name);
-                        element.SetAttribute("AttendanceType", pinfo.Type);
+                        K12.Data.AttendancePeriod ap = new K12.Data.AttendancePeriod();
+                        ap.Period = pinfo.Name;
+                        ap.AbsenceType = ainfo.Name;
+                        attRecord.PeriodDetail.Add(ap);
+
                         hasContent = true;
 
                         //log 紀錄修改後的資料 缺曠明細部分
@@ -522,15 +537,9 @@ namespace JHSchool.Behavior.Legacy
 
                     if (hasContent)
                     {
-                        updateHelper.AddElement("Attendance");
-                        updateHelper.AddElement("Attendance", "Field");
-                        updateHelper.AddElement("Attendance/Field", "RefStudentID", _student.ID);
-                        updateHelper.AddElement("Attendance/Field", "SchoolYear", row.Cells[ColumnIndex["學年度"]].Value.ToString());
-                        updateHelper.AddElement("Attendance/Field", "Semester", row.Cells[ColumnIndex["學期"]].Value.ToString());
-                        updateHelper.AddElement("Attendance/Field", "OccurDate", tag.Date.ToShortDateString());
-                        updateHelper.AddElement("Attendance/Field", "Detail", h2.GetRawXml(), true);
-                        updateHelper.AddElement("Attendance", "Condition");
-                        updateHelper.AddElement("Attendance/Condition", "ID", tag.Key);
+                        attRecord.SchoolYear = int.Parse("" + row.Cells[ColumnIndex["學年度"]].Value);
+                        attRecord.Semester = int.Parse("" + row.Cells[ColumnIndex["學期"]].Value);
+                        updateHelper.Add(attRecord);
                     }
                     else
                     {
@@ -540,16 +549,16 @@ namespace JHSchool.Behavior.Legacy
                         afterData.Remove(tag.Date.ToShortDateString());
                         deleteData.Add(tag.Date.ToShortDateString());
                     }
+                    #endregion
                 }
-                #endregion
             }
 
             #region InsertHelper
-            if (InsertHelper.GetElements("Attendance").Length > 0)
+            if (InsertHelper.Count > 0)
             {
                 try
                 {
-                    JHSchool.Feature.Legacy.EditAttendance.Insert(new DSRequest(InsertHelper));
+                    K12.Data.Attendance.Insert(InsertHelper);
                 }
                 catch (Exception ex)
                 {
@@ -579,11 +588,11 @@ namespace JHSchool.Behavior.Legacy
             #endregion
 
             #region updateHelper
-            if (updateHelper.GetElements("Attendance").Length > 0)
+            if (updateHelper.Count > 0)
             {
                 try
                 {
-                    JHSchool.Feature.Legacy.EditAttendance.Update(new DSRequest(updateHelper));
+                    K12.Data.Attendance.Update(updateHelper);
                 }
                 catch (Exception ex)
                 {
@@ -635,16 +644,9 @@ namespace JHSchool.Behavior.Legacy
             #region deleteList
             if (deleteList.Count > 0)
             {
-                DSXmlHelper deleteHelper = new DSXmlHelper("DeleteRequest");
-                deleteHelper.AddElement("Attendance");
-                foreach (string key in deleteList)
-                {
-                    deleteHelper.AddElement("Attendance", "ID", key);
-                }
-
                 try
                 {
-                    JHSchool.Feature.Legacy.EditAttendance.Delete(new DSRequest(deleteHelper));
+                    K12.Data.Attendance.Delete(deleteList);
                 }
                 catch (Exception ex)
                 {
@@ -1145,35 +1147,55 @@ namespace JHSchool.Behavior.Legacy
             return result;
         }
 
+        // 衝突偵測選擇覆蓋後,將 grid 各 row 的 IsNew/Key/Cells[0].Tag 對齊當下 DB,避免 save 走錯分支(insert vs update)
+        private void ReconcileRowsWithCurrentDb_Single()
+        {
+            Dictionary<string, K12.Data.AttendanceRecord> currentRecords = new Dictionary<string, K12.Data.AttendanceRecord>();
+            foreach (K12.Data.AttendanceRecord record in K12.Data.Attendance.SelectByStudents(new K12.Data.StudentRecord[] { _student }))
+            {
+                if (record.OccurDate.CompareTo(dateTimeInput1.Value) == -1 || record.OccurDate.CompareTo(dateTimeInput2.Value) == 1)
+                    continue;
+                currentRecords[record.OccurDate.ToShortDateString()] = record;
+            }
+
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                RowTag rt = row.Tag as RowTag;
+                if (rt == null) continue;
+                string dateStr = rt.Date.ToShortDateString();
+
+                if (currentRecords.ContainsKey(dateStr))
+                {
+                    // DB 此日已有紀錄,改成「舊 row」,save 會走 update 分支
+                    K12.Data.AttendanceRecord existing = currentRecords[dateStr];
+                    rt.IsNew = false;
+                    rt.Key = existing.ID;
+                    row.Cells[0].Tag = existing;
+                }
+                else
+                {
+                    // DB 此日已無紀錄,改成「新 row」,save 會走 insert 分支
+                    rt.IsNew = true;
+                    rt.Key = null;
+                    row.Cells[0].Tag = _student.ID;
+                }
+            }
+        }
+
         private Dictionary<string, Dictionary<string, string>> FetchCurrentDbState_Single()
         {
             var result = new Dictionary<string, Dictionary<string, string>>();
-            DSXmlHelper helper = new DSXmlHelper("Request");
-            helper.AddElement("Field");
-            helper.AddElement("Field", "All");
-            helper.AddElement("Condition");
-            helper.AddElement("Condition", "RefStudentID", _student.ID);
-            helper.AddElement("Condition", "StartDate", dateTimeInput1.Value.ToShortDateString());
-            helper.AddElement("Condition", "EndDate", dateTimeInput2.Value.ToShortDateString());
-            DSResponse dsrsp = JHSchool.Feature.Legacy.QueryAttendance.GetAttendance(new DSRequest(helper));
-            helper = dsrsp.GetContent();
-            foreach (XmlElement element in helper.GetElements("Attendance"))
+            foreach (K12.Data.AttendanceRecord record in K12.Data.Attendance.SelectByStudents(new K12.Data.StudentRecord[] { _student }))
             {
-                string occurDate = element.SelectSingleNode("OccurDate").InnerText;
-                DateTime dt;
-                if (!DateTime.TryParse(occurDate, out dt)) continue;
-                string dateStr = dt.ToShortDateString();
+                if (record.OccurDate.CompareTo(dateTimeInput1.Value) == -1 || record.OccurDate.CompareTo(dateTimeInput2.Value) == 1)
+                    continue;
+                string dateStr = record.OccurDate.ToShortDateString();
                 if (!result.ContainsKey(dateStr))
                     result[dateStr] = new Dictionary<string, string>();
-                XmlNode detailNode = element.SelectSingleNode("Detail");
-                if (detailNode == null || detailNode.FirstChild == null) continue;
-                foreach (XmlNode node in detailNode.FirstChild.SelectNodes("Period"))
+                foreach (K12.Data.AttendancePeriod ap in record.PeriodDetail)
                 {
-                    string periodName = node.InnerText;
-                    XmlNode attrNode = node.SelectSingleNode("@AbsenceType");
-                    if (attrNode == null) continue;
-                    if (!result[dateStr].ContainsKey(periodName))
-                        result[dateStr][periodName] = attrNode.InnerText;
+                    if (!string.IsNullOrEmpty(ap.AbsenceType))
+                        result[dateStr][ap.Period] = ap.AbsenceType;
                 }
             }
             return result;
@@ -1186,6 +1208,8 @@ namespace JHSchool.Behavior.Legacy
             var conflicts = new List<ConflictInfo>();
             string className = _student.Class != null ? _student.Class.Name : "";
             string seatNo = "" + _student.SeatNo;
+
+            // 主迴圈:處理開啟時就有資料的日期(他人刪除/修改)
             foreach (string dateStr in beforeData.Keys)
             {
                 Dictionary<string, string> before = beforeData[dateStr];
@@ -1238,6 +1262,50 @@ namespace JHSchool.Behavior.Legacy
                 }
                 conflicts.Add(ci);
             }
+
+            // 補偵測:開啟時無資料,但他人在此期間新增了紀錄,且本機也有編輯的情況
+            foreach (string dateStr in currentDbState.Keys)
+            {
+                if (beforeData.ContainsKey(dateStr)) continue; // 已在主迴圈處理過
+                if (currentDbState[dateStr].Count == 0) continue; // DB 實際上無資料
+
+                // 若使用者沒有對此日期做任何編輯,儲存時不會影響該日,不算衝突
+                Dictionary<string, string> userDay;
+                userEdits.TryGetValue(dateStr, out userDay);
+                if (userDay == null || userDay.Count == 0) continue;
+
+                DateTime occurDate;
+                DateTime.TryParse(dateStr, out occurDate);
+
+                ConflictInfo ci = new ConflictInfo();
+                ci.StudentID = _student.ID;
+                ci.ClassName = className;
+                ci.SeatNo = seatNo;
+                ci.Name = _student.Name;
+                ci.OccurDate = occurDate;
+                ci.DeletedByOther = false;
+
+                var currentPeriods = currentDbState[dateStr];
+                var allPeriods = new HashSet<string>(currentPeriods.Keys);
+                foreach (string p in userDay.Keys) allPeriods.Add(p);
+
+                foreach (string period in allPeriods)
+                {
+                    string currentAbsence;
+                    currentPeriods.TryGetValue(period, out currentAbsence);
+                    string userAbsence;
+                    userDay.TryGetValue(period, out userAbsence);
+                    ci.PeriodDiffs.Add(new PeriodDiff
+                    {
+                        PeriodName = period,
+                        BeforeAbsence = null,
+                        UserAbsence = userAbsence,
+                        CurrentAbsence = currentAbsence
+                    });
+                }
+                conflicts.Add(ci);
+            }
+
             return conflicts;
         }
     }

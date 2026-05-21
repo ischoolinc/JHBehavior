@@ -44,7 +44,8 @@ namespace JHSchool.Behavior
                 int count = Student.Instance.SelectedList.Count;
                 if (count == 1)
                 {
-                    SingleEditor editor = new SingleEditor(Student.Instance.SelectedList[0]);
+                    JHStudentRecord stud = JHStudent.SelectByID(K12.Presentation.NLDPanels.Student.SelectedSource[0]);
+                    SingleEditor editor = new SingleEditor(stud);
                     editor.ShowDialog();
                 }
                 else if (count > 1)
@@ -67,7 +68,8 @@ namespace JHSchool.Behavior
                 {
                     if (Student.Instance.SelectedList.Count == 1)
                     {
-                        SingleEditor editor = new SingleEditor(Student.Instance.SelectedList[0]);
+                        JHStudentRecord stud = JHStudent.SelectByID(K12.Presentation.NLDPanels.Student.SelectedSource[0]);
+                        SingleEditor editor = new SingleEditor(stud);
                         editor.ShowDialog();
                     }
                     else if (Student.Instance.SelectedList.Count > 1)

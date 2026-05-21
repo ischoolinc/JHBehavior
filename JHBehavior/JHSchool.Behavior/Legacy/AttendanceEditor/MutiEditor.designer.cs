@@ -42,12 +42,11 @@
             this.btnRenew = new DevComponents.DotNetBar.ButtonX();
             this.dataGridView = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.chkHasData = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.labelX4 = new DevComponents.DotNetBar.LabelX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.tableLayoutPanel2.SuspendLayout();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -93,7 +92,7 @@
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.Location = new System.Drawing.Point(696, 529);
+            this.buttonX2.Location = new System.Drawing.Point(696, 521);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(75, 24);
             this.buttonX2.TabIndex = 2;
@@ -105,7 +104,7 @@
             this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX3.Location = new System.Drawing.Point(615, 529);
+            this.buttonX3.Location = new System.Drawing.Point(615, 521);
             this.buttonX3.Name = "buttonX3";
             this.buttonX3.Size = new System.Drawing.Size(75, 24);
             this.buttonX3.TabIndex = 1;
@@ -206,7 +205,7 @@
             this.dataGridView.Location = new System.Drawing.Point(12, 133);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 24;
-            this.dataGridView.Size = new System.Drawing.Size(759, 359);
+            this.dataGridView.Size = new System.Drawing.Size(759, 369);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellEndEdit);
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
@@ -217,7 +216,6 @@
             // 
             this.panelEx2.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.panelEx2.Controls.Add(this.labelX4);
             this.panelEx2.Controls.Add(this.labelX2);
             this.panelEx2.Controls.Add(this.checkBoxX1);
             this.panelEx2.Controls.Add(this.dateTimeInput1);
@@ -240,6 +238,22 @@
             this.panelEx2.Style.GradientAngle = 90;
             this.panelEx2.TabIndex = 0;
             this.panelEx2.Text = "panelEx2";
+            // 
+            // labelX2
+            // 
+            this.labelX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelX2.AutoSize = true;
+            this.labelX2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.Class = "";
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(12, 514);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(359, 39);
+            this.labelX2.TabIndex = 30;
+            this.labelX2.Text = "1.本功能依據[上課日設定]顯示日期\r\n2.儲存前若缺曠被[線上請假]或[課堂點名]變更,將會提示訊息";
             // 
             // checkBoxX1
             // 
@@ -329,7 +343,7 @@
             // 
             this.chkHasData.BackgroundStyle.Class = "";
             this.chkHasData.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.chkHasData.Location = new System.Drawing.Point(615, 499);
+            this.chkHasData.Location = new System.Drawing.Point(433, 523);
             this.chkHasData.Name = "chkHasData";
             this.chkHasData.Size = new System.Drawing.Size(147, 21);
             this.chkHasData.TabIndex = 24;
@@ -339,39 +353,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // labelX4
-            // 
-            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelX4.AutoSize = true;
-            this.labelX4.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX4.BackgroundStyle.Class = "";
-            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.ForeColor = System.Drawing.Color.Red;
-            this.labelX4.Location = new System.Drawing.Point(253, 515);
-            this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(34, 21);
-            this.labelX4.TabIndex = 31;
-            this.labelX4.Text = "紅字";
-            // 
-            // labelX2
-            // 
-            this.labelX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelX2.AutoSize = true;
-            this.labelX2.BackColor = System.Drawing.Color.Transparent;
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.Class = "";
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(12, 497);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(359, 56);
-            this.labelX2.TabIndex = 30;
-            this.labelX2.Text = "1.本功能依據[上課日設定]顯示日期\r\n2.假日卻有缺曠資料,將在星期欄位標示為\r\n3.儲存前若缺曠被[線上請假]或[課堂點名]變更,將會提示訊息";
             // 
             // MutiEditor
             // 
@@ -416,7 +397,6 @@
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput1;
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.LabelX labelX2;
     }
 }
